@@ -1,0 +1,106 @@
+.splash-nav{
+  height: 72px;
+  width: 1192px;
+  margin: 0 auto;
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: $rh_fonts;
+}
+
+.splash-logo{
+  background-image: url("../images/rh_logo_small.png");
+  width: 20px;
+  height: 27px;
+  background-size: 100%, 100%;
+}
+
+.splash-right{
+  display: flex;
+  align-items: center;
+  height: 48px;
+  width: 190px;
+  justify-content: space-between;
+  a{
+    text-decoration: none;
+  }
+  .login{
+    display: flex;
+    align-items: center;
+    color: black;
+    font-weight: 750;
+    font-size: 15px;
+    height: 35px;
+  }
+}
+
+.signup{
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  background: $rh_green;
+  border-radius: 36px;
+  padding-right: 24px;
+  padding-left: 24px;
+  height: 48px; 
+  color: white;
+  font-weight: 550;
+  font-size: 16px;
+  line-height: 18px;
+  -webkit-box-pack: center;
+  width: 108.44px;
+  box-sizing: border-box;
+}
+
+.splash-left{
+  font-size: $med_font;
+  display:flex;
+  align-items: center;
+
+  height: 48px; 
+  span{
+    margin-left: 5px;
+    font-size: 18px;
+    letter-spacing: .01px;
+  }
+}
+
+.login:hover{
+  color: $rh_green;
+}
+
+.signup:hover{
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.16)
+}
+
+.splash-left:hover{
+  color: $rh_green;
+  cursor: pointer;
+  .splash-logo{
+    background-image: url("../images/rh_logo_small_green.png");
+  }
+}
+
+.splash-body{
+  width: 1192px;
+  display: flex;
+  justify-content: space-between;
+  .welcome{
+    width: 310px;
+    padding-top: 230px;
+    display: flex;
+    flex-direction: column;
+    h1{
+      margin-bottom: 36px;
+    }
+    span{
+      line-height: 27px;
+      font-size: 16px;
+      margin-bottom: 36px;
+    }
+  }
+  img{
+    margin-right: -130px;
+    box-sizing: border-box;
+  }
+}
