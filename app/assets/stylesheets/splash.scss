@@ -9,7 +9,7 @@
 }
 
 .splash-logo{
-  background-image: url("../images/rh_logo_small.png");
+  background-image: url("../images/rh_logo_small_black.png");
   width: 20px;
   height: 27px;
   background-size: 100%, 100%;
@@ -37,25 +37,8 @@
     letter-spacing: 0.32px;
     height: 27px;
   }
-  .signup, #demo-login{
+  .signup{
     margin-left: 4px;
-    border-style: none;
-    display: flex;
-    text-decoration: none;
-    align-items: center;
-    justify-content: center;
-    background: $rh_green;
-    border-radius: 36px;
-    padding-right: 24px;
-    padding-left: 24px;
-    height: 48px; 
-    color: white;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 18px;
-    -webkit-box-pack: center;
-    width: 108.44px;
-    box-sizing: border-box;
   }
   #demo-login{
     padding-left: 33px;

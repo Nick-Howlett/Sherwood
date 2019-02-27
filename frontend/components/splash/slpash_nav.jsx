@@ -13,8 +13,8 @@ export default props => {
       <div className="splash-right">
         <Link className="login" to="/login">Log In</Link>
         <div>
-          <Link id="demo-login" to="/demologin">Demo Login</Link>
-          <Link className="signup" to="/signup">Sign Up</Link>
+          <Link className="rh-button" id="demo-login" to="/demologin">Demo Login</Link>
+          <Link className="signup rh-button" to="/signup">Sign Up</Link>
         </div>
       </div>
     </nav>

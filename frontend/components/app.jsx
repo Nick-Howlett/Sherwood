@@ -1,6 +1,6 @@
 import React from 'react';
 import Splash from './splash/splash';
-import Profile from './profile/profile';
+import ProfileContainer from './profile/profile_container';
 import {Route} from 'react-router-dom';
 import {AuthRoute} from '../utils/route_util';
 import LoginFormContainer from "./session_form/login_form_container";
@@ -9,7 +9,7 @@ import DemoLoginContainer from "./session_form/demo_form_container";
 
 
 const App = props => {
-  const RootComponent = props.currentUser ? Profile : Splash;
+  const RootComponent = props.currentUser ? ProfileContainer : Splash;
   return ( 
     <div>
       <Route exact path="/" component={RootComponent}/>

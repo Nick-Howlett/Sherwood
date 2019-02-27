@@ -1,13 +1,30 @@
+#login-nav{
+  position: relative;
+  width: 100%;
+  height: 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  a{
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    left: 48px;
+  }
+}
 
-.logo{
+#rh-logo-nav{
+  background-image: url("../images/rh_logo_black.png");
+  background-size: 100%, 100%;
   width: 48px;
   height: 48px;
-  background-image: url("../images/robinhood_logo.png");
-  background-size: 100%, 100%;
 }
 
-.logo:hover{
-  color: $rh_green;
-  background-image: url("../images/robinhood_logo.png");
+#rh-logo-nav:hover{
+  background-image: url("../images/rh_logo_green.png");
 }
 
+#navbar-right{
+  position: absolute;
+  right: 48px;
+}
