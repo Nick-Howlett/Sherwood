@@ -1,9 +1,24 @@
 body{
   font-family: $rh_fonts;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.25px;
+  line-height: 19px;
 }
 
 h1{
   line-height: 49px;
   font-weight: bold;
   font-size: 44px;
+}
+
+h2{
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 30px;
+  margin: 0 0 16px;
+}
+
+a{
+  text-decoration: none;
 }

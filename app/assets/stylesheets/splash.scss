@@ -19,49 +19,61 @@
   display: flex;
   align-items: center;
   height: 48px;
-  width: 190px;
+  width: 300px;
   justify-content: space-between;
   a{
     text-decoration: none;
+  }
+  div{
+    display: flex;
+    align-items: center;
   }
   .login{
     display: flex;
     align-items: center;
     color: black;
-    font-weight: 750;
-    font-size: 15px;
-    height: 35px;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 0.32px;
+    height: 27px;
   }
-}
-
-.signup{
-  display: flex;
-  text-decoration: none;
-  align-items: center;
-  background: $rh_green;
-  border-radius: 36px;
-  padding-right: 24px;
-  padding-left: 24px;
-  height: 48px; 
-  color: white;
-  font-weight: 550;
-  font-size: 16px;
-  line-height: 18px;
-  -webkit-box-pack: center;
-  width: 108.44px;
-  box-sizing: border-box;
+  .signup, #demo-login{
+    margin-left: 4px;
+    border-style: none;
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    background: $rh_green;
+    border-radius: 36px;
+    padding-right: 24px;
+    padding-left: 24px;
+    height: 48px; 
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+    -webkit-box-pack: center;
+    width: 108.44px;
+    box-sizing: border-box;
+  }
+  #demo-login{
+    padding-left: 33px;
+  }
 }
 
 .splash-left{
   font-size: $med_font;
   display:flex;
   align-items: center;
+  width: 150px;
 
   height: 48px; 
   span{
     margin-left: 5px;
     font-size: 18px;
-    letter-spacing: .01px;
+    font-weight: 600;
+    line-height: 26px;
   }
 }
 
@@ -69,7 +81,7 @@
   color: $rh_green;
 }
 
-.signup:hover{
+.signup:hover, #demo-login:hover{
   box-shadow: 0px 4px 8px rgba(0,0,0,0.16)
 }
 
