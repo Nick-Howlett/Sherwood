@@ -1,6 +1,7 @@
 import {connect} from "react-redux";
-import {login} from "../../actions/session_actions";
+import {login, receiveErrors} from "../../actions/session_actions";
 import SessionForm from "./session_form";
+import {withRouter} from 'react-router-dom';
 
 const msp = state => ({
   errors: state.errors.session,
@@ -8,7 +9,8 @@ const msp = state => ({
 });
 
 const mdp = dispatch => ({
-  action: user => dispatch(login(user))
+  action: user => dispatch(login(user)),
+  clearErrors: () => dispatch(receiveErrors([]))
 });
 
-export default connect(msp, mdp)(SessionForm);
+export default withRouter(connect(msp, mdp)(SessionForm));

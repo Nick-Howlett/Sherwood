@@ -1,6 +1,6 @@
 import React from "react";
 
-export default ({errors}) => {
+export default ({error}) => {
   return (
     <div id="session-errors">
       <svg width="16" height="18">
@@ -10,7 +10,7 @@ export default ({errors}) => {
       </svg>
       <span id="circle-text" x="5" y="14">!</span>
       <div id="error-text">
-        {errors}
+        {error}
       </div>
     </div>
   )
