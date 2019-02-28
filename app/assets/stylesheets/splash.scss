@@ -32,7 +32,7 @@
     display: flex;
     align-items: center;
     color: black;
-    font-weight: bold;
+    font-weight: 750;
     font-size: 16px;
     letter-spacing: 0.32px;
     height: 27px;
@@ -50,7 +50,7 @@
   display:flex;
   align-items: center;
   width: 150px;
-
+  color: black;
   height: 48px; 
   span{
     margin-left: 5px;
@@ -90,7 +90,8 @@
     }
     span{
       line-height: 27px;
-      font-size: 16px;
+      font-size: 15px;
+      font-weight: 450;
       margin-bottom: 36px;
     }
   }

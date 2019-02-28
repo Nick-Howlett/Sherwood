@@ -60,7 +60,9 @@ class SessionForm extends React.Component{
   render() {
     return (
       <div className="session-form">
-        <img src="images/form_half.png"/>
+        <div id="session-img">
+          <img src="images/form_half.png"/>
+        </div>
         <div className="form-side">
           <div className="session-form-container">
             <h2>Welcome to Robinhood</h2>

@@ -1,6 +1,11 @@
 @font-face{
   font-family: "DIN";
-  src: url("./../fonts/Gidole-Regular.ttf")
+  src: url("./../fonts/D-DIN-Bold.otf");
+  font-weight: bold;
+}
+@font-face{
+  font-family: "DIN";
+  src: url("./../fonts/D-DIN.otf")
 }
 $rh_green: #21ce99;
 $rh_highlight: #1ae9aa;
@@ -17,11 +22,11 @@ $rh_fonts: "DIN", sans-serif;
   justify-content: center;
   background: $rh_green;
   border-radius: 36px;
-  padding-right: 24px;
-  padding-left: 24px;
+  padding-right: 22px;
+  padding-left: 22px;
   height: 48px; 
   color: white;
-  font-weight: 700;
+  font-weight: bold;
   font-size: 16px;
   line-height: 18px;
   -webkit-box-pack: center;
