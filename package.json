@@ -24,10 +24,15 @@
     "lib": "lib",
     "test": "test"
   },
+  "engines": {
+    "npm": "6.4.1",
+    "node": "10.15.1"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack -w --mode=development"
+    "start": "webpack -w --mode=development",
+    "postinstall": "webpack"
   },
   "repository": {
     "type": "git",
