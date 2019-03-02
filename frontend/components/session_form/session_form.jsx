@@ -63,7 +63,7 @@ class SessionForm extends React.Component{
         <img src="images/form_half.png"/>
         <div className="form-side">
           <div className="session-form-container">
-            <h2>Welcome to Robinhood</h2>
+            <h2>Welcome to Sherwood</h2>
             <form onSubmit={this.handleSubmit}>
               <label><div>Email or Username</div>
                 <input className="text-input" required type="text" value={this.state.username} onChange={this.update("username")} />

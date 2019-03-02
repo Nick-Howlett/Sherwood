@@ -1,0 +1,55 @@
+#main-stock{
+  margin: 0 auto;
+  width: 1024px;
+  padding-top: 36px;
+}
+
+#chart-value{
+  height: 46px;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: -0.7px;
+}
+
+#stock-chart{
+  padding-top: 40px;
+  height: 318px;
+  h1{
+    height: 42px;
+    margin-bottom: 84px;
+  }
+  position: relative;
+}
+
+#chart-percents{
+  top: 42px;
+  position: absolute;
+  font-size: 13px;
+  font-weight:600;
+  margin-bottom: 10px;
+}
+
+
+#chart-time{
+  font-size: 12px;
+  top: 60px;
+  position: absolute;
+  width: 80px;
+}
+
+#chart-buttons{
+  margin-top: 24px;
+  margin-bottom: 12px;
+  width: 676px;
+  border-bottom: 1px solid black;
+  height: 33px;
+  button{
+    background: none;
+  }
+  button:hover{
+    color: $rh_green;
+    cursor: pointer;
+  }
+}
+
+

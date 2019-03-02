@@ -8,7 +8,7 @@ export default props => {
     <nav className="splash-nav">
       <a href="/" className="splash-left">
         <div className="splash-logo"></div>
-        <span>robinhood</span>
+        <span>sherwood</span>
       </a>
       <div className="splash-right">
         <Link className="login" to="/login">Log In</Link>
