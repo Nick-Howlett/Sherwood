@@ -5,3 +5,12 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+ActiveRecord::Base.transaction do 
+  Stock.destroy_all
+  File.open("full_company_data.txt").each do |line|
+    stock = JSON.parse(line)
+    stock["employees"] = stock["employees"].delete(",").to_i if stock["employees"]
+    Stock.create(stock)
+  end
+end

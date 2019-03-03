@@ -15,5 +15,8 @@ export const minuteToLabel = minute => {
     return minute.slice(1) + " AM";
   }
   const minParts = minute.split(":");
-  return `${minParts[0] % 12}:${minParts[1]} ${minParts[0] > 12 ? "PM" : "AM"}`;
+  if(minParts[0] === "12"){
+    return `${minute} PM`;
+  }
+  return `${minParts[0] % 12}:${minParts[1]} ${minParts[0] >= 12 ? "PM" : "AM"}`;
 }

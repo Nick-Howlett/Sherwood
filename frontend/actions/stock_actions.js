@@ -1,16 +1,17 @@
 import * as APIUtil from "../utils/stock_api_utils";
 import {timeInt, timeStr} from "../utils/time_utils";
 
-export const RECEIVE_STOCK = "RECEIVE_STOCK";
 export const RECEIVE_CHART = "RECEIVE_CHART";
-export const RECEIVE_PREV = "RECEIVE_PREV";
+export const RECEIVE_INFO = "RECEIVE_INFO";
+export const RECEIVE_NEWS = "RECEIVE_NEWS";
+
 
 export const fetchStock = symbol => dispatch => {
-  APIUtil.fetchStock(symbol).then(stock => dispatch(receiveStock(stock)));
-}
+  APIUtil.fetchStock(symbol).then(info => dispatch(receiveInfo(symbol, info)));
+};
 
-export const getStock = symbol => dispatch => {
-  APIUtil.getStock(symbol).then(stock => dispatch(receiveStock(stock)));
+export const getInfo = symbol => dispatch => {
+  APIUtil.getInfo(symbol).then(info => dispatch(receiveInfo(symbol, info)));
 }
 
 export const get1dChart = symbol => dispatch => {
@@ -19,16 +20,23 @@ export const get1dChart = symbol => dispatch => {
 
 export const getChart = (symbol, range) => dispatch => {
   APIUtil.getChart(symbol, range).then(chart => dispatch(receiveChart(chart, range)));
-}
-
-export const getPrev = symbol => dispatch => {
-  APIUtil.getPrev(symbol).then(prev => dispatch(receivePrev(prev)));
 };
 
-export const receiveStock = stock => ({
-  type: RECEIVE_STOCK,
-  stock
+export const getNews = symbol => dispatch => {
+  APIUtil.getNews(symbol).then(news => dispatch(receiveNews(news)));
+}
+
+export const receiveInfo = (symbol, info) => ({
+  type: RECEIVE_INFO,
+  symbol,
+  info
 });
+
+export const receiveNews = news => ({
+  type: RECEIVE_NEWS,
+  news
+})
+
 
 export const receiveChart = (chart, range) => ({
   type: RECEIVE_CHART,
@@ -37,10 +45,6 @@ export const receiveChart = (chart, range) => ({
 });
 
 
-export const receivePrev = prev => ({
-  type: RECEIVE_PREV,
-  prev
-})
 
 //TODO what does the call return before the markets open on a day?
 /*
