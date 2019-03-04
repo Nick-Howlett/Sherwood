@@ -8,8 +8,11 @@
     justify-content: space-between;
     box-sizing: border-box;
     height: 48px;
-    button:hover{
+    button{
       color: $rh_green;
+    }
+    button:hover{
+      color: $rh_highlight;
     }
   }
   h3{
@@ -23,8 +26,11 @@
 }
 
 h3{
-  button:hover{
+  button{
     color: $rh_green;
+  }
+  button:hover{
+    color: $rh_highlight;
   }
 }
 
@@ -79,9 +85,17 @@ h3{
     padding-bottom: 16px;
     border-bottom: 1px solid $rh_lgrey;
   }
-  button:hover{
+  button{
     color: $rh_green;
   }
+  button:hover{
+    color: $rh_highlight;
+  }
+}
+
+.news-items{
+  max-height: 582px;
+  overflow:hidden;
 }
 
 .news-item{
@@ -91,7 +105,55 @@ h3{
   align-items: center;
   img{
     width: 200px;
-    height: 135px;
+    height: 134px;
     border-radius: 6px;
   }
+} 
+
+.news-right{
+  display: flex;
+  flex-direction: column;
+  width: 458.66px;
+  height: 134px;
+  margin-left: 24px;
+  h3{
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 22px;
+    margin: 0;
+  }
+  svg{
+    width: 14px;
+    height: 11px;
+    fill: $rh_grey;
+    margin-right: 6px;
+  }
+}
+
+.summary{
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 22px;
+  margin: 0;
+  font-weight: 300;
+}
+
+.source{
+  font-weight: 600;
+}
+
+.views{
+  margin-top: 30px;
+  color: $rh_grey;
+}
+
+.headline-summary{
+  height: 70px;
+  overflow: hidden;
+}
+
+.hours{
+  margin-left: 5px;
+  color: $rh_grey;
 }

@@ -27,7 +27,7 @@ class StockChart extends React.Component{
             dataKey={value} 
             stroke="#21ce99" 
             dot={false}
-            isAnimationActive={false} />
+           />
           <Tooltip 
             wrapperStyle={{visibility: 'visible'}} 
             position={{ x: 0, y: -84 }} 
