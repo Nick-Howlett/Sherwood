@@ -3,7 +3,7 @@
     width: 676px;
     padding-bottom: 16px;
     margin: 0;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid $rh_lgrey;
     display: flex;
     justify-content: space-between;
     box-sizing: border-box;
@@ -77,7 +77,7 @@ h3{
     justify-content: space-between;
     height: 36px;
     padding-bottom: 16px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid $rh_lgrey;
   }
   button:hover{
     color: $rh_green;
@@ -87,4 +87,11 @@ h3{
 .news-item{
   width: 738px;
   height: 194px;
+  display: flex;
+  align-items: center;
+  img{
+    width: 200px;
+    height: 135px;
+    border-radius: 6px;
+  }
 }

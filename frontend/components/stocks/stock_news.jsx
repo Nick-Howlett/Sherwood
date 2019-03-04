@@ -16,10 +16,15 @@ class StockNews extends React.Component {
           <button onClick={() => this.state.showMore ? this.setState({showMore: false}) : this.setState({showMore: true})}>{this.state.showMore ? "Show Less" : "Show More"}</button>
         </header>
         <div className={this.state.showMore ? "news-container long" : "news-container"}>
-          {news.map(article => {
-            <a class="news-item">
-              
-            </a>
+          {news.map((article, i) => {
+            return( <a key={i} className="news-item">
+                <img src={"images/stock_news.jpg"}/>
+                <div>
+                  {article.source}
+                  {article.headline}
+                  {article.summary}
+                </div>
+            </a>)
           })}
         </div>
       </div>
