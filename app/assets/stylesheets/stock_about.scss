@@ -1,9 +1,16 @@
 #stock-about{
-  h2{
+  header{
     width: 676px;
     padding-bottom: 16px;
     margin: 0;
     border-bottom: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    height: 48px;
+    button:hover{
+      color: $rh_green;
+    }
   }
   h3{
     max-width: 570px;
@@ -11,14 +18,31 @@
     letter-spacing: 0;
     font-size: 15px;
     font-weight: 600;
-    margin: 0 0 24px; 
+    margin: 24px 0; 
   }
-  .grid{
-    padding-top: 18px;
-    display: flex;
-    flex-wrap: wrap;
-    width: 678.66px;
+}
+
+h3{
+  button:hover{
+    color: $rh_green;
   }
+}
+
+.grid{
+  padding-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 678.66px;
+  max-height: 100px;
+  overflow: hidden;
+}
+
+.hidden{
+  display: none;
+}
+
+.long{
+  max-height: 1000px;
 }
 
 .grid-item{
@@ -43,4 +67,24 @@
 
 .grid > *:nth-child(4n) {
   margin-right: 0;
+}
+
+#news-container{
+  margin-top: 30px;
+  header{
+    width: 676px;
+    display: flex;
+    justify-content: space-between;
+    height: 36px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid black;
+  }
+  button:hover{
+    color: $rh_green;
+  }
+}
+
+.news-item{
+  width: 738px;
+  height: 194px;
 }

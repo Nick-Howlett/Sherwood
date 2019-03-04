@@ -20,3 +20,10 @@ export const minuteToLabel = minute => {
   }
   return `${minParts[0] % 12}:${minParts[1]} ${minParts[0] >= 12 ? "PM" : "AM"}`;
 }
+
+const monthToStr = {"01": "JAN", "02": "FEB", "03": "MAR", "04": "APR", "05": "MAY", "06":"JUN", "07":"JUL", "08":"AUG", "09":"SEP", "10": "OCT", "11": "NOV", "12":"DEC"};
+
+export const formatDate = date => {
+  const parts = date.split("-"); //date is formatted 2019-03-27
+  return `${monthToStr[parts[1]]} ${parts[2]}, ${parts[0]}`;
+}

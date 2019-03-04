@@ -10,27 +10,48 @@ class StockChart extends React.Component{
   }
 
   render(){
-    const data = this.props.charts["1d"];
-    const currentStocks = data.filter(datum => datum.marketOpen);
+    const current = this.state.currentChart;
+    const data = this.props.charts[current];
+    const value = current === "1d" ? "marketOpen" : "close";
+    const currentStocks = data.filter(datum => datum[value]);
+    let min = current === "1d" ? Math.min(this.props.prev, ...currentStocks.map(datum => datum[value])) : "dataMin";
     const end = currentStocks[currentStocks.length - 1];
-    const min = Math.min(this.props.prev, ...currentStocks.map(datum => datum.marketOpen));
     return (
       <div id="stock-chart">
         <h1>{this.props.name.split(" ")[0]}</h1>
         <LineChart width={676} height={196} data={data}>
-          <Line activeDot={ {r: 6}} type="linear" strokeWidth={2} dataKey="marketOpen" stroke="#21ce99" dot={false} />
-          <Tooltip wrapperStyle={{visibility: 'visible'}} position={{ x: 0, y: -84 }} content={<ChartNums value={end.marketOpen} prev={this.props.prev}/>}/>
-          <YAxis hide domain={[min, 'dataMax']}/>
-          <ReferenceLine y={this.props.prev} dot={true}/>
-          <XAxis hide dataKey="minute"/>
+          <Line 
+            activeDot={ {r: 6}} 
+            type="linear" 
+            strokeWidth={2} 
+            dataKey={value} 
+            stroke="#21ce99" 
+            dot={false}
+            isAnimationActive={false} />
+          <Tooltip 
+            wrapperStyle={{visibility: 'visible'}} 
+            position={{ x: 0, y: -84 }} 
+            content={<ChartNums 
+                        value={end[value]} 
+                        prev={current === "1d" ? this.props.prev : data[0].open}
+                     />} 
+          />
+          <ReferenceLine className={current === "1d" ? "" : "hidden"} y={this.props.prev}/>
+          <YAxis 
+            hide 
+            domain={[min, 'dataMax']} />
+          <XAxis 
+            hide
+            dataKey="minute"/>
         </LineChart>
       <nav id="chart-buttons">
-          <button onClick={() => this.setState({currentChart: "1d" })}>1D</button>
-          <button onClick={() => this.setState({currentChart: "1w" })}>1W</button>
-          <button onClick={() => this.setState({currentChart: "1m" })}>1M</button>
-          <button onClick={() => this.setState({currentChart: "3m" })}>3M</button>
-          <button onClick={() => this.setState({currentChart: "1y" })}>1Y</button>
-          <button onClick={() => this.setState({currentChart: "5y" })}>5Y</button>
+          {["1d", "1w", "1m", "3m", "1y", "5y"].map(range => {
+            return(<button 
+              key = {range}
+              className={this.state.currentChart === range ? 'selected' : ''}
+              onClick={() => this.setState({currentChart: range})}>
+            {range}</button>)
+          })}
         </nav>
       </div>
     )

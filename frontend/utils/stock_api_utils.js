@@ -12,16 +12,6 @@ export const getChart = (symbol, range) => (
   })
 );
 
-export const get1dChart = symbol => (
-  $.ajax({
-    method: "GET",
-    url:`https://api.iextrading.com/1.0/stock/${symbol}/chart/1d`,
-    data:{
-      chartInterval: 5
-    }
-  })
-);
-
 export const getInfo = symbol => (
   $.ajax({
     method: "GET",

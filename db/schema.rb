@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_02_222611) do
+ActiveRecord::Schema.define(version: 2019_03_04_021533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2019_03_02_222611) do
     t.string "headquarters"
     t.integer "founded"
     t.float "dividend_yield"
-    t.index ["name"], name: "index_stocks_on_name", unique: true
+    t.index ["name"], name: "index_stocks_on_name"
     t.index ["symbol"], name: "index_stocks_on_symbol", unique: true
   end
 

@@ -2,6 +2,7 @@ import React from 'react';
 import StockChart from './stock_chart';
 import StockAbout from './stock_about';
 import Navbar from '../navbar/navbar';
+import StockNews from "./stock_news";
 
 class StockShow extends React.Component {
   
@@ -34,6 +35,7 @@ class StockShow extends React.Component {
         <main id="main-stock">
           <StockChart charts={this.props.charts} name={this.props.info.name} prev={this.props.info.previousClose}/>
           <StockAbout info={this.props.info} />
+          <StockNews news={this.props.news} />
         </main>
       </>
     )

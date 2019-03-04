@@ -1,5 +1,5 @@
 import * as APIUtil from "../utils/stock_api_utils";
-import {timeInt, timeStr} from "../utils/time_utils";
+import {timeInt, timeStr, formatDate} from "../utils/time_utils";
 
 export const RECEIVE_CHART = "RECEIVE_CHART";
 export const RECEIVE_INFO = "RECEIVE_INFO";
@@ -15,16 +15,16 @@ export const getInfo = symbol => dispatch => {
 }
 
 export const get1dChart = symbol => dispatch => {
-  APIUtil.get1dChart(symbol).then(chart => dispatch(receiveChart(padChart(fixDelay(chart)), "1d")));
+  APIUtil.getChart(symbol, "1d").then(chart => dispatch(receiveChart({"1d": padChart(fixGaps(chart))})));
 }
 
-export const getChart = (symbol, range) => dispatch => {
-  APIUtil.getChart(symbol, range).then(chart => dispatch(receiveChart(chart, range)));
+export const getCharts = symbol => dispatch => {
+  APIUtil.getChart(symbol, "5y").then(chart => dispatch(receiveChart(createCharts(chart))));
 };
 
 export const getNews = symbol => dispatch => {
   APIUtil.getNews(symbol).then(news => dispatch(receiveNews(news)));
-}
+};
 
 export const receiveInfo = (symbol, info) => ({
   type: RECEIVE_INFO,
@@ -38,11 +38,24 @@ export const receiveNews = news => ({
 })
 
 
-export const receiveChart = (chart, range) => ({
+export const receiveChart = chart => ({
   type: RECEIVE_CHART,
-  range,
   chart
 });
+
+
+function createCharts(chart){
+  chart.forEach(datum => {
+    datum.date = formatDate(datum.date);
+  })
+  const charts = {};
+  charts["5y"] = chart;
+  charts["1y"] = chart.slice(chart.length - 252);
+  charts["3m"] = chart.slice(chart.length - 60);
+  charts["1m"] = chart.slice(chart.length - 21);
+  charts["1w"] = chart.slice(chart.length - 7);
+  return charts;
+}
 
 
 
@@ -84,14 +97,29 @@ function padChart(chart){
 }
 
 /*
-  Fix Delay -
+  Fix Gaps -
   The IEX has a 15 minute delay on marketOpen values, so we use the IEX open for the last three data points.
-
+  The chart only needs data points for every 5th minute, but data may not be available at that minute, so we
+  search backwards and forwards for data.
 */
 
-function fixDelay(chart){
-  for(let i = chart.length - 4; i < chart.length; i++){
+function fixGaps(chart){
+  const newChart = [];
+  for(let i = 0; i < chart.length; i += 5){
+    if(chart[i].marketOpen){
+      //no problems
+    } else if(chart[i].open){ //fix those last three data points
       chart[i].marketOpen = chart[i].open;
+    } else if(chart[i + 1] && chart[i + 1].marketOpen){
+      chart[i].marketOpen = chart[i + 1].marketOpen;
+    } else if(chart[i - 1] && chart[i - 1].marketOpen){
+      chart[i].marketOpen = chart[i - 1].marketOpen;
+    } else if(chart[i + 2] && chart[i + 2].marketOpen){
+      chart[i].marketOpen = chart[i + 2].marketOpen;
+    } else if(chart[i - 2] && chart[i - 2].marketOpen){
+      chart[i].marketOpen = chart[i - 2].marketOpen;
+    }
+    newChart.push(chart[i]);
   }
-  return chart;
+  return newChart;
 }

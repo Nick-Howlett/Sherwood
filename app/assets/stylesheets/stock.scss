@@ -47,10 +47,12 @@
   height: 33px;
   button{
     background: none;
-    padding: 0;
+    padding: 0 0 14px;
     margin: 0 12px;
     font-size: 15px;
     font-weight: 900;
+    text-transform: uppercase;
+    box-sizing: border-box;
   }
   button:first-child{
     margin-left: 0;
@@ -58,6 +60,11 @@
   button:hover{
     color: $rh_green;
     cursor: pointer;
+  }
+  button.selected{
+    color: $rh_green;
+    border-bottom: 2px solid $rh_green;
+    padding-top: 2px;
   }
 }
 

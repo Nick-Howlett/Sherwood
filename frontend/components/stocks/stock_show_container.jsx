@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import StockShow from "./stock_show";
-import {fetchStock, getInfo, getNews, get1dChart} from '../../actions/stock_actions';
+import {fetchStock, getInfo, getNews, get1dChart, getCharts} from '../../actions/stock_actions';
 import {withRouter} from "react-router-dom";
 
 
