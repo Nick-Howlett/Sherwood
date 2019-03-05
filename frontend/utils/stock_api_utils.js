@@ -1,5 +1,3 @@
-const keys = require("../../keys.json");
-
 export const fetchStock = symbol => (
   $.ajax({
     method: "GET",

@@ -29,4 +29,3 @@
 #ignore node modules 
 node_modules
 bundle.js*
-keys.json
