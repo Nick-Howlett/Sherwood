@@ -39,7 +39,7 @@ export const getNews = name => (
     data: {
       q: name,
       language: "en",
-      apiKey: keys.news,
+      apiKey: window.newsAPIKey,
       pageSize: 5
     }
   })
