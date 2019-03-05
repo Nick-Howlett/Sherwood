@@ -10,7 +10,7 @@ const msp = (state, ownProps) => ({
   info: state.entities.stocks[ownProps.match.params.symbol],
   news: state.entities.news,
   currentUser: state.entities.users[state.session.id],
-  shares: numShares(state, ownProps.match.params.symbol),
+  shares: numShares(state, ownProps.match.params.symbol.toUpperCase()),
   stocks: state.entities.search
 });
 
