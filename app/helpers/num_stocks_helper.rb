@@ -1,0 +1,2 @@
+module NumStocksHelper
+end

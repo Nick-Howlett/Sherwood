@@ -9,8 +9,9 @@
 }
 $rh_green: #21ce99;
 $rh_highlight: #1ae9aa;
-$rh_lgrey: #fafafa;
+$rh_lgrey: #f4f4f5;
 $rh_grey: #cbcbcd;
+$rh_darkgrey: #7d8c8e;
 $med_font: 16px;
 $rh_fonts: "DIN", sans-serif;
 
@@ -32,4 +33,9 @@ $rh_fonts: "DIN", sans-serif;
   -webkit-box-pack: center;
   width: 108.44px;
   box-sizing: border-box;
+}
+
+#root{
+  width: 100%;
+  height: 800px;
 }

@@ -72,18 +72,18 @@
 #error-container{
   max-height: 0px;
   overflow: hidden;
+  display: flex;
+  align-items: center;
 }
 
 #error-container.grow{
-  max-height: 70px;
+  max-height: 200px;
   transition: max-height;
   transition-duration: 300ms;
 }
 
 #session-errors{
   display: flex;
-  padding-top: 14px;
-  margin-bottom: -14px;
   padding-bottom: 0;
   position: relative;
 }

@@ -1,0 +1,159 @@
+#stock-about{
+  header{
+    width: 676px;
+    padding-bottom: 16px;
+    margin: 0;
+    border-bottom: 1px solid $rh_lgrey;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    height: 48px;
+    button{
+      color: $rh_green;
+    }
+    button:hover{
+      color: $rh_highlight;
+    }
+  }
+  h3{
+    max-width: 570px;
+    line-height: 22px;
+    letter-spacing: 0;
+    font-size: 16px;
+    font-weight: 100;
+    margin: 24px 0; 
+  }
+}
+
+h3{
+  button{
+    color: $rh_green;
+  }
+  button:hover{
+    color: $rh_highlight;
+  }
+}
+
+.grid{
+  padding-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 678.66px;
+  max-height: 100px;
+  overflow: hidden;
+}
+
+.hidden{
+  display: none;
+}
+
+.long{
+  max-height: 1000px;
+}
+
+.grid-item{
+    margin: 0 6px 12px;
+    flex-basis: calc(25% - 9px);
+}
+
+.grid-head{
+  font-weight: 900;
+}
+
+.grid-value{
+  font-weight: 100;
+  letter-spacing: .25px;
+  line-height: 19px;
+  font-size: 13px;
+}
+
+.grid > *:nth-child(4n + 1){
+  margin-left: 0;
+}
+
+.grid > *:nth-child(4n) {
+  margin-right: 0;
+}
+
+#news-container{
+  margin-top: 30px;
+  header{
+    width: 676px;
+    display: flex;
+    justify-content: space-between;
+    height: 36px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid $rh_lgrey;
+  }
+  button{
+    color: $rh_green;
+  }
+  button:hover{
+    color: $rh_highlight;
+  }
+}
+
+.news-items{
+  max-height: 582px;
+  overflow:hidden;
+}
+
+.news-item{
+  width: 738px;
+  height: 194px;
+  display: flex;
+  align-items: center;
+  img{
+    width: 200px;
+    height: 134px;
+    border-radius: 6px;
+  }
+} 
+
+.news-right{
+  display: flex;
+  flex-direction: column;
+  width: 458.66px;
+  height: 134px;
+  margin-left: 24px;
+  h3{
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 22px;
+    margin: 0;
+  }
+  svg{
+    width: 14px;
+    height: 11px;
+    fill: $rh_grey;
+    margin-right: 6px;
+  }
+}
+
+.summary{
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 22px;
+  margin: 0;
+  font-weight: 300;
+}
+
+.source{
+  font-weight: 600;
+}
+
+.views{
+  margin-top: 30px;
+  color: $rh_grey;
+}
+
+.headline-summary{
+  height: 70px;
+  overflow: hidden;
+}
+
+.hours{
+  margin-left: 5px;
+  color: $rh_grey;
+}
