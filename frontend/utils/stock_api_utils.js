@@ -5,6 +5,14 @@ export const fetchStock = symbol => (
   })
 );
 
+export const makeTransaction = transaction => (
+  $.ajax({
+    method: "POST",
+    url: `api/transactions/`,
+    data: {transaction}
+  })
+);
+
 export const getChart = (symbol, range) => (
   $.ajax({
     method: "GET",
@@ -26,5 +34,12 @@ export const getNews = symbol => (
   $.ajax({
     method: "GET",
     url: `https://api.iextrading.com/1.0/stock/${symbol}/news`
+  })
+);
+
+export const getPrice = symbol => (
+  $.ajax({
+    method: "GET",
+    url: `https://api.iextrading.com/1.0/stock/${symbol}/price`
   })
 );

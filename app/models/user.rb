@@ -4,6 +4,9 @@ class User < ApplicationRecord
   validates :username, :session_token, :password_hash, presence: true
   validates :password, length: {minimum: 6, allow_nil: true}
   attr_reader :password
+  has_many :transactions
+
+  #session methods
 
   def self.find_by_credentials(username, password)
     user = User.find_by(username: username)
@@ -29,4 +32,19 @@ class User < ApplicationRecord
   def is_password?(password)
     BCrypt::Password.new(self.password_hash).is_password?(password)
   end
+
+  #stock_methods
+
+  def num_shares(symbol)
+    shares = 0
+    transactions.where(symbol: symbol).each do |transaction|
+      if(transaction.transaction_type == "purchase")
+        shares += transaction.num_shares
+      else
+        shares -= transaction.num_shares
+      end
+    end
+    shares
+  end
+
 end

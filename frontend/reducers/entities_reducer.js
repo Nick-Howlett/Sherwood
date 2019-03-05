@@ -3,10 +3,12 @@ import UsersReducer from "./users_reducer";
 import StocksReducer from "./stocks_reducer";
 import ChartsReducer from './charts_reducer';
 import NewsReducer from './news_reducer';
+import TransactionsReducer from './transactions_reducer';
 
 export default combineReducers({
   users: UsersReducer,
   stocks: StocksReducer,
   charts: ChartsReducer,
-  news: NewsReducer
+  news: NewsReducer,
+  transactions: TransactionsReducer
 });

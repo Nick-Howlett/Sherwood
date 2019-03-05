@@ -3,7 +3,7 @@ class Api::UsersController < ApplicationController
     @user = User.create(user_params)
     if @user.save
       log_in(@user)
-      render :show
+      render :show 
     else
       render json: @user.errors.full_messages, status: :unprocessable_entity
     end

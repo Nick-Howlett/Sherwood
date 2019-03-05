@@ -4,7 +4,9 @@ import {timeInt, timeStr, formatDate} from "../utils/time_utils";
 export const RECEIVE_CHART = "RECEIVE_CHART";
 export const RECEIVE_INFO = "RECEIVE_INFO";
 export const RECEIVE_NEWS = "RECEIVE_NEWS";
-
+export const RECEIVE_TRANSACTION = "RECEIVE_TRANSACTION";
+export const RECEIVE_TRANSACTIONS = "RECEIVE_TRANSACTIONS";
+export const RECEIVE_PRICE = "RECEIVE_PRICE";
 
 export const fetchStock = symbol => dispatch => {
   APIUtil.fetchStock(symbol).then(info => dispatch(receiveInfo(symbol, info)));
@@ -12,7 +14,11 @@ export const fetchStock = symbol => dispatch => {
 
 export const getInfo = symbol => dispatch => {
   APIUtil.getInfo(symbol).then(info => dispatch(receiveInfo(symbol, info)));
-}
+};
+
+export const makeTransaction = transaction => dispatch => {
+  return APIUtil.makeTransaction(transaction).then(payload => dispatch(receiveTransaction(payload)));
+};
 
 export const get1dChart = symbol => dispatch => {
   APIUtil.getChart(symbol, "1d").then(chart => dispatch(receiveChart({"1d": padChart(fixGaps(chart))})));
@@ -25,6 +31,28 @@ export const getCharts = symbol => dispatch => {
 export const getNews = symbol => dispatch => {
   APIUtil.getNews(symbol).then(news => dispatch(receiveNews(news)));
 };
+
+export const getPrice = symbol => dispatch => {
+  APIUtil.getPrice(symbol).then(price => dispatch(receivePrice(symbol, price)));
+}
+
+
+export const receivePrice = (symbol, price) => ({
+  type: RECEIVE_PRICE,
+  symbol,
+  price
+})
+
+export const receiveTransaction = payload => ({
+  type: RECEIVE_TRANSACTION,
+  payload
+});
+
+export const receiveTransactions = transactions => ({
+  type: RECEIVE_TRANSACTIONS,
+  transactions
+})
+
 
 export const receiveInfo = (symbol, info) => ({
   type: RECEIVE_INFO,

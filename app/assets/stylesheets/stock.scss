@@ -1,7 +1,16 @@
 #main-stock{
-  margin: 0 auto;
   width: 1024px;
-  padding-top: 36px;
+  padding-top: 64px;
+  margin: 0 auto;
+  display: flex;
+}
+
+.navbar{
+  width: 100%;  
+}
+
+#transaction-column{
+  width: 287px;
 }
 
 #chart-value{
@@ -68,4 +77,111 @@
   }
 }
 
+#transaction-form{
+  position: relative;
+  padding: 0 24px;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.01), 0 3px 24px rgba(48, 51, 51, 0.09);
+  font-weight: 600;
+  font-size: 14px;
+  header{
+    height: 52px;
+    display: flex;
+    padding: 4px 24px 0;
+    margin: 0 -24px;
+    border-bottom: 1px solid $rh_lgrey;
+  }
+  label{
+    height: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  input{
+    background: $rh_lgrey;
+    text-align: right;
+    padding: 0 16px;
+    height: 36px;
+    width: 82px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    outline: 0;
+    border: 1px solid $rh_lgrey;
+    transition: border-color 200ms;
+  }
+  input:hover{
+    border-color: $rh_grey;
+    background: white;
+  }
+  input:focus{
+    border-color: $rh_green;
+    background: white;
+  }
+}
 
+.bordered{
+  border-bottom: 1px solid $rh_lgrey;
+}
+
+
+.form-div{
+  height: 48px;
+  padding-right: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#transaction-submit{
+  background: $rh_green;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 48px;
+  width: 227px;
+  height: 48px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#transaction-submit:hover{
+  background-color: $rh_highlight;
+}
+
+#submit-div{
+  padding: 12px 24px 24px;
+  margin: 0 -24px 0;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid $rh_grey;
+}
+
+.toggle-button{
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0;
+  margin: 0;
+  padding: 12px 0 0;
+  box-sizing: border-box;
+}
+
+.selected{
+  color: $rh_green;
+  border-bottom: 2px solid $rh_green;
+}
+
+
+.toggle-button:first-child{
+  margin-right: 12px;
+}
+
+#info-div{
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+}

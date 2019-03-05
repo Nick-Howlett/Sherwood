@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import React from "react";
 import configureStore from "./store/store";
 import Root from './components/root';
-import {getInfo, fetchStock, getNews, get1dChart} from "./actions/stock_actions";
+import {makeTransaction} from "./actions/stock_actions";
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -11,9 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if(window.currentUser){
     const preloadedState = {
       entities: {
-        users: { [window.currentUser.id]: window.currentUser }
+        users: { [window.currentUser.user.id]: window.currentUser.user },
+        transactions: window.currentUser.transactions
       },
-      session: { id: window.currentUser.id }
+      session: { id: window.currentUser.user.id }
     };
     store = configureStore(preloadedState);
     delete window.currentUser;
@@ -22,9 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   window.getState = store.getState;
   window.dispatch = store.dispatch;
-  window.getInfo = getInfo;
-  window.fetchStock = fetchStock;
-  window.getNews = getNews;
-  window.get1dChart = get1dChart;
+  window.makeTransaction = makeTransaction;
   ReactDOM.render(<Root store={store} />, root)
 })
