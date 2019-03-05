@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import React from "react";
 import configureStore from "./store/store";
 import Root from './components/root';
-import {makeTransaction} from "./actions/stock_actions";
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -21,8 +21,5 @@ document.addEventListener("DOMContentLoaded", () => {
   } else{
     store = configureStore();
   }
-  window.getState = store.getState;
-  window.dispatch = store.dispatch;
-  window.makeTransaction = makeTransaction;
   ReactDOM.render(<Root store={store} />, root)
 })
