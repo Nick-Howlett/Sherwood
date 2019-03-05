@@ -12,12 +12,14 @@ class StockShow extends React.Component {
   }
 
   getData(symbol){
-    this.props.fetchStock(symbol);
-    this.props.getInfo(symbol);
-    this.props.get1dChart(symbol);
-    this.props.getCharts(symbol);
-    this.props.getNews(symbol);
-    this.props.getPrice(symbol);
+    this.props.getSearch().then(() => {
+      this.props.fetchStock(symbol);
+      this.props.getInfo(symbol);
+      this.props.get1dChart(symbol);
+      this.props.getCharts(symbol);
+      this.props.getNews(this.props.stocks[symbol.toUpperCase()].name);
+      this.props.getPrice(symbol);
+    });
   }
 
   componentDidUpdate(prevProps){

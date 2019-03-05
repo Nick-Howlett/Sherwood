@@ -1,3 +1,5 @@
+const keys = require("../../keys.json");
+
 export const fetchStock = symbol => (
   $.ajax({
     method: "GET",
@@ -30,10 +32,10 @@ export const getInfo = symbol => (
   })
 );
 
-export const getNews = symbol => (
+export const getNews = name => (
   $.ajax({
     method: "GET",
-    url: `https://api.iextrading.com/1.0/stock/${symbol}/news`
+    url: `https://newsapi.org/v2/top-headlines?q=${name}&country=us&apiKey=${keys.news}`
   })
 );
 
@@ -41,5 +43,12 @@ export const getPrice = symbol => (
   $.ajax({
     method: "GET",
     url: `https://api.iextrading.com/1.0/stock/${symbol}/price`
+  })
+);
+
+export const getSearch = () => (
+  $.ajax({
+    method: "GET",
+    url: `api/stocks/`
   })
 );

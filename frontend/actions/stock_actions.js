@@ -7,6 +7,7 @@ export const RECEIVE_NEWS = "RECEIVE_NEWS";
 export const RECEIVE_TRANSACTION = "RECEIVE_TRANSACTION";
 export const RECEIVE_TRANSACTIONS = "RECEIVE_TRANSACTIONS";
 export const RECEIVE_PRICE = "RECEIVE_PRICE";
+export const RECEIVE_SEARCH = "RECEIVE_SEARCH";
 
 export const fetchStock = symbol => dispatch => {
   APIUtil.fetchStock(symbol).then(info => dispatch(receiveInfo(symbol, info)));
@@ -28,13 +29,17 @@ export const getCharts = symbol => dispatch => {
   APIUtil.getChart(symbol, "5y").then(chart => dispatch(receiveChart(createCharts(chart))));
 };
 
-export const getNews = symbol => dispatch => {
-  APIUtil.getNews(symbol).then(news => dispatch(receiveNews(news)));
+export const getNews = name => dispatch => {
+  APIUtil.getNews(name).then(news => dispatch(receiveNews(news)));
 };
 
 export const getPrice = symbol => dispatch => {
   APIUtil.getPrice(symbol).then(price => dispatch(receivePrice(symbol, price)));
 }
+
+export const getSearch = () => dispatch => {
+  return APIUtil.getSearch().then(search => dispatch(receiveSearch(search)));
+};
 
 
 export const receivePrice = (symbol, price) => ({
@@ -70,6 +75,11 @@ export const receiveChart = chart => ({
   type: RECEIVE_CHART,
   chart
 });
+
+export const receiveSearch = search => ({
+  type: RECEIVE_SEARCH,
+  search
+})
 
 
 function createCharts(chart){

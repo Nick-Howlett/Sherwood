@@ -11,6 +11,7 @@ ActiveRecord::Base.transaction do
   File.open("full_company_data.txt").each do |line|
     stock = JSON.parse(line)
     stock["employees"] = stock["employees"].delete(",").to_i if stock["employees"]
+    stock["name"] = stock["name"].split(" ")[0]; #inelegant but gets general idea for most companies (e.g. Aplhabet inc => Alphabet but Perth Mint Physical Gold => Perth);
     Stock.create(stock)
   end
 end

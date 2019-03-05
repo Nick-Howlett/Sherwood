@@ -17,15 +17,15 @@ class StockNews extends React.Component {
           <button onClick={() => this.state.showMore ? this.setState({showMore: false}) : this.setState({showMore: true})}>{this.state.showMore ? "Show Less" : "Show More"}</button>
         </header>
         <div className={this.state.showMore ? "news-items long" : "news-items"}>
-          {news.map((article, i) => {
-            const date = new Date(article.datetime);
+          {news.articles.map((article, i) => {
+            const date = new Date(article.publishedAt);
             return( <a key={i} href={article.url}className="news-item">
-                <img src={"images/stock_news.jpg"}/>
+                <img src={article.urlToImage}/>
                 <div className="news-right">
-                  <span className="source">{article.source}<span className="hours">{`${((now - date) / 600000).toFixed(0)}h`}</span></span>
+                  <span className="source">{article.source.name}<span className="hours">{`${((now - date) / 600000).toFixed(0)}h`}</span></span>
                   <div className="headline-summary">
-                    <h3>{article.headline}</h3>
-                    <div className="summary">{article.summary}</div>
+                    <h3>{article.title}</h3>
+                    <div className="summary">{article.description}</div>
                   </div>
                   <span className="views">
                     <svg>

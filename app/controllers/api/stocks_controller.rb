@@ -7,4 +7,8 @@ class Api::StocksController < ApplicationController
       render json: {}, status: :not_found
     end
   end
+
+  def index
+    @stocks = Stock.all
+  end
 end
