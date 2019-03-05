@@ -13,7 +13,7 @@ import StockShowContainer from "./stocks/stock_show_container";
 const App = props => {
   const RootComponent = props.currentUser ? ProfileContainer : Splash;
   return ( 
-    <div>
+    <>
       <Switch>
         <AuthRoute path="/login" component={LoginFormContainer}/>
         <AuthRoute path="/signup" component={SignupFormContainer}/>
@@ -22,7 +22,7 @@ const App = props => {
         <Route exact path="/" component={RootComponent}/>
         <Redirect to="/"/>
       </Switch>
-    </div>
+    </>
   )
 };
 

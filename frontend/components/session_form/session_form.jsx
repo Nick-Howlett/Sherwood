@@ -13,7 +13,7 @@ class SessionForm extends React.Component{
 
   componentDidMount(){
     if(this.props.demo){
-      this.loginUser(this.props.demo)
+      this.loginUser(this.props.demo);
     }
   }
 
@@ -31,7 +31,7 @@ class SessionForm extends React.Component{
   loginUser(user){
     const username = user.username;
     const password = user.password;
-    const typeSpeed = 100;
+    const typeSpeed = 50;
     let i = 0;
     let j = 0;
     const userInterval = setInterval(() => {
@@ -47,8 +47,8 @@ class SessionForm extends React.Component{
       setTimeout(() => {
         clearInterval(passInterval);
         this.props.action(this.state);
-      }, typeSpeed * password.length);
-    }, typeSpeed * username.length);
+      }, (typeSpeed + 1) * password.length);
+    }, (typeSpeed + 1) * username.length);
   }
 
   componentWillUnmount(){

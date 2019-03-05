@@ -35,7 +35,13 @@ export const getInfo = symbol => (
 export const getNews = name => (
   $.ajax({
     method: "GET",
-    url: `https://newsapi.org/v2/top-headlines?q=${name}&country=us&apiKey=${keys.news}`
+    url: `https://newsapi.org/v2/everything`,
+    data: {
+      q: name,
+      language: "en",
+      apiKey: keys.news,
+      pageSize: 5
+    }
   })
 );
 

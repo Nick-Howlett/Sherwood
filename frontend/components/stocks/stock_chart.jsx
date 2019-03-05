@@ -18,7 +18,7 @@ class StockChart extends React.Component{
     const end = currentStocks[currentStocks.length - 1];
     return (
       <div id="stock-chart">
-        <h1>{this.props.name.split(" ")[0]}</h1>
+        <h1 id="stock-name">{this.props.name}</h1>
         <LineChart width={676} height={196} data={data}>
           <Line 
             activeDot={ {r: 6}} 

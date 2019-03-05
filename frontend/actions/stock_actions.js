@@ -8,6 +8,7 @@ export const RECEIVE_TRANSACTION = "RECEIVE_TRANSACTION";
 export const RECEIVE_TRANSACTIONS = "RECEIVE_TRANSACTIONS";
 export const RECEIVE_PRICE = "RECEIVE_PRICE";
 export const RECEIVE_SEARCH = "RECEIVE_SEARCH";
+export const RECEIVE_TRANSACTION_ERRORS = "RECEIVE_TRANSACTION_ERRORS";
 
 export const fetchStock = symbol => dispatch => {
   APIUtil.fetchStock(symbol).then(info => dispatch(receiveInfo(symbol, info)));
@@ -18,7 +19,7 @@ export const getInfo = symbol => dispatch => {
 };
 
 export const makeTransaction = transaction => dispatch => {
-  return APIUtil.makeTransaction(transaction).then(payload => dispatch(receiveTransaction(payload)));
+  return APIUtil.makeTransaction(transaction).then(payload => dispatch(receiveTransaction(payload)), ({responseJSON}) => dispatch(receiveErrors(responseJSON)));
 };
 
 export const get1dChart = symbol => dispatch => {
@@ -40,6 +41,12 @@ export const getPrice = symbol => dispatch => {
 export const getSearch = () => dispatch => {
   return APIUtil.getSearch().then(search => dispatch(receiveSearch(search)));
 };
+
+
+export const receiveErrors = errors => ({
+  type: RECEIVE_TRANSACTION_ERRORS,
+  errors
+})
 
 
 export const receivePrice = (symbol, price) => ({

@@ -27,3 +27,14 @@ export const formatDate = date => {
   const parts = date.split("-"); //date is formatted 2019-03-27
   return `${monthToStr[parts[1]]} ${parts[2]}, ${parts[0]}`;
 }
+
+export const timeSince = milliseconds => {
+  let days = "";
+  let hours = "";
+  if(milliseconds > 86400000){
+    days = `${Math.floor(milliseconds/86400000)}d`;
+    milliseconds = milliseconds % 86400000;
+  }
+  hours = (milliseconds / 6000000).toFixed(0);
+  return `${days} ${hours}h`;
+}

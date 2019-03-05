@@ -13,10 +13,11 @@
   width: 287px;
 }
 
+
 #chart-value{
   height: 46px;
   font-size: 30px;
-  font-weight: 300;
+  font-weight: 100;
   letter-spacing: -0.7px;
 }
 
@@ -25,7 +26,12 @@
   height: 381px;
   h1{
     height: 42px;
+    font-size: 36px;
+    font-weight: 100;
     margin-bottom: 84px;
+  }
+  h1#stock-name{
+    font-weight: 600;
   }
   position: relative;
   margin-bottom: 44px;

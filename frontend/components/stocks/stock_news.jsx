@@ -1,4 +1,5 @@
 import React from 'react';
+import {timeSince} from "../../utils/time_utils";
 
 class StockNews extends React.Component {
 
@@ -22,7 +23,7 @@ class StockNews extends React.Component {
             return( <a key={i} href={article.url}className="news-item">
                 <img src={article.urlToImage}/>
                 <div className="news-right">
-                  <span className="source">{article.source.name}<span className="hours">{`${((now - date) / 600000).toFixed(0)}h`}</span></span>
+                  <span className="source">{article.source.name}<span className="hours">{timeSince(now - date)}</span></span>
                   <div className="headline-summary">
                     <h3>{article.title}</h3>
                     <div className="summary">{article.description}</div>

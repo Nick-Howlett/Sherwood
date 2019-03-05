@@ -4,6 +4,7 @@ import StockAbout from './stock_about';
 import Navbar from '../navbar/navbar';
 import StockNews from "./stock_news";
 import StockTransactionContainer from './stock_transaction_container';
+import Loading from '../loading';
 
 class StockShow extends React.Component {
   
@@ -37,8 +38,8 @@ class StockShow extends React.Component {
        !this.props.charts["1d"] ||
        !this.props.charts["3m"] ||
        !this.props.news){
-      return null;
-    }
+      return <Loading/>
+    } 
     return (
       <>
         <div className="fixed navbar">

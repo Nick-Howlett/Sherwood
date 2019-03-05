@@ -1,4 +1,5 @@
 import React from 'react';
+import Error from '../session_form/session_errors';
 
 
 class StockTransaction extends React.Component {
@@ -19,7 +20,7 @@ class StockTransaction extends React.Component {
       transaction_type: this.state.buySell === "Buy" ? "purchase" : "sale",
       stock_price: this.props.price,
       num_shares: this.state.numShares,
-    }).then(() => {
+    }).always(() => {
       this.setState({numShares: 0});
       this.setState({transacting: false});
     });
@@ -31,8 +32,9 @@ class StockTransaction extends React.Component {
     }
   }
 
-  
-
+  componentWillUnmount(){
+    this.props.clearErrors();
+  }
 
   render(){
     const finalDiv = this.props.user ? 
@@ -49,12 +51,14 @@ class StockTransaction extends React.Component {
     return(
       <form id="transaction-form">
         <header>
-          <button className={this.state.buySell === "Buy" ? "toggle-button selected" : "toggle-button"}
-            onClick={() => this.setState({buySell: "Buy"})}>
+          <button type="button" className={this.state.buySell === "Buy" ? "toggle-button selected" : "toggle-button"}
+            onClick={() => {this.setState({buySell: "Buy"});
+                            this.props.clearErrors()}}>
               Buy {this.props.symbol}
           </button>
-          {this.props.user ? <button className={this.state.buySell === "Sell" ? "toggle-button selected" : "toggle-button"}
-                  onClick={() => this.setState({buySell: "Sell"})}>Sell {this.props.symbol}</button> : <></>}
+          {this.props.user ? <button type="button" className={this.state.buySell === "Sell" ? "toggle-button selected" : "toggle-button"}
+                  onClick={() => {this.setState({buySell: "Sell"});
+                                 this.props.clearErrors()}}>Sell {this.props.symbol}</button> : <></>}
         </header>
         <label>Shares
           <input value={this.state.numShares} min="0" onChange={this.handleChange("numShares")} type="number" placeholder="0" step="1" />
@@ -68,8 +72,11 @@ class StockTransaction extends React.Component {
             <span>Estimated {`${this.state.buySell === "Buy" ? 'Cost' : "Credit"}`}</span>
             {`$${this.state.numShares > 0 ? (this.state.numShares * this.props.price).toFixed(2) : 0}`}
         </div>
+        <div id="error-container" className={this.props.errors.length > 0 ? "form-div grow" : "form-div"}>
+                {this.props.errors.map((error, i) => <Error key={i} error={error}/>)}
+        </div>
         <div id="submit-div">
-          <button id="transaction-submit" disabled={this.state.transacting ? "disabled" : ""} onClick={this.handleSubmit}>{this.props.user ? `Submit ${this.state.buySell}` : `Sign Up to Buy`}</button>
+          <button id="transaction-submit" disabled={this.state.transacting || !this.props.user ? "disabled" : ""} onClick={this.handleSubmit}>{this.props.user ? `Submit ${this.state.buySell}` : `Sign Up to Buy`}</button>
         </div>
         {finalDiv}
       </form>
