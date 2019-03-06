@@ -1,6 +1,6 @@
 import React from 'react';
 import {Line, LineChart, YAxis, XAxis, Tooltip, ReferenceLine} from 'recharts';
-import ChartNums from './chart_nums';
+import ChartTooltip from './chart_tooltip';
 
 class StockChart extends React.Component{
 
@@ -31,7 +31,7 @@ class StockChart extends React.Component{
           <Tooltip 
             wrapperStyle={{visibility: 'visible'}} 
             position={{ x: 0, y: -84 }} 
-            content={<ChartNums 
+            content={<ChartTooltip 
                         value={end[value]} 
                         prev={current === "1d" ? this.props.prev : data[0].open}
                      />} 
