@@ -11,11 +11,18 @@ class StockChart extends React.Component{
 
   render(){
     const current = this.state.currentChart;
-    const data = this.props.charts[current];
+    let data = this.props.charts[current];
     const value = current === "1d" ? "marketOpen" : "close";
-    const currentStocks = data.filter(datum => datum[value]);
-    let min = current === "1d" ? Math.min(this.props.prev, ...currentStocks.map(datum => datum[value])) : "dataMin";
-    const end = currentStocks[currentStocks.length - 1];
+    let min, end;
+    if(typeof data === "string"){
+      data = [{open: 0}];
+      min = 0;
+      end = {[value]: 0};
+    } else{
+      const currentStocks = data.filter(datum => datum[value]);
+      min = current === "1d" ? Math.min(this.props.prev, ...currentStocks.map(datum => datum[value])) : "dataMin";
+      end = currentStocks[currentStocks.length - 1];
+    }
     return (
       <div id="stock-chart">
         <h1 id="stock-name">{this.props.name}</h1>

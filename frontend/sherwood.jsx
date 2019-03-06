@@ -3,6 +3,8 @@ import React from "react";
 import configureStore from "./store/store";
 import Root from './components/root';
 import {searchStocks} from './actions/selectors';
+import moment from 'moment';
+import tz from 'moment-timezone';
 
 
 
@@ -24,5 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   window.getState = store.getState;
   window.searchStocks = searchStocks;
+  window.moment = moment;
   ReactDOM.render(<Root store={store} />, root)
 })

@@ -1,5 +1,5 @@
 import * as APIUtil from "../utils/stock_api_utils";
-import {timeInt, timeStr, formatDate} from "../utils/time_utils";
+import {padChart, formatChart, createCharts} from '../utils/chart_utils';
 
 export const RECEIVE_CHART = "RECEIVE_CHART";
 export const RECEIVE_INFO = "RECEIVE_INFO";
@@ -23,11 +23,11 @@ export const makeTransaction = transaction => dispatch => {
 };
 
 export const get1dChart = symbol => dispatch => {
-  APIUtil.getChart(symbol, "1d").then(chart => dispatch(receiveChart({"1d": padChart(fixGaps(chart))})));
+  APIUtil.getChart(symbol, "1d").then(chart => dispatch(receiveChart({"1d": formatChart(chart, "1d")})));
 }
 
 export const getCharts = symbol => dispatch => {
-  APIUtil.getChart(symbol, "5y").then(chart => dispatch(receiveChart(createCharts(chart))));
+  APIUtil.getChart(symbol, "5y").then(chart => dispatch(receiveChart(createCharts(formatChart(chart, "5y")))));
 };
 
 export const getNews = name => dispatch => {
@@ -89,82 +89,4 @@ export const receiveSearch = search => ({
 })
 
 
-function createCharts(chart){
-  chart.forEach(datum => {
-    datum.date = formatDate(datum.date);
-  })
-  const charts = {};
-  charts["5y"] = chart;
-  charts["1y"] = chart.slice(chart.length - 252);
-  charts["3m"] = chart.slice(chart.length - 60);
-  charts["1m"] = chart.slice(chart.length - 21);
-  charts["1w"] = chart.slice(chart.length - 7);
-  return charts;
-}
 
-
-
-//TODO what does the call return before the markets open on a day?
-/*
-  Pad Chart -
-  adds data points to the beginning and end of the chart to create a full day's chart
-  The IEX only returns data from 9:30-4:00 and the chart needs to display from 9:00-6:00.
-*/
-function padChart(chart){
-  const firstPrice = chart[0].marketOpen;
-  const lastPrice = chart[chart.length - 1].marketOpen;
-  let startTime = 900;
-  const firstTime = timeInt(chart[0].minute);
-  let lastTime = timeInt(chart[chart.length - 1].minute);
-  let currTimeStr = new Date().toLocaleTimeString('en-US', {hour12: false, timeZone: `America/New_York`}).slice(0, 5);
-  let currentTime = timeInt(currTimeStr);
-  currentTime = currentTime - currentTime % 5;
-  const endTime = 1800;
-  const padLeft = [];
-  const padRight = [];
-  while(startTime < firstTime){
-    padLeft.push({minute: timeStr(startTime), marketOpen: firstPrice});
-    startTime += 5;
-  }
-  if(currentTime > endTime) currentTime = endTime;
-  while(lastTime < currentTime){
-    lastTime += 5;
-    if(lastTime % 100 === 60){
-      lastTime += 40;
-    }
-    padRight.push({minute: timeStr(lastTime), marketOpen: lastPrice});  
-  }
-  while(currentTime < endTime){
-    padRight.push({minute: timeStr(currentTime), marketOpen: null});
-    currentTime += 5;
-  }
-  return padLeft.concat(chart, padRight);
-}
-
-/*
-  Fix Gaps -
-  The IEX has a 15 minute delay on marketOpen values, so we use the IEX open for the last three data points.
-  The chart only needs data points for every 5th minute, but data may not be available at that minute, so we
-  search backwards and forwards for data.
-*/
-
-function fixGaps(chart){
-  const newChart = [];
-  for(let i = 0; i < chart.length; i += 5){
-    if(chart[i].marketOpen){
-      //no problems
-    } else if(chart[i].open){ //fix those last three data points
-      chart[i].marketOpen = chart[i].open;
-    } else if(chart[i + 1] && chart[i + 1].marketOpen){
-      chart[i].marketOpen = chart[i + 1].marketOpen;
-    } else if(chart[i - 1] && chart[i - 1].marketOpen){
-      chart[i].marketOpen = chart[i - 1].marketOpen;
-    } else if(chart[i + 2] && chart[i + 2].marketOpen){
-      chart[i].marketOpen = chart[i + 2].marketOpen;
-    } else if(chart[i - 2] && chart[i - 2].marketOpen){
-      chart[i].marketOpen = chart[i - 2].marketOpen;
-    }
-    newChart.push(chart[i]);
-  }
-  return newChart;
-}

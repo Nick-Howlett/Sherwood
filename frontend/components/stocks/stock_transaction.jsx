@@ -12,6 +12,9 @@ class StockTransaction extends React.Component {
   
 
   handleSubmit(e){
+    if(!this.props.user){
+      this.props.history.push("/signup");
+    }
     e.preventDefault();
     this.setState({transacting: true});
     this.props.makeTransaction({
@@ -28,7 +31,7 @@ class StockTransaction extends React.Component {
 
   handleChange(field){
     return e => {
-      this.setState({[field]: e.target.value})
+      this.setState({[field]: e.target.value});
     }
   }
 
@@ -76,7 +79,7 @@ class StockTransaction extends React.Component {
                 {this.props.errors.map((error, i) => <Error key={i} error={error}/>)}
         </div>
         <div id="submit-div">
-          <button id="transaction-submit" disabled={this.state.transacting || !this.props.user ? "disabled" : ""} onClick={this.handleSubmit}>{this.props.user ? `Submit ${this.state.buySell}` : `Sign Up to Buy`}</button>
+          <button id="transaction-submit" disabled={this.state.transacting ? "disabled" : ""} onClick={this.handleSubmit}>{this.props.user ? `Submit ${this.state.buySell}` : `Sign Up to Buy`}</button>
         </div>
         {finalDiv}
       </form>

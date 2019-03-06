@@ -103,7 +103,7 @@
 
 .search-container:hover, .search-container.long{
   color: black;
-  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.01), 0 3px 24px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.01), 0 3px 24px rgba(48, 51, 51, 0.09);
   border: transparent;
   input{
     ::placeholder{
@@ -171,6 +171,12 @@
   width: 480px;
   font-size: 14px;
   font-weight: 550;
+  div{
+    word-wrap: none;
+    height: 19px;
+    width: 360px;
+    overflow: hidden;
+  }
   div:first-child{
     width: 60px;
   }

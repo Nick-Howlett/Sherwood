@@ -58,7 +58,7 @@ class Search extends React.Component {
               <h3 className={this.state.results.length > 0 ? "" : "hide"}>Stocks</h3>
               <div className="flex">
                 <ul>
-                  {this.state.results.map(result => <ResultItem stock={result} />)}
+                  {this.state.results.map(result => <ResultItem key={result.symbol} stock={result} />)}
                 </ul>
               </div>
             </div>

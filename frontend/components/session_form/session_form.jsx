@@ -47,8 +47,8 @@ class SessionForm extends React.Component{
       setTimeout(() => {
         clearInterval(passInterval);
         this.props.action(this.state);
-      }, (typeSpeed + 1) * password.length);
-    }, (typeSpeed + 1) * username.length);
+      }, (typeSpeed + 3) * password.length);
+    }, (typeSpeed + 3) * username.length);
   }
 
   componentWillUnmount(){
@@ -61,7 +61,7 @@ class SessionForm extends React.Component{
     return (
       <div className="session-form">
         <div id="session-img">
-          <img src="images/form_half.png"/>
+          <img src="images/form_half.png" />
         </div>
         <div className="form-side">
           <div className="session-form-container">

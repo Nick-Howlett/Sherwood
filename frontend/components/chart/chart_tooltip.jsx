@@ -1,5 +1,4 @@
 import React from 'react';
-import {minuteToLabel} from "../../utils/time_utils";
 
 export default ({active, payload, value, prev, coordinate}) => {
   let stockValue;
@@ -20,7 +19,7 @@ export default ({active, payload, value, prev, coordinate}) => {
         id="chart-time" 
         style={{left: coordinate.x - 32}}>
           <span>
-            {`${payload[0] ? (payload[0].payload.minute ? `${minuteToLabel(payload[0].payload.minute)} ET` : payload[0].payload.date) : ""}`}
+            {`${payload[0] ? payload[0].payload.label : ""}`}
           </span>
         </div>
     </div>

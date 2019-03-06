@@ -1,5 +1,5 @@
 import React from 'react';
-import {timeSince} from "../../utils/time_utils";
+import moment from 'moment';
 
 class StockNews extends React.Component {
 
@@ -10,7 +10,6 @@ class StockNews extends React.Component {
 
   render(){
     const news = this.props.news; 
-    const now = new Date();
     return(
       <div id="news-container">
         <header>
@@ -19,11 +18,13 @@ class StockNews extends React.Component {
         </header>
         <div className={this.state.showMore ? "news-items long" : "news-items"}>
           {news.articles.map((article, i) => {
-            const date = new Date(article.publishedAt);
+            const now = moment();
+            const publish = moment(article.publishedAt.slice(0, article.publishedAt.length - 1))
+            const duration = moment.duration(now.diff(publish))
             return( <a key={i} href={article.url}className="news-item">
                 <img src={article.urlToImage}/>
                 <div className="news-right">
-                  <span className="source">{article.source.name}<span className="hours">{timeSince(now - date)}</span></span>
+                  <span className="source">{article.source.name}<span className="hours">{`${duration.days()}d ${duration.hours()}h`}</span></span>
                   <div className="headline-summary">
                     <h3>{article.title}</h3>
                     <div className="summary">{article.description}</div>

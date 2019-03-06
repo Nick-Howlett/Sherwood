@@ -33,6 +33,10 @@
   }
   h1#stock-name{
     font-weight: 600;
+    width: 570px;
+    height: 43px;
+    white-space: nowrap;
+    overflow: hidden;
   }
   position: relative;
   margin-bottom: 44px;
