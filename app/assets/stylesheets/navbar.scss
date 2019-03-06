@@ -5,6 +5,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: white;
   .logo{
     width: 48px;
     height: 48px;
@@ -31,7 +32,6 @@
 #navbar-right{
   position: absolute;
   right: 48px;
- 
   a{
     color: black;
     font-family: $rh_fonts;
@@ -66,3 +66,126 @@
     cursor: pointer;
   }
 }
+
+
+#nav-middle{
+  margin: 0 auto;
+  height: 64px;
+  width: 1024px;
+  display: flex;
+  align-items: center;
+}
+
+#searchbar{
+  width: 478px;
+  height: 36px;
+  border: 1px solid $rh_lgrey;
+  border-radius: 4px;
+  input{
+    padding: 0;
+    margin: 0;
+    border: transparent;
+    outline: transparent;
+    line-height: normal;
+    height: 34px;
+    padding-left: 52px;
+    font-size: 13px;
+    font-weight: 500;
+    padding-right: 24px;
+    width: 402px;
+  }
+  ::placeholder{
+    color: $rh_grey;
+    font-weight: 600;
+    transition: color 150ms, ease-out;
+  }
+}
+
+.search-container:hover, .search-container.long{
+  color: black;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.01), 0 3px 24px rgba(0, 0, 0, 0.6);
+  border: transparent;
+  input{
+    ::placeholder{
+      color: black;
+    }
+  }
+  #search-magnifier{
+    fill: black;
+  }
+}
+
+#search-container-wrapper{
+  width: 478px;
+  height: 36px;
+}
+
+
+.search-container{
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  max-height: 36px;
+  overflow: hidden;
+  border-radius: 4px;
+  transition: border-color 150ms, box-shadow 150ms, ease-out, -webkit-box-shadow 150ms ease-out;
+}
+
+.search-container.long{
+  transition: max-height;
+  transition-duration: 200ms;
+}
+
+.search-container:focus{
+  max-height: 500px;
+}
+
+#search-results{
+  position: relative;
+  top: -1px;
+  width: 481px;
+  background: white;
+  height: auto;
+  z-index: 5;
+  h3{
+    margin: 10px 0;
+    margin-left: 20px;
+    font-size: 15px;
+    color: $rh_grey;
+  }
+  ul{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  span{
+    padding-left: 30px;
+  }
+}
+
+.search-item{
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  height: 30px;
+  width: 480px;
+  font-size: 14px;
+  font-weight: 550;
+  div:first-child{
+    width: 60px;
+  }
+}
+
+.search-item:hover{
+  background: #fcfcfc;
+}
+
+
+#search-magnifier{
+  position: absolute;
+  left: 25px;
+  top: 9px;
+  fill: $rh_grey;
+}
+
+

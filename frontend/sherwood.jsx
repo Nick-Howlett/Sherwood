@@ -2,6 +2,7 @@ import ReactDOM from "react-dom";
 import React from "react";
 import configureStore from "./store/store";
 import Root from './components/root';
+import {searchStocks} from './actions/selectors';
 
 
 
@@ -21,5 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   } else{
     store = configureStore();
   }
+  window.getState = store.getState;
+  window.searchStocks = searchStocks;
   ReactDOM.render(<Root store={store} />, root)
 })

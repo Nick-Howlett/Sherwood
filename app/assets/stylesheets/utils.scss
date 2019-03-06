@@ -18,3 +18,12 @@
 .fixed{
   position: fixed;
 }
+
+.flex{
+  display: flex;
+}
+
+.flex-apart{
+  display: flex;
+  justify-content: space-between;
+}

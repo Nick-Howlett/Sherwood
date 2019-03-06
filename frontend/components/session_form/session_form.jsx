@@ -21,7 +21,7 @@ class SessionForm extends React.Component{
     e.preventDefault();
     this.props.action(this.state);
   }
-
+ 
   update(field){
     return e => {
       this.setState({[field]: e.target.value});
