@@ -172,10 +172,11 @@
   font-size: 14px;
   font-weight: 550;
   div{
-    word-wrap: none;
     height: 19px;
     width: 360px;
+    white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
   }
   div:first-child{
     width: 60px;
