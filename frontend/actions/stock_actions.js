@@ -13,6 +13,7 @@ export const RECEIVE_SEARCH = "RECEIVE_SEARCH";
 export const RECEIVE_TRANSACTION_ERRORS = "RECEIVE_TRANSACTION_ERRORS";
 export const RECEIVE_WATCH = "RECEIVE_WATCH";
 export const DELETE_WATCH = "DELETE_WATCH";
+export const RECEIVE_WATCHLIST_INFO = "RECEIVE_WATCHLIST_INFO";
 
 export const fetchStock = symbol => dispatch => {
   APIUtil.fetchStock(symbol).then(info => dispatch(receiveInfo(symbol, info)));
@@ -72,6 +73,11 @@ export const watchStock = (id, symbol) => dispatch => {
 
 export const removeWatch = id => dispatch => {
   return APIUtil.deleteWatch(id).then(({id}) => dispatch(deleteWatch(id)));
+};
+
+
+export const getWatchlistInfo = watchedStocks => dispatch => {
+  return APIUtil.getWatchlistInfo(watchedStocks.map(stock => stock.symbol)).then(info => dispatch(receiveWatchlistInfo(info, watchedStocks)));
 }
 
 
@@ -137,5 +143,9 @@ export const deleteWatch = id => ({
   id
 });
 
-
+export const receiveWatchlistInfo = (info, watchedStocks) => ({
+  type: RECEIVE_WATCHLIST_INFO,
+  info,
+  watchedStocks
+});
 

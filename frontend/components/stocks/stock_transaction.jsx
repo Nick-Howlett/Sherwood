@@ -53,7 +53,7 @@ class StockTransaction extends React.Component {
     const commission = this.props.user ?  <></> : <div className="form-div bordered"><span>Comissions</span><span>$0.00</span></div>
     return(
       <form id="transaction-form">
-        <header>
+        <header className="sidebar-header">
           <button type="button" className={this.state.buySell === "Buy" ? "toggle-button selected" : "toggle-button"}
             onClick={() => {this.setState({buySell: "Buy"});
                             this.props.clearErrors()}}>

@@ -111,3 +111,15 @@ export const deleteWatch = id => (
     url: `api/stock_watches/${id}`
   })
 );
+
+export const getWatchlistInfo = symbols => (
+  $.ajax({
+    method: "GET",
+    url: `https://api.iextrading.com/1.0/stock/market/batch`,
+    data: {
+      symbols: symbols.join(","),
+      types: "chart,quote",
+      range: "1d"
+    }
+  })
+)

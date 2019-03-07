@@ -79,4 +79,17 @@ export const getWatchId = (state, symbol) => {
     }
   }
   return null;
-}
+};
+
+
+export const watchedStocks = state => {
+  const currentUser = state.session.id;
+  const watchList = state.entities.watchedStocks;
+  const res = [];
+  Object.keys(watchList).forEach(id => {
+    if(watchList[id].userId === currentUser){
+      res.push(watchList[id]);
+    }
+  });
+  return res;
+};
