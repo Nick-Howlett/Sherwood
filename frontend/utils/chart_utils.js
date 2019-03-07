@@ -2,6 +2,39 @@ import moment from 'moment';
 import tz from 'moment-timezone';
 
 
+export const createProfileCharts = (stockShares, charts) => {
+  const symbols = Object.keys(stockShares);
+  const res = [];
+  symbols.forEach(symbol => {
+    const chart = charts[symbol].chart.reverse();
+    const shares = stockShares[symbol];
+    for(let i = 0; i < chart.length; i++){
+      const open = chart[i].open * shares;
+      const close = chart[i].close * shares;
+      if(res[i]){
+        res[i].open += open;
+        res[i].close += close;
+      } else {
+        const datum = {};
+        datum.open = open;
+        datum.close = close;
+        datum.date = chart[i].date;
+        res[i] = datum;
+      }
+    }
+  });
+  return createCharts(formatChart(res.reverse(), "5y"));
+};
+
+export const createProfile1dChart = (stockShares, charts) => {
+  
+};
+
+export const padProfileChart = chart => {
+  padLength = 1258 - chart.length;
+
+}
+
 export const createCharts = chart => {
   const charts = {};
   charts["5y"] = chart;
@@ -13,6 +46,7 @@ export const createCharts = chart => {
 };
 
 export const formatChart = (chart, type) => {
+  debugger
   const res = [];
   if(type === '5y'){
     for(let i = 0; i < chart.length; i++){

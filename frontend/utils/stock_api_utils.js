@@ -20,6 +20,18 @@ export const getChart = (symbol, range) => (
   })
 );
 
+export const getProfileChart = (symbols, range) => (
+  $.ajax({
+    method: "GET",
+    url:`https://api.iextrading.com/1.0/stock/market/batch`,
+    data: {
+      symbols: symbols.join(","),
+      types: "chart",
+      range: range
+    }
+  })
+);
+
 export const getInfo = symbol => (
   $.ajax({
     method: "GET",
@@ -39,6 +51,18 @@ export const getNews = name => (
       language: "en",
       apiKey: window.newsAPIKey,
       pageSize: 5
+    }
+  })
+);
+
+export const getProfileNews = () => (
+  $.ajax({
+    method: "GET",
+    url: `https://newsapi.org/v2/top-headlines`,
+    data: {
+      category: "business",
+      country: "us",
+      apiKey: window.newsAPIKey
     }
   })
 );

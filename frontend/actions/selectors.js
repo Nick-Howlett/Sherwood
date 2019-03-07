@@ -18,6 +18,31 @@ export const numShares = (state, symbol) => {
   return shares;
 };
 
+export const stockShares = state => {
+  const shares = {};
+  const id = state.session.id;
+  Object.keys(state.entities.transactions).forEach(transaction_id => {
+    const transaction = state.entities.transactions[transaction_id];
+    if(transaction.user_id === id){
+      if(transaction.transaction_type === "purchase"){
+        if(shares[transaction.symbol]){
+          shares[transaction.symbol] += transaction.num_shares;
+        } else{
+          shares[transaction.symbol] = transaction.num_shares;
+        }
+      }
+      else{
+        if(shares[transaction.symbol]){
+          shares[transaction.symbol] += transaction.num_shares;
+        } else{
+          shares[transaction.symbol] = transaction.num_shares;
+        }
+      }
+    }
+  });
+  return shares;
+};
+
 export const searchStocks = (state, query) => {
   query = query.toLowerCase();
   const res = [];

@@ -2,7 +2,7 @@ import React from 'react';
 import Chart from '../chart/chart';
 import StockAbout from './stock_about';
 import Navbar from '../navbar/navbar';
-import StockNews from "./stock_news";
+import News from "./news";
 import StockTransactionContainer from './stock_transaction_container';
 import Loading from '../loading';
 
@@ -45,13 +45,13 @@ class StockShow extends React.Component {
         <div className="fixed navbar">
           <Navbar/>
         </div>
-        <main id="main-stock">
+        <main id="main-page">
           <div>
             <Chart charts={this.props.charts} name={this.props.info.name} prev={this.props.info.previousClose}/>
             <StockAbout info={this.props.info} />
-            <StockNews news={this.props.news} />
+            <News news={this.props.news} />
           </div>
-          <div id="transaction-column">
+          <div id="side-column">
             <div className="fixed">
               <StockTransactionContainer symbol={this.props.info.symbol} price={this.props.info.price} shares={this.props.shares}/>
             </div>

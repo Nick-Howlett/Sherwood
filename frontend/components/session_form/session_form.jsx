@@ -32,23 +32,19 @@ class SessionForm extends React.Component{
     const username = user.username;
     const password = user.password;
     const typeSpeed = 50;
-    let i = 0;
-    let j = 0;
-    const userInterval = setInterval(() => {
-      this.setState({username: this.state.username + username[i]});
-      i++;
-    }, typeSpeed);
-    setTimeout(() => {
-      clearInterval(userInterval);
-      const passInterval = setInterval(() => {
-        this.setState({password: this.state.password + password[j]});
-        j++;
-      }, typeSpeed);
+    for(let i = 0; i < username.length; i++){
       setTimeout(() => {
-        clearInterval(passInterval);
-        this.props.action(this.state);
-      }, (typeSpeed + 3) * password.length);
-    }, (typeSpeed + 3) * username.length);
+        this.setState({username: this.state.username + username[i]});
+      }, i * typeSpeed);
+    }
+    for(let j = 0; j < password.length; j++){
+      setTimeout(() => {
+        this.setState({password: this.state.password + password[j]});
+      }, (username.length * typeSpeed) + j * typeSpeed);
+    }
+    setTimeout(() => {
+      this.props.action(this.state);
+    }, (username.length * typeSpeed) + (password.length * typeSpeed) + typeSpeed);
   }
 
   componentWillUnmount(){

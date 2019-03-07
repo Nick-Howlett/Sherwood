@@ -1,5 +1,6 @@
 import * as APIUtil from "../utils/stock_api_utils";
-import {padChart, formatChart, createCharts} from '../utils/chart_utils';
+import {padChart, formatChart, createCharts, createProfileCharts} from '../utils/chart_utils';
+
 
 export const RECEIVE_CHART = "RECEIVE_CHART";
 export const RECEIVE_INFO = "RECEIVE_INFO";
@@ -30,8 +31,16 @@ export const getCharts = symbol => dispatch => {
   APIUtil.getChart(symbol, "5y").then(chart => dispatch(receiveChart(createCharts(formatChart(chart, "5y")))));
 };
 
+export const getProfileCharts = stockShares => dispatch => {
+  return APIUtil.getProfileChart(Object.keys(stockShares), "5y").then(charts => dispatch(receiveChart(createProfileCharts(stockShares, charts))));
+}
+
 export const getNews = name => dispatch => {
   APIUtil.getNews(name).then(news => dispatch(receiveNews(news)));
+};
+
+export const getProfileNews = () => dispatch => {
+  APIUtil.getProfileNews().then(news => dispatch(receiveNews(news)));
 };
 
 export const getPrice = symbol => dispatch => {
@@ -41,6 +50,8 @@ export const getPrice = symbol => dispatch => {
 export const getSearch = () => dispatch => {
   return APIUtil.getSearch().then(search => dispatch(receiveSearch(search)));
 };
+
+
 
 
 export const receiveErrors = errors => ({

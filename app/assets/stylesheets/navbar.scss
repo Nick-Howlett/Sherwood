@@ -97,7 +97,7 @@
   ::placeholder{
     color: $rh_grey;
     font-weight: 600;
-    transition: color 150ms, ease-out;
+  
   }
 }
 
@@ -108,10 +108,17 @@
   input{
     ::placeholder{
       color: black;
+      transition: color 150ms, ease-out;
     }
   }
   #search-magnifier{
     fill: black;
+  }
+}
+
+#searchbar:hover{
+  ::placeholder{
+    color: black;
   }
 }
 

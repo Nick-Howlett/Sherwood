@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-class StockNews extends React.Component {
+class News extends React.Component {
 
   constructor(props){
     super(props);
@@ -45,4 +45,4 @@ class StockNews extends React.Component {
   }
 }
 
-export default StockNews
+export default News
