@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import React from "react";
 import configureStore from "./store/store";
 import Root from './components/root';
-import {getProfileChart} from './utils/stock_api_utils';
+import {getProfilePrevClose, getInfo} from './utils/stock_api_utils';
 import {stockShares} from "./actions/selectors";
 import moment from 'moment';
 import tz from 'moment-timezone';
@@ -26,8 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
     store = configureStore();
   }
   window.getState = store.getState;
-  window.getProfileChart = getProfileChart;
-  window.stockShares = stockShares;
+  window.getProfilePrevClose = getProfilePrevClose;
+  window.getInfo = getInfo;
   window.moment = moment;
   ReactDOM.render(<Root store={store} />, root)
 })

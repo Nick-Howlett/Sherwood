@@ -2,7 +2,7 @@ import React from 'react';
 
 export default ({active, payload, value, prev, coordinate}) => {
   let stockValue;
-  if(active && payload[0]){
+  if(active && payload && payload[0]){
     stockValue = payload[0].value;
   } else {
     stockValue = value;
@@ -19,7 +19,7 @@ export default ({active, payload, value, prev, coordinate}) => {
         id="chart-time" 
         style={{left: coordinate.x - 32}}>
           <span>
-            {`${payload[0] ? payload[0].payload.label : ""}`}
+            {`${payload && payload[0] ? payload[0].payload.label : ""}`}
           </span>
         </div>
     </div>

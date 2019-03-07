@@ -39,8 +39,8 @@ class StockChart extends React.Component{
             wrapperStyle={{visibility: 'visible'}} 
             position={{ x: 0, y: -84 }} 
             content={<ChartTooltip 
-                        value={end[value]} 
-                        prev={current === "1d" ? this.props.prev : data[0].open}
+                        value={end ? end[value] : 0} 
+                        prev={current === "1d" ? this.props.prev : (data[0] ? data[0].open : null)}
                      />} 
           />
           <ReferenceLine className={current === "1d" ? "" : "hidden"} y={this.props.prev}/>

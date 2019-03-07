@@ -11,13 +11,16 @@ class Profile extends React.Component{
             this.props.getSearch();
         }
         this.props.getNews();
-        this.props.getCharts(this.props.stock_shares);
+        this.props.getCharts(this.props.stockShares);
+        this.props.get1dChart(this.props.stockShares);
+        this.props.getPrevClose(this.props.stockShares, this.props.userId);
     }
     render(){
       if(!this.props.stocks.AAPL ||
          !this.props.charts["1d"] ||
          !this.props.charts["3m"] ||
-         !this.news){
+         !this.props.news ||
+         !this.props.prev){
           return <Loading />
       }
       return(  
@@ -27,7 +30,7 @@ class Profile extends React.Component{
                 </div>
                 <main id="main-page">
                 <div>
-                    <Chart charts={this.props.charts} name={null} prev={null}/>
+                    <Chart charts={this.props.charts} name={null} prev={this.props.prev}/>
                     <News news={this.props.news} />
                 </div>
                 <div id="side-column">

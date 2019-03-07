@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import tz from 'moment-timezone';
 
 class News extends React.Component {
 
@@ -18,13 +19,13 @@ class News extends React.Component {
         </header>
         <div className={this.state.showMore ? "news-items long" : "news-items"}>
           {news.articles.map((article, i) => {
-            const now = moment();
-            const publish = moment(article.publishedAt.slice(0, article.publishedAt.length - 1))
+            const now = moment.utc();
+            const publish = moment.tz(article.publishedAt.slice(0, article.publishedAt.length - 1), "UTC")
             const duration = moment.duration(now.diff(publish))
             return( <a key={i} href={article.url}className="news-item">
                 <img src={article.urlToImage}/>
                 <div className="news-right">
-                  <span className="source">{article.source.name}<span className="hours">{`${duration.days()}d ${duration.hours()}h`}</span></span>
+                  <span className="source">{article.source.name}<span className="hours">{`${duration.days() > 0 ? `${duration.days()} d` : ""} ${duration.hours()}h`}</span></span>
                   <div className="headline-summary">
                     <h3>{article.title}</h3>
                     <div className="summary">{article.description}</div>

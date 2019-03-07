@@ -33,7 +33,7 @@ export const stockShares = state => {
       }
       else{
         if(shares[transaction.symbol]){
-          shares[transaction.symbol] += transaction.num_shares;
+          shares[transaction.symbol] -= transaction.num_shares;
         } else{
           shares[transaction.symbol] = transaction.num_shares;
         }

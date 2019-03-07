@@ -27,7 +27,21 @@ export const createProfileCharts = (stockShares, charts) => {
 };
 
 export const createProfile1dChart = (stockShares, charts) => {
-  
+  const symbols = Object.keys(stockShares);
+  const res = [];
+  symbols.forEach(symbol => {
+    const chart = formatChart(charts[symbol].chart);
+    const shares = stockShares[symbol];
+    for(let i = 0; i < chart.length; i++){
+      if(res[i]){
+        res[i].marketOpen += chart[i].marketOpen * shares;
+      } else {
+        chart[i].marketOpen *= shares;
+        res[i] = chart[i];
+      }
+    }
+  });
+  return res;
 };
 
 export const padProfileChart = chart => {
@@ -46,7 +60,6 @@ export const createCharts = chart => {
 };
 
 export const formatChart = (chart, type) => {
-  debugger
   const res = [];
   if(type === '5y'){
     for(let i = 0; i < chart.length; i++){
@@ -102,30 +115,25 @@ export const formatChart = (chart, type) => {
 export const padChart =  chart => {
   const firstPrice = chart[0].marketOpen;
   const lastPrice = chart[chart.length - 1].marketOpen;
-  let startTime = 900;
-  const firstTime = timeInt(chart[0].minute);
-  let lastTime = timeInt(chart[chart.length - 1].minute);
-  let currTimeStr = new Date().toLocaleTimeString('en-US', {hour12: false, timeZone: `America/New_York`}).slice(0, 5);
-  let currentTime = timeInt(currTimeStr);
-  currentTime = currentTime - currentTime % 5;
-  const endTime = 1800;
+  let startTime = moment(`${moment().format("YYYY-MM-DD")}T09:00-05:00`);
+  const firstTime = chart[0].time;
+  let lastTime = chart[chart.length - 1].time;
+  let currentTime = moment();
+  const endTime = moment(`${moment().format("YYYY-MM-DD")}T18:00-05:00`);
   const padLeft = [];
   const padRight = [];
-  while(startTime < firstTime){
-    padLeft.push({minute: timeStr(startTime), marketOpen: firstPrice});
-    startTime += 5;
+  while(startTime.isBefore(firstTime)){
+    padLeft.push({time: startTime, marketOpen: firstPrice, label: `${startTime.format("hh:mm A")} ET`});
+    startTime.add(5, "m");
   }
-  if(currentTime > endTime) currentTime = endTime;
-  while(lastTime < currentTime){
-    lastTime += 5;
-    if(lastTime % 100 === 60){
-      lastTime += 40;
-    }
-    padRight.push({minute: timeStr(lastTime), marketOpen: lastPrice});  
+  if(currentTime.isAfter(endTime)) currentTime = endTime;
+  while(lastTime.isBefore(currentTime)){
+    lastTime.add(5, 'm');
+    padRight.push({time: lastTime, marketOpen: lastPrice, label: `${lastTime.format("hh:mm A")} ET`});  
   }
-  while(currentTime < endTime){
-    padRight.push({minute: timeStr(currentTime), marketOpen: null});
-    currentTime += 5;
+  while(currentTime.isBefore(endTime)){
+    padRight.push({time: currentTime, marketOpen: null, label: `${currentTime.format("hh:mm A")} ET`});
+    currentTime.add(5, 'm');
   }
   return padLeft.concat(chart, padRight);
 }
