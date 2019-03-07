@@ -11,6 +11,8 @@ export const RECEIVE_PREV_CLOSES = "RECEIVE_PREV_CLOSES";
 export const RECEIVE_PRICE = "RECEIVE_PRICE";
 export const RECEIVE_SEARCH = "RECEIVE_SEARCH";
 export const RECEIVE_TRANSACTION_ERRORS = "RECEIVE_TRANSACTION_ERRORS";
+export const RECEIVE_WATCH = "RECEIVE_WATCH";
+export const DELETE_WATCH = "DELETE_WATCH";
 
 export const fetchStock = symbol => dispatch => {
   APIUtil.fetchStock(symbol).then(info => dispatch(receiveInfo(symbol, info)));
@@ -64,6 +66,14 @@ export const getSearch = () => dispatch => {
   return APIUtil.getSearch().then(search => dispatch(receiveSearch(search)));
 };
 
+export const watchStock = (id, symbol) => dispatch => {
+  return APIUtil.watchStock(id, symbol).then(watch => dispatch(receiveWatch(watch)));
+};
+
+export const removeWatch = id => dispatch => {
+  return APIUtil.deleteWatch(id).then(({id}) => dispatch(deleteWatch(id)));
+}
+
 
 export const receivePrevCloses = (id, stockShares, prevCloses) => ({
   type: RECEIVE_PREV_CLOSES,
@@ -116,6 +126,16 @@ export const receiveSearch = search => ({
   type: RECEIVE_SEARCH,
   search
 })
+
+export const receiveWatch = watch => ({
+  type: RECEIVE_WATCH,
+  watch
+});
+
+export const deleteWatch = id => ({
+  type: DELETE_WATCH,
+  id
+});
 
 
 

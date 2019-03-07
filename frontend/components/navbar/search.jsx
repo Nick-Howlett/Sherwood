@@ -7,10 +7,17 @@ class Search extends React.Component {
     super(props);
     this.state = {search: "", results: [], open: false};
     this.handleClick = this.handleClick.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   componentWillMount(){
     document.addEventListener('mousedown', this.handleClick, false);
+  }
+
+  handleKeyPress(e){
+    if(e.key == 'Enter'){
+      this.props.history.push(`/stocks/${this.state.results[0].symbol}`);
+    }
   }
 
   componentWillUnmount(){
@@ -51,7 +58,8 @@ class Search extends React.Component {
                   autoCorrect="off"
                   spellCheck="false"
                   autoapitalize="none"
-                  onChange={e => this.handleChange(e)} />
+                  onChange={e => this.handleChange(e)}
+                  onKeyPress={this.handleKeyPress} />
           </div>
             <div className={this.state.open && this.state.search !== "" ? " " : "hide"} id="search-results">
               {this.state.results.length === 0 ?  <span>We were unable to find any results for your search.</span> : ""}

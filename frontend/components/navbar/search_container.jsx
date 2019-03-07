@@ -1,4 +1,5 @@
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import Search from './search';
 import {searchStocks} from '../../actions/selectors';
 
@@ -9,4 +10,4 @@ const msp = state => ({
 
 
 
-export default connect(msp, null)(Search);
+export default withRouter(connect(msp, null)(Search));

@@ -67,3 +67,16 @@ export const searchStocks = (state, query) => {
   }
   return res;
 };
+
+export const getWatchId = (state, symbol) => {
+  const currentUser = state.session.id;
+  const watchList = state.entities.watchedStocks;
+  const ids = Object.keys(state.entities.watchedStocks)
+  for(let i = 0; i < ids.length; i++){
+    const currentStock = watchList[ids[i]];
+    if(currentStock.userId === currentUser && currentStock.symbol === symbol){
+      return ids[i];
+    }
+  }
+  return null;
+}

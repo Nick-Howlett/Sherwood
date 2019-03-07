@@ -5,6 +5,7 @@ import Navbar from '../navbar/navbar';
 import News from "./news";
 import StockTransactionContainer from './stock_transaction_container';
 import Loading from '../loading';
+import WatchButtonContainer from "./watch_button_container";
 
 class StockShow extends React.Component {
   
@@ -54,6 +55,7 @@ class StockShow extends React.Component {
           <div id="side-column">
             <div className="fixed">
               <StockTransactionContainer symbol={this.props.info.symbol} price={this.props.info.price} shares={this.props.shares}/>
+              <WatchButtonContainer/>
             </div>
           </div>
         </main>

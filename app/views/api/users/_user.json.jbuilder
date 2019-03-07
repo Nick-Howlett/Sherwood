@@ -13,3 +13,11 @@ json.transactions do
     end
   end
 end
+json.watchlist do 
+  user.watched_stocks.each do |watched_stock|
+    json.set! watched_stock.id do
+      json.extract! watched_stock, :id, :symbol
+      json.userId watched_stock.user_id
+    end
+  end
+end

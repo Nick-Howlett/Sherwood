@@ -5,6 +5,7 @@ class User < ApplicationRecord
   validates :password, length: {minimum: 6, allow_nil: true}
   attr_reader :password
   has_many :transactions, dependent: :destroy
+  has_many :watched_stocks, class_name: :StockWatch, dependent: :destroy
 
   #session methods
 

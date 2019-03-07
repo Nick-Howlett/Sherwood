@@ -4,7 +4,7 @@ import SessionForm from "./session_form";
 
 const msp = state => ({
   errors: state.errors.session,
-  demo: {username: "xXSherrif_0f_N0ttinghamXx", password: "password"},
+  demo: {username: "xXSherriff_0f_N0ttinghamXx", password: "password"},
   formType: "Sign In"
 });
 
