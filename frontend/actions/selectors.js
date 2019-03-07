@@ -5,13 +5,13 @@ export const currentUser = state => {
 export const numShares = (state, symbol) => {
   let shares = 0;
   const id = state.session.id;
-  Object.keys(state.entities.transactions).forEach(transaction_id => {
-    const transaction = state.entities.transactions[transaction_id];
-    if(transaction.user_id === id && transaction.symbol === symbol){
-      if(transaction.transaction_type === "purchase"){
-        shares += transaction.num_shares;
+  Object.keys(state.entities.transactions).forEach(transactionId => {
+    const transaction = state.entities.transactions[transactionId];
+    if(transaction.userId === id && transaction.symbol === symbol){
+      if(transaction.transactionType === "purchase"){
+        shares += transaction.numShares;
       } else{
-        shares -= transaction.num_shares;
+        shares -= transaction.numShares;
       }
     }
   });
@@ -21,21 +21,21 @@ export const numShares = (state, symbol) => {
 export const stockShares = state => {
   const shares = {};
   const id = state.session.id;
-  Object.keys(state.entities.transactions).forEach(transaction_id => {
-    const transaction = state.entities.transactions[transaction_id];
-    if(transaction.user_id === id){
-      if(transaction.transaction_type === "purchase"){
+  Object.keys(state.entities.transactions).forEach(transactionId => {
+    const transaction = state.entities.transactions[transactionId];
+    if(transaction.userId === id){
+      if(transaction.transactionType === "purchase"){
         if(shares[transaction.symbol]){
-          shares[transaction.symbol] += transaction.num_shares;
+          shares[transaction.symbol] += transaction.numShares;
         } else{
-          shares[transaction.symbol] = transaction.num_shares;
+          shares[transaction.symbol] = transaction.numShares;
         }
       }
       else{
         if(shares[transaction.symbol]){
-          shares[transaction.symbol] -= transaction.num_shares;
+          shares[transaction.symbol] -= transaction.numShares;
         } else{
-          shares[transaction.symbol] = transaction.num_shares;
+          shares[transaction.symbol] = transaction.numShares;
         }
       }
     }

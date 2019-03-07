@@ -6,5 +6,6 @@ Rails.application.routes.draw do
     resource :session, only: [:create, :destroy]
     resources :stocks, param: :symbol, only: [:show, :index]
     resources :transactions, only: [:create]
+    resources :stock_watches, only: [:create, :destroy]
   end
 end

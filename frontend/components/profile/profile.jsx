@@ -20,7 +20,7 @@ class Profile extends React.Component{
          !this.props.charts["1d"] ||
          !this.props.charts["3m"] ||
          !this.props.news ||
-         !this.props.prev){
+         this.props.prev === undefined){
           return <Loading />
       }
       return(  

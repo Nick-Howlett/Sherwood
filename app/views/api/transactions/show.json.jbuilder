@@ -1,6 +1,10 @@
 json.transaction do
-  json.extract! @transaction, :id, :user_id, :symbol, :transaction_type, :stock_price, :num_shares
+  json.extract! @transaction, :id, :symbol
+  json.userId @transaction.user_id
+  json.transactionType @transaction.transaction_type
+  json.stockPrice @transaction.stock_price
+  json.numShares @transaction.num_shares
 end
 json.user do
- json.buying_power @user.buying_power
+ json.buyingPower @user.buying_power
 end

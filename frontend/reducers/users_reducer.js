@@ -14,7 +14,7 @@ export default (state = {}, action) => {
       return Object.assign({}, state, {[action.id]: user});
     case RECEIVE_TRANSACTION:
       const newState = Object.assign({}, state);
-      newState[action.payload.transaction.user_id].buying_power = action.payload.user.buying_power;
+      newState[action.payload.transaction.userId].buyingPower = action.payload.user.buyingPower;
       return newState;
     default:
       return state;

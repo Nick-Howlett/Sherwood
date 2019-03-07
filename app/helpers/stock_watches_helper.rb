@@ -1,0 +1,2 @@
+module StockWatchesHelper
+end

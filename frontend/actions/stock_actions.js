@@ -21,11 +21,13 @@ export const getInfo = symbol => dispatch => {
 };
 
 export const getProfilePrevClose = (stockShares, id) => dispatch => {
-  APIUtil.getProfilePrevClose(Object.keys(stockShares)).then(prevCloses => dispatch(receivePrevCloses(id, stockShares, prevCloses)));
+  APIUtil.getProfilePrevClose(Object.keys(stockShares)).then(prevCloses => dispatch(receivePrevCloses(id, stockShares, prevCloses)), 
+  () => dispatch(receivePrevCloses(id, stockShares, {})));
 }
 
 export const makeTransaction = transaction => dispatch => {
-  return APIUtil.makeTransaction(transaction).then(payload => dispatch(receiveTransaction(payload)), ({responseJSON}) => dispatch(receiveErrors(responseJSON)));
+  return APIUtil.makeTransaction(transaction).then(payload => dispatch(receiveTransaction(payload)), 
+  ({responseJSON}) => dispatch(receiveErrors(responseJSON)));
 };
 
 export const get1dChart = symbol => dispatch => {
@@ -37,13 +39,13 @@ export const getCharts = symbol => dispatch => {
 };
 
 export const getProfileCharts = stockShares => dispatch => {
-  if(Object.entries(stockShares).length === 0 && stockShares.constructor === Object) return dispatch(receiveChart({"1w": [], "1m": [], "3m": [], "1y": [], "5y": []}));
-  return APIUtil.getProfileChart(Object.keys(stockShares), "5y").then(charts => dispatch(receiveChart(createProfileCharts(stockShares, charts))));
+  return APIUtil.getProfileChart(Object.keys(stockShares), "5y").then(charts => dispatch(receiveChart(createProfileCharts(stockShares, charts))), 
+  () => dispatch(receiveChart({"1w": [], "1m": [], "3m": [], "1y": [], "5y": []})));
 }
 
 export const getProfile1dChart = stockShares => dispatch => {
-  if(Object.entries(stockShares).length === 0 && stockShares.constructor === Object) return dispatch(receiveChart({"1d": []}));
-  return APIUtil.getProfileChart(Object.keys(stockShares), "1d").then(charts => dispatch(receiveChart({"1d": createProfile1dChart(stockShares, charts)})));
+  return APIUtil.getProfileChart(Object.keys(stockShares), "1d").then(charts => dispatch(receiveChart({"1d": createProfile1dChart(stockShares, charts)})), 
+  () => dispatch(receiveChart({"1d": []})));
 }
 
 export const getNews = name => dispatch => {

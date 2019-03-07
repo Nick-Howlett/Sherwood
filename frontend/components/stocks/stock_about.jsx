@@ -25,7 +25,7 @@ class StockAbout extends React.Component{
                          "Founded": info.founded, 
                          "Market Cap": info.marketCap, 
                          "Price-Earnings Ratio": info.peRatio,
-                         "Dividend Yield": info.dividend_yield,
+                         "Dividend Yield": info.dividendYield,
                          "Average Volume": info.avgTotalVolume,
                          "High Today": `$${info.high}`,
                          "Low Today": `$${info.low}`,
@@ -59,7 +59,7 @@ class StockAbout extends React.Component{
                   <div className="grid-value">{gridValues[key]}</div>
                 </div>
                 )
-            })};
+            })}
           </div>
         </div>
       )

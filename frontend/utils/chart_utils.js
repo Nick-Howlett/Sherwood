@@ -41,13 +41,8 @@ export const createProfile1dChart = (stockShares, charts) => {
       }
     }
   });
-  return res;
+  return padChart(res);
 };
-
-export const padProfileChart = chart => {
-  padLength = 1258 - chart.length;
-
-}
 
 export const createCharts = chart => {
   const charts = {};
@@ -93,7 +88,7 @@ export const formatChart = (chart, type) => {
        datum.marketOpen = chart[i - 3].marketOpen;
       } 
       else{
-        return "Incomplete one day data, cannot render.";
+        return [];
       }
       let date = chart[i].date;
       let minute = chart[i].minute;  

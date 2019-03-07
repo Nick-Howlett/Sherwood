@@ -46,7 +46,7 @@ class StockTransaction extends React.Component {
                           {display: "none"}} 
                     id="info-div">
                       {this.state.buySell === "Buy" ? 
-                      `$${this.props.user.buying_power.toFixed(2)} Buying Power Available` :
+                      `$${this.props.user.buyingPower.toFixed(2)} Buying Power Available` :
                       `${this.props.shares} Shares Available`}
               </div> 
               : <></>
