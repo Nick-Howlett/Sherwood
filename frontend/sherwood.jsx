@@ -25,9 +25,5 @@ document.addEventListener("DOMContentLoaded", () => {
   } else{
     store = configureStore();
   }
-  window.getState = store.getState;
-  window.getProfilePrevClose = getProfilePrevClose;
-  window.getInfo = getInfo;
-  window.moment = moment;
   ReactDOM.render(<Root store={store} />, root)
 })
