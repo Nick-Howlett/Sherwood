@@ -1,0 +1,14 @@
+#watch-button{
+  margin: 24px 24px 0;
+  padding: 0 40px;
+  width: 227px;
+  height: 48px;
+  border: 1px solid $rh_green;
+  border-radius: 4px;
+  color: $rh_green;
+}
+
+#watch-button:hover{
+  color: $rh_highlight;
+  border-color: $rh_highlight;
+}
