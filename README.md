@@ -14,3 +14,5 @@ Sherwood is a clone of the popular stock trading site robinhood.com.
   * Ability to add to and remove stocks from a user's watchlist
   * Ability to 'buy' and 'sell' stocks within Sherwood's ecosystem.
   
+##Technologies
+Sherwood uses a Ruby on Rails backend with a Postgresql database to store non-real time external information such as certain stock details(company name, location, number of employees) as well as users, transactions, and watchlists. Sherwood's frontend is built in React/Redux, with chart data displayed by Recharts, Stock information provided by the [IEX API](https://iextrading.com/developer/docs/) and news provided by the [News Api](https://newsapi.org/)
