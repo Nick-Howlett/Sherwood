@@ -140,10 +140,30 @@ export const formatChart = (chart, type) => {
       } 
       else if(chart[i + 4] && chart[i + 4].marketOpen){
         datum.marketOpen = chart[i + 4].marketOpen;
-       }
-       else if(chart[i - 4] && chart[i - 4].marketOpen){
+      }
+      else if(chart[i - 4] && chart[i - 4].marketOpen){
         datum.marketOpen = chart[i - 4].marketOpen;
-       } 
+      } else if(chart[i + 1] && chart[i + 1].open){ //start checking opens instead, for last 15 minutes of graph where there are only opens, no marketOpens.
+        datum.marketOpen = chart[i + 1].open;
+      } else if(chart[i - 1] && chart[i - 1].open){
+        datum.marketOpen = chart[i - 1].open;
+      } else if(chart[i + 2] && chart[i + 2].open){
+        datum.marketOpen = chart[i + 2].open;
+      } else if(chart[i - 2] && chart[i - 2].open){
+        datum.marketOpen = chart[i - 2].open;
+      }
+      else if(chart[i + 3] && chart[i + 3].open){
+        datum.marketOpen = chart[i + 3].open;
+      }
+      else if(chart[i - 3] && chart[i - 3].open){
+        datum.marketOpen = chart[i - 3].open;
+      } 
+      else if(chart[i + 4] && chart[i + 4].open){
+        datum.marketOpen = chart[i + 4].open;
+      }
+      else if(chart[i - 4] && chart[i - 4].open){
+        datum.marketOpen = chart[i - 4].open;
+      } 
       else{
         return [];
       }
