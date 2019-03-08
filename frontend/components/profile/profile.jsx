@@ -28,7 +28,7 @@ class Profile extends React.Component{
             });
         }
         this.props.getNews();
-        this.props.getCharts(this.props.stockShares);
+        this.props.getCharts(this.props.transactions);
         this.props.get1dChart(this.props.stockShares);
         this.props.getPrevClose(this.props.stockShares, this.props.userId);
         this.props.getWatchlistInfo(this.props.watchedStocks);

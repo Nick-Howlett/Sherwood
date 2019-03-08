@@ -96,3 +96,17 @@ export const watchedStocks = state => {
   });
   return res;
 };
+
+export const transactionArray = state => {
+  const res = [];
+  const currentUser = state.session.id;
+  const transactions = state.entities.transactions;
+  Object.keys(transactions).forEach(id => {
+    if(transactions[id].userId === currentUser){
+      transactions[id].time = moment(transactions[id].time);
+      res.push(transactions[id]);
+    }
+  });
+  return res.sort((transaction1, transaction2) => transaction1.time.isBefore(transaction2.time));
+};
+

@@ -10,6 +10,7 @@ json.transactions do
       json.transactionType transaction.transaction_type
       json.stockPrice transaction.stock_price
       json.numShares transaction.num_shares
+      json.time transaction.created_at
     end
   end
 end

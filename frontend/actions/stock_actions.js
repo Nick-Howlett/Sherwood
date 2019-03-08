@@ -1,6 +1,6 @@
 import * as APIUtil from "../utils/stock_api_utils";
 import {padChart, formatChart, createCharts, createProfileCharts, createProfile1dChart} from '../utils/chart_utils';
-
+import {uniq} from 'lodash';
 
 export const RECEIVE_CHART = "RECEIVE_CHART";
 export const RECEIVE_INFO = "RECEIVE_INFO";
@@ -35,7 +35,7 @@ export const makeTransaction = transaction => dispatch => {
   return APIUtil.makeTransaction(transaction).then(payload => dispatch(receiveTransaction(payload)), 
   ({responseJSON}) => dispatch(receiveErrors(responseJSON)));
 };
-
+6
 export const get1dChart = symbol => dispatch => {
   APIUtil.getChart(symbol, "1d").then(chart => dispatch(receiveChart({"1d": padChart(formatChart(chart, "1d"))})));
 }
@@ -44,13 +44,13 @@ export const getCharts = symbol => dispatch => {
   APIUtil.getChart(symbol, "5y").then(chart => dispatch(receiveChart(createCharts(formatChart(chart, "5y")))));
 };
 
-export const getProfileCharts = stockShares => dispatch => {
-  if(Object.entries(stockShares).length === 0 && stockShares.constructor === Object){
+export const getProfileCharts = transactions => dispatch => {
+  const symbols = uniq(transactions.map(transaction => transaction.symbol));
+  if(transactions.length === 0){
     return dispatch(receiveChart({"1w": [], "1m": [], "3m": [], "1y": [], "5y": []}));
   } else{
-    return APIUtil.getProfileChart(Object.keys(stockShares), "5y").then(charts => dispatch(receiveChart(createProfileCharts(stockShares, charts))));
+    return APIUtil.getProfileChart(['AAPL', ...symbols], "5y").then(charts => dispatch(receiveChart(createProfileCharts(transactions, charts))));
   }
-  
 }
 
 export const getProfile1dChart = stockShares => dispatch => {

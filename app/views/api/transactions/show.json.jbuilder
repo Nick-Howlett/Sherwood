@@ -4,7 +4,8 @@ json.transaction do
   json.transactionType @transaction.transaction_type
   json.stockPrice @transaction.stock_price
   json.numShares @transaction.num_shares
-end
+  json.time @transaction.created_at
+end 
 json.user do
  json.buyingPower @user.buying_power
 end

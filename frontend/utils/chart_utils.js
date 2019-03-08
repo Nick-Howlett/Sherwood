@@ -2,38 +2,80 @@ import moment from 'moment';
 import tz from 'moment-timezone';
 
 
-export const createProfileCharts = (stockShares, charts) => {
-  const symbols = Object.keys(stockShares);
-  const res = [];
-  symbols.forEach(symbol => {
-    const chart = charts[symbol].chart.reverse();
-    const shares = stockShares[symbol];
-    for(let i = 0; i < chart.length; i++){
-      const open = chart[i].open * shares;
-      const close = chart[i].close * shares;
-      if(res[i]){
-        res[i].open += open;
-        res[i].close += close;
+// export const createProfileCharts = (stockShares, charts) => {
+//   const symbols = Object.keys(stockShares);
+//   const res = [];
+//   symbols.forEach(symbol => {
+//     const chart = charts[symbol].chart.reverse();
+//     const shares = stockShares[symbol];
+//     for(let i = 0; i < chart.length; i++){
+//       const open = chart[i].open * shares;
+//       const close = chart[i].close * shares;
+//       if(res[i]){
+//         res[i].open += open;
+//         res[i].close += close;
+//       } else {
+//         const datum = {};
+//         datum.open = open;
+//         datum.close = close;
+//         datum.date = chart[i].date;
+//         res[i] = datum;
+//       }
+//     }
+//   });
+//   return createCharts(formatChart(res.reverse(), "5y"));
+// };
+
+export const createProfileCharts = (transactions, charts) => {
+  Object.keys(charts).forEach(symbol => {
+    charts[symbol].chart.reverse();
+  });
+  const baseChart = removeValues(formatChart(charts.AAPL.chart, '5y')); //We ensure that we always have the apple chart and we know it goes back the full five years. O(1) fixed chart length
+  transactions.forEach(transaction => {  //for testing, bring transactions within time period.
+    transaction.time.subtract(7, 'd');
+  });
+  for(let i = 0; i < baseChart.length; i++){
+    const shares = countStocksAfterTime(baseChart[i].date , transactions);
+    Object.keys(shares).forEach(symbol => {
+      if(charts[symbol].chart[i])
+        baseChart[i].open += charts[symbol].chart[i].open * shares[symbol];
+        baseChart[i].close += charts[symbol].chart[i].close * shares[symbol];
+    });
+  }
+  return createCharts(baseChart.reverse());
+};
+
+const countStocksAfterTime = (date, transactions) => {
+  const stocks = {};
+  for(let i = 0; i < transactions.length; i++){
+    if(date.isBefore(transactions[i].time))
+      return stocks;  
+    else{
+      const stock = transactions[i];
+      if(stocks[stock.symbol]){
+        if(stock.transactionType === "purchase"){
+          stocks[stock.symbol] += stock.numShares;
+        } else {
+          stocks[stock.symbol] -= stock.numShares;
+          if(stocks[stock.symbol] === 0){
+            delete stocks[stock.symbol];
+          }
+        }
       } else {
-        const datum = {};
-        datum.open = open;
-        datum.close = close;
-        datum.date = chart[i].date;
-        res[i] = datum;
+        stocks[stock.symbol] = stock.numShares; // we're assuming that the dataset is good, no selling before purchasing.
       }
     }
+  }
+  return stocks;
+};
+
+const removeValues = chart => {
+  chart.forEach(datum => {
+    datum.close = 0;
+    datum.open = 0;
   });
-  return createCharts(formatChart(res.reverse(), "5y"));
-};
-
-export const createProfileChartsTime = (transactions, charts) => {
-  //somehow get the correct 1258 days. 
-  //create the mother of all objects with the 1258 days as keys and the number of stocks on each day as values
-  // (creating array constant time) calculating stocks on each day O(n) where n is the number of transactions, only need to see each stock once
-  // (basically time sensitive stockShares, simple addition) send in transactions as ordered array, break early once we hit a transaction outside our range.
-  // go through 1258 days and ask each chart what the price is on that day for each stock owned on that day. Worst case we have all owned stocks for all days still O(1258 * n)
-
-};
+  return chart;
+}
 
 export const createProfile1dChart = (stockShares, charts) => {
   const symbols = Object.keys(stockShares);

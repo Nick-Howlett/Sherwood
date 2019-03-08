@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import React from "react";
 import configureStore from "./store/store";
 import Root from './components/root';
-
+import moment from 'moment';
 
 
 
@@ -23,5 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
   } else{
     store = configureStore();
   }
+  window.moment = moment;
   ReactDOM.render(<Root store={store} />, root)
 })
