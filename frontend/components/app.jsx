@@ -7,6 +7,7 @@ import LoginFormContainer from "./session_form/login_form_container";
 import SignupFormContainer from "./session_form/signup_form_container";
 import DemoLoginContainer from "./session_form/demo_form_container";
 import StockShowContainer from "./stocks/stock_show_container";
+import Footer from './footer';
 
 
 

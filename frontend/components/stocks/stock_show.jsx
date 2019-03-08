@@ -6,6 +6,7 @@ import News from "./news";
 import StockTransactionContainer from './stock_transaction_container';
 import Loading from '../loading';
 import WatchButtonContainer from "./watch_button_container";
+import Footer from '../footer';
 
 class StockShow extends React.Component {
   
@@ -59,6 +60,7 @@ class StockShow extends React.Component {
             </div>
           </div>
         </main>
+        <Footer/>
       </>
     )
   }

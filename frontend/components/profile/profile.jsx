@@ -4,6 +4,7 @@ import News from '../stocks/news';
 import Chart from '../chart/chart';
 import Loading from '../loading';
 import WatchList from '../watchlist/watchlist';
+import Footer from '../footer';
 import {getWatchlistInfo} from '../../utils/stock_api_utils';
 
 class Profile extends React.Component{
@@ -57,6 +58,7 @@ class Profile extends React.Component{
                   </div>
                 </div>
             </main>
+            <Footer />
             </>
         )
     }
