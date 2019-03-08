@@ -20,7 +20,7 @@ end
 ActiveRecord::Base.transaction do 
   Stock.destroy_all
   User.destroy_all
-  User.create(username: "xXSherrif_0f_N0ttinghamXx", password:"password", buying_power:1000000)
+  User.create(username: "xXSherriff_0f_N0ttinghamXx", password:"password", buying_power:1000000)
   File.open("full_company_data.txt").each do |line|
     stock = JSON.parse(line)
     stock["employees"] = stock["employees"].delete(",").to_i if stock["employees"]
