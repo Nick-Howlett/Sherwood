@@ -26,6 +26,15 @@ export const createProfileCharts = (stockShares, charts) => {
   return createCharts(formatChart(res.reverse(), "5y"));
 };
 
+export const createProfileChartsTime = (transactions, charts) => {
+  //somehow get the correct 1258 days. 
+  //create the mother of all objects with the 1258 days as keys and the number of stocks on each day as values
+  // (creating array constant time) calculating stocks on each day O(n) where n is the number of transactions, only need to see each stock once
+  // (basically time sensitive stockShares, simple addition) send in transactions as ordered array, break early once we hit a transaction outside our range.
+  // go through 1258 days and ask each chart what the price is on that day for each stock owned on that day. Worst case we have all owned stocks for all days still O(1258 * n)
+
+};
+
 export const createProfile1dChart = (stockShares, charts) => {
   const symbols = Object.keys(stockShares);
   const res = [];
@@ -108,6 +117,7 @@ export const formatChart = (chart, type) => {
   The IEX only returns data from 9:30-4:00 and the chart needs to display from 9:00-6:00.
 */
 export const padChart =  chart => {
+  if(chart.length === 0) return chart;
   const firstPrice = chart[0].marketOpen;
   const lastPrice = chart[chart.length - 1].marketOpen;
   let startTime = moment(`${moment().format("YYYY-MM-DD")}T09:00-05:00`);

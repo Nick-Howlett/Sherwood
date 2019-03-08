@@ -35,7 +35,7 @@ class StockShow extends React.Component {
     if(!this.props.info ||
        !this.props.info.price ||
        !this.props.info.previousClose ||
-       !this.props.info.description || 
+       this.props.info.description === undefined || 
        !this.props.charts["1d"] ||
        !this.props.charts["3m"] ||
        !this.props.news){

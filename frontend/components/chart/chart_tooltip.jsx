@@ -8,7 +8,12 @@ export default ({active, payload, value, prev, coordinate}) => {
     stockValue = value;
   }
   const diff = (stockValue - prev).toFixed(2);
-  const percent = ((diff / prev) * 100).toFixed(2);
+  let percent;
+  if(!prev){
+    percent = 0;
+  } else{
+    percent = ((diff / prev) * 100).toFixed(2);
+  }
   return (
     <div>
       <h1>{"$" + stockValue.toFixed(2)}</h1>

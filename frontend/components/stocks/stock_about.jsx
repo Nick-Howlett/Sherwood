@@ -39,7 +39,12 @@ class StockAbout extends React.Component{
         delete gridValues["Headquarters"];
         delete gridValues["Founded"];
       }
-      const descriptionParts = info.description.split(" Read More");
+      let descriptionParts;
+      if(info.description !== undefined){
+        descriptionParts = info.description.split(" Read More");
+      } else{
+        descriptionParts = ["No description available", ""];
+      }
       return(
         <div id="stock-about">
           <header>
