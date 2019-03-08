@@ -11,5 +11,6 @@ Sherwood is a clone of the popular stock trading site robinhood.com.
   * Real time stock data
   * Charts detailing a user's portfolio performance
   * Real-time business and individual stock-related news
+  * Ability to add to and remove stocks from a user's watchlist
   * Ability to 'buy' and 'sell' stocks within Sherwood's ecosystem.
   
