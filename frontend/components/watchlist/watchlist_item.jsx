@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Line, LineChart, YAxis, XAxis} from 'recharts';
+import {Line, LineChart, YAxis} from 'recharts';
 
 export default props => {
   return(
