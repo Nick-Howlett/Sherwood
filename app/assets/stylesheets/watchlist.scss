@@ -15,7 +15,7 @@
 
 #watchlist{
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.01), 0 3px 24px rgba(48, 51, 51, 0.09);
-  padding: 0 24px 24px;
+  padding: 0 24px;
 }
 
 .watchlist-item{
@@ -27,6 +27,14 @@
   font-size: 13px;
   margin: 0 -24px;
   padding: 0 24px;
+  cursor: pointer;
+  div{
+    font-weight: 550;
+  }
+}
+
+.watchlist-item:last-child{
+  border-bottom: 1px solid $rh_lgrey;
 }
 
 .watchlist-item:hover{

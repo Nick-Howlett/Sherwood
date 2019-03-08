@@ -34,6 +34,9 @@ export const stockShares = state => {
       else{
         if(shares[transaction.symbol]){
           shares[transaction.symbol] -= transaction.numShares;
+          if(shares[transaction.symbol] === 0){
+            delete shares[transaction.symbol];
+          }
         } else{
           shares[transaction.symbol] = transaction.numShares;
         }

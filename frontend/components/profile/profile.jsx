@@ -4,6 +4,7 @@ import News from '../stocks/news';
 import Chart from '../chart/chart';
 import Loading from '../loading';
 import WatchList from '../watchlist/watchlist';
+import {getWatchlistInfo} from '../../utils/stock_api_utils';
 
 class Profile extends React.Component{
 
@@ -11,6 +12,19 @@ class Profile extends React.Component{
         if(Object.entries(this.props.stocks ).length === 0 && this.props.stocks.constructor === Object){ //Code to see if an object is empty taken from https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
             this.props.getSearch();
         }
+        this.symbols = Object.keys(this.props.stockShares);
+        this.ownedStocks = []
+        getWatchlistInfo(this.symbols).then(info => {
+            this.symbols.forEach(symbol => {
+                const stock_info = {};
+                stock_info.symbol = symbol;
+                stock_info.shares = this.props.stockShares[symbol];
+                stock_info.chart = info[symbol].chart;
+                stock_info.price = info[symbol].quote.latestPrice;
+                stock_info.prev = info[symbol].quote.previousClose;
+                this.ownedStocks.push(stock_info);
+            });
+        });
         this.props.getNews();
         this.props.getCharts(this.props.stockShares);
         this.props.get1dChart(this.props.stockShares);
@@ -23,7 +37,8 @@ class Profile extends React.Component{
          !this.props.charts["3m"] ||
          !this.props.news ||
          this.props.prev === undefined ||
-         !this.props.watchedStocks[0]){
+         !this.props.watchedStocks[0] ||
+         !this.ownedStocks[0]){
           return <Loading />
       }
       return(  
@@ -38,7 +53,7 @@ class Profile extends React.Component{
                 </div>
                 <div id="side-column">
                   <div className="fixed">
-                    <WatchList watchedStocks={this.props.watchedStocks}/>
+                    <WatchList ownedStocks={this.ownedStocks ? this.ownedStocks : []} watchedStocks={this.props.watchedStocks ? this.props.watchedStocks : []}/>
                   </div>
                 </div>
             </main>
