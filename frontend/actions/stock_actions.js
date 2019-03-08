@@ -24,8 +24,11 @@ export const getInfo = symbol => dispatch => {
 };
 
 export const getProfilePrevClose = (stockShares, id) => dispatch => {
-  APIUtil.getProfilePrevClose(Object.keys(stockShares)).then(prevCloses => dispatch(receivePrevCloses(id, stockShares, prevCloses)), 
-  () => dispatch(receivePrevCloses(id, stockShares, {})));
+  if(Object.entries(stockShares).length === 0 && stockShares.constructor === Object){
+    return dispatch(receivePrevCloses(id, stockShares, {}));
+  } else{
+    APIUtil.getProfilePrevClose(Object.keys(stockShares)).then(prevCloses => dispatch(receivePrevCloses(id, stockShares, prevCloses)));
+  }
 }
 
 export const makeTransaction = transaction => dispatch => {
@@ -42,13 +45,20 @@ export const getCharts = symbol => dispatch => {
 };
 
 export const getProfileCharts = stockShares => dispatch => {
-  return APIUtil.getProfileChart(Object.keys(stockShares), "5y").then(charts => dispatch(receiveChart(createProfileCharts(stockShares, charts))), 
-  () => dispatch(receiveChart({"1w": [], "1m": [], "3m": [], "1y": [], "5y": []})));
+  if(Object.entries(stockShares).length === 0 && stockShares.constructor === Object){
+    return dispatch(receiveChart({"1w": [], "1m": [], "3m": [], "1y": [], "5y": []}));
+  } else{
+    return APIUtil.getProfileChart(Object.keys(stockShares), "5y").then(charts => dispatch(receiveChart(createProfileCharts(stockShares, charts))));
+  }
+  
 }
 
 export const getProfile1dChart = stockShares => dispatch => {
-  return APIUtil.getProfileChart(Object.keys(stockShares), "1d").then(charts => dispatch(receiveChart({"1d": createProfile1dChart(stockShares, charts)})), 
-  () => dispatch(receiveChart({"1d": []})));
+  if(Object.entries(stockShares).length === 0 && stockShares.constructor === Object){
+    return dispatch(receiveChart({"1d": []}));
+  } else {
+    return APIUtil.getProfileChart(Object.keys(stockShares), "1d").then(charts => dispatch(receiveChart({"1d": createProfile1dChart(stockShares, charts)})));
+  }
 }
 
 export const getNews = name => dispatch => {

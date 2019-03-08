@@ -8,7 +8,7 @@ export default props => {
           <h3>Stocks</h3>
       </div>
       <ul className="flex-column">
-        {props.ownedStocks.map(stock => <WatchlistItem key={stock.id} stock={stock}/>)}
+        {props.ownedStocks.map(stock => <WatchlistItem key={stock.symbol} stock={stock}/>)}
       </ul>
       <div className="watchlist-header">
           <h3>Watchlist</h3>
