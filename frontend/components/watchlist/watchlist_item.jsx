@@ -3,6 +3,9 @@ import {Link} from 'react-router-dom';
 import {Line, LineChart, YAxis} from 'recharts';
 
 export default props => {
+  if(!props.stock.symbol || !props.stock.prev || !props.stock.chart || !props.stock.price){
+    return null;
+  }
   return(
     <Link className="watchlist-item" to={`/stocks/${props.stock.symbol}`}>
         <div className="flex-column">
