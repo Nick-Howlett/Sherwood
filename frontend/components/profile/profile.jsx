@@ -36,9 +36,7 @@ class Profile extends React.Component{
          !this.props.charts["1d"] ||
          !this.props.charts["3m"] ||
          !this.props.news ||
-         this.props.prev === undefined ||
-         !this.props.watchedStocks[0] ||
-         !this.ownedStocks[0]){
+         this.props.prev === undefined){
           return <Loading />
       }
       return(  
