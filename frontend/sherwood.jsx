@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import React from "react";
 import configureStore from "./store/store";
 import Root from './components/root';
-import {watchStock, removeWatch} from './actions/stock_actions';
+
 
 
 
@@ -23,9 +23,5 @@ document.addEventListener("DOMContentLoaded", () => {
   } else{
     store = configureStore();
   }
-  window.getState = store.getState;
-  window.dispatch = store.dispatch;
-  window.watchStock = watchStock;
-  window.removeWatch = removeWatch;
   ReactDOM.render(<Root store={store} />, root)
 })
