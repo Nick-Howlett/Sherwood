@@ -138,6 +138,12 @@ export const formatChart = (chart, type) => {
       else if(chart[i - 3] && chart[i - 3].marketOpen){
        datum.marketOpen = chart[i - 3].marketOpen;
       } 
+      else if(chart[i + 4] && chart[i + 4].marketOpen){
+        datum.marketOpen = chart[i + 4].marketOpen;
+       }
+       else if(chart[i - 4] && chart[i - 4].marketOpen){
+        datum.marketOpen = chart[i - 4].marketOpen;
+       } 
       else{
         return [];
       }

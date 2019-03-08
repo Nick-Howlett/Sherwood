@@ -7,9 +7,13 @@
   align-items: center;
   background: white;
   .logo{
-    width: 48px;
-    height: 48px;
+    width: 25px;
+    height: 35px;
+    padding-top: 10px;
     position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     left: 48px;
   }
 }
@@ -19,14 +23,15 @@
 }
 
 #rh-logo-nav{
-  background-image: url("../images/rh_logo_black.png");
+  background-image: url("../images/sherwood_logo_black.png");
   background-size: 100%, 100%;
-  width: 48px;
-  height: 48px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 35px;
 }
 
 #rh-logo-nav:hover{
-  background-image: url("../images/rh_logo_green.png");
+  background-image: url("../images/sherwood_logo_green.png");
 }
 
 #navbar-right{
