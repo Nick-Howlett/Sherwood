@@ -188,13 +188,14 @@ export const padChart =  chart => {
   if(chart.length === 0) return chart;
   const firstPrice = chart[0].marketOpen;
   const lastPrice = chart[chart.length - 1].marketOpen;
-  let startTime = moment(`${moment().format("YYYY-MM-DD")}T09:00-05:00`);
+  let startTime = moment(`${chart[0].time.format("YYYY-MM-DD")}T09:00-05:00`);
   const firstTime = chart[0].time;
   let lastTime = chart[chart.length - 1].time;
   let currentTime = moment();
-  const endTime = moment(`${moment().format("YYYY-MM-DD")}T18:00-05:00`);
+  const endTime = moment(`${chart[0].time.format("YYYY-MM-DD")}T18:00-05:00`);
   const padLeft = [];
   const padRight = [];
+  debugger;
   while(startTime.isBefore(firstTime)){
     padLeft.push({time: startTime, marketOpen: firstPrice, label: `${startTime.format("hh:mm A")} ET`});
     startTime.add(5, "m");

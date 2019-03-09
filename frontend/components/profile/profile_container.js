@@ -22,6 +22,7 @@ const mdp = dispatch => ({
   getSearch: () => dispatch(getSearch()),
   getNews: () => dispatch(getProfileNews()),
   getCharts: transactions => dispatch(getProfileCharts(transactions)),
+  get1dChart: stockShares => dispatch(getProfile1dChart(stockShares)),
   getPrevClose: (stocks, id) => dispatch(getProfilePrevClose(stocks, id)),
   getWatchlistInfo: watchedStocks => dispatch(getWatchlistInfo(watchedStocks))
 });
