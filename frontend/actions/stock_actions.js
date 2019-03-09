@@ -35,13 +35,16 @@ export const makeTransaction = transaction => dispatch => {
   return APIUtil.makeTransaction(transaction).then(payload => dispatch(receiveTransaction(payload)), 
   ({responseJSON}) => dispatch(receiveErrors(responseJSON)));
 };
-6
-export const get1dChart = symbol => dispatch => {
-  APIUtil.getChart(symbol, "1d").then(chart => dispatch(receiveChart({"1d": padChart(formatChart(chart, "1d"))})));
-}
 
 export const getCharts = symbol => dispatch => {
-  APIUtil.getChart(symbol, "5y").then(chart => dispatch(receiveChart(createCharts(formatChart(chart, "5y")))));
+  const charts = {};
+  return APIUtil.getChart(symbol, "5y").then(chart => {
+    Object.assign(charts, createCharts(formatChart(chart, "5y")));
+    return APIUtil.getChart(symbol, '1d').then(chart => {
+      Object.assign(charts, {"1d": padChart(formatChart(chart, "1d"))});
+      dispatch(receiveChart(charts));
+    });
+  });
 };
 
 export const getProfileCharts = transactions => dispatch => {
