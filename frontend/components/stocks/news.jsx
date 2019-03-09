@@ -15,7 +15,7 @@ class News extends React.Component {
       <div id="news-container">
         <header>
           <h2>News</h2>
-          <button onClick={() => this.state.showMore ? this.setState({showMore: false}) : this.setState({showMore: true})}>{this.state.showMore ? "Show Less" : "Show More"}</button>
+          <button onClick={() => this.setState({showMore: !this.state.showmore})}>{this.state.showMore ? "Show Less" : "Show More"}</button>
         </header>
         <div className={this.state.showMore ? "news-items long" : "news-items"}>
           {news.articles.map((article, i) => {

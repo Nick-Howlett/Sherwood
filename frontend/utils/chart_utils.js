@@ -195,7 +195,6 @@ export const padChart =  chart => {
   const endTime = moment(`${chart[0].time.format("YYYY-MM-DD")}T18:00-05:00`);
   const padLeft = [];
   const padRight = [];
-  debugger;
   while(startTime.isBefore(firstTime)){
     padLeft.push({time: startTime, marketOpen: firstPrice, label: `${startTime.format("hh:mm A")} ET`});
     startTime.add(5, "m");

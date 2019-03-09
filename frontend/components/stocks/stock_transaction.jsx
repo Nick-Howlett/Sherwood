@@ -1,5 +1,6 @@
 import React from 'react';
 import Error from '../session_form/session_errors';
+import {formatMoney} from "../../utils/utils";
 
 
 class StockTransaction extends React.Component {
@@ -46,7 +47,7 @@ class StockTransaction extends React.Component {
                           {display: "none"}} 
                     id="info-div">
                       {this.state.buySell === "Buy" ? 
-                      `$${this.props.user.buyingPower.toFixed(2)} Buying Power Available` :
+                      `${formatMoney(this.props.user.buyingPower)} Buying Power Available` :
                       `${this.props.shares} Shares Available`}
               </div> 
               : <></>
@@ -68,12 +69,12 @@ class StockTransaction extends React.Component {
         </label>
         <div className={`form-div ${this.props.user ? "bordered" : ""}`}>
             <span>Market Price</span>
-            {`$${this.props.price.toFixed(2)}`}
+            {`${formatMoney(this.props.price)}`}
         </div>
         {commission}
         <div className="form-div">
             <span>Estimated {`${this.state.buySell === "Buy" ? 'Cost' : "Credit"}`}</span>
-            {`$${this.state.numShares > 0 ? (this.state.numShares * this.props.price).toFixed(2) : 0}`}
+            {`${this.state.numShares > 0 ? formatMoney(this.state.numShares * this.props.price) : 0}`}
         </div>
         <div id="error-container" className={this.props.errors.length > 0 ? "form-div grow" : "form-div"}>
                 {this.props.errors.map((error, i) => <Error key={i} error={error}/>)}

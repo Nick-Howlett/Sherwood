@@ -1,4 +1,5 @@
 import React from 'react';
+import {formatMoney} from '../../utils/utils';
 
 
 class StockAbout extends React.Component{
@@ -6,6 +7,13 @@ class StockAbout extends React.Component{
     constructor(props){
       super(props);
       this.state = {showMore: false, readMore: false};
+      this.toggleState = this.toggleState.bind(this);
+    }
+
+    toggleState(field){
+      return () => {
+        this.setState({[field]: !this.state[field]});
+      }
     }
 
     render(){
@@ -27,12 +35,12 @@ class StockAbout extends React.Component{
                          "Price-Earnings Ratio": info.peRatio,
                          "Dividend Yield": info.dividendYield,
                          "Average Volume": info.avgTotalVolume,
-                         "High Today": `$${info.high}`,
-                         "Low Today": `$${info.low}`,
-                         "Open Price": `$${info.open}`,
+                         "High Today": formatMoney(info.high),
+                         "Low Today": formatMoney(info.low),
+                         "Open Price": formatMoney(info.open),
                          "Volume": info.latestVolume,
-                         "52 Week High": `$${info.week52High}`,
-                         "52 Week Low": `$${info.week52Low}`};
+                         "52 Week High": formatMoney(info.week52High),
+                         "52 Week Low": formatMoney(info.week52Low)}
       if(info.ceo === "—" && info.employees === "—" && info.founded === "—" && info.headquarters === "—"){ //Robinhood removes the top row if it has none of the four.
         delete gridValues["CEO"];
         delete gridValues["Employees"];
@@ -49,12 +57,12 @@ class StockAbout extends React.Component{
         <div id="stock-about">
           <header>
             <h2>About</h2>
-            <button onClick={() => this.state.showMore ? this.setState({showMore: false}) : this.setState({showMore: true})}>{this.state.showMore ? "Show Less" : "Show More"}</button>
+            <button onClick={this.toggleState("showMore")}>{this.state.showMore ? "Show Less" : "Show More"}</button>
           </header>
           <h3>
               {descriptionParts[0]}
               <span className={this.state.readMore ? "" : "hidden"}>{descriptionParts[1]}</span>
-              <button onClick={() => this.state.readMore ? this.setState({readMore: false}) : this.setState({readMore: true})}>{this.state.readMore ? "Read Less" : "Read More"}</button>
+              <button onClick={this.toggleState("readMore")}>{this.state.readMore ? "Read Less" : "Read More"}</button>
           </h3>
           <div className={this.state.showMore ? "grid long" : "grid"}>
             {Object.keys(gridValues).map(key => {

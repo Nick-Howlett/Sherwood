@@ -1,4 +1,5 @@
 import React from 'react';
+import {formatMoney} from "../../utils/utils";
 
 export default ({active, payload, value, prev, coordinate}) => {
   let stockValue;
@@ -16,7 +17,7 @@ export default ({active, payload, value, prev, coordinate}) => {
   }
   return (
     <div>
-      <h1>{"$" + stockValue.toFixed(2)}</h1>
+      <h1>{formatMoney(stockValue)}</h1>
       <div id="chart-percents">
         {`${diff > 0 ? "+" : ""}${diff} (${percent}%)`}
       </div>

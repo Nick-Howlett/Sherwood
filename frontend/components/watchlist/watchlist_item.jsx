@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {Line, LineChart, YAxis} from 'recharts';
+import {formatMoney} from '../../utils/utils';
 
 export default props => {
   if(!props.stock.symbol || !props.stock.prev || !props.stock.chart || !props.stock.price){
@@ -22,7 +23,7 @@ export default props => {
             hide 
             domain={[props.stock.prev, 'dataMax']} />
         </LineChart>
-        <h3>{`$${props.stock.price.toFixed(2)}`}</h3>
+        <h3>{`${formatMoney(props.stock.price)}`}</h3>
     </Link>
   )
 }
