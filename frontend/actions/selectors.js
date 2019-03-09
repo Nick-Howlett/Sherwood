@@ -50,28 +50,28 @@ export const stockShares = state => {
 
 export const searchStocks = (state, query) => {
   query = query.toLowerCase();
-  const res = [];
+  let res = [];
   const stocks = Object.keys(state.entities.search).sort();
   if(query.length < 5){
-    for(let i = 0; i < stocks.length; i++){
-      const stock = state.entities.search[stocks[i]];
-      const symbol = stock.symbol.toLowerCase();
-      if(symbol.startsWith(query)){
-        res.push(stock);
-      }
-      if(res.length > 5) return res;
-    }
-  }
+    res = res.concat(search(5 - res.length, stocks, state, stock => stock.symbol.toLowerCase().startsWith(query)));
+    if(res.length === 5) return res;
+  } 
+  return res.concat(search(5 - res.length, stocks, state, stock => stock.name.toLowerCase().includes(query)));
+};
+
+const search = (limit, stocks, state, cb)  => {
+  const res = [];
   for(let i = 0; i < stocks.length; i++){
     const stock = state.entities.search[stocks[i]];
-    const name = stock.name.toLowerCase();
-    if(name.includes(query)){
+    if(cb(stock)){
       res.push(stock);
     }
-    if(res.length > 5) return res;
+    if(res.length === limit){
+      return res;
+    }
   }
   return res;
-};
+}
 
 export const getWatchId = (state, symbol) => {
   const currentUser = state.session.id;
