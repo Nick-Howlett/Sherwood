@@ -8,8 +8,11 @@ const msp = state => ({
   formType: "Sign In"
 });
 
-const mdp = dispatch => ({
-  action: user => dispatch(login(user)),
+const mdp = (dispatch, ownProps) => ({
+  action: user => {
+    return dispatch(login(user))
+      .then(() => ownProps.history.goBack());
+  },
   clearErrors : () => dispatch(receiveErrors([]))
 });
 

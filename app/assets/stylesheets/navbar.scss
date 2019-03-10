@@ -38,19 +38,19 @@
   position: absolute;
   right: 48px;
   a{
+    display: flex;
+    align-items: center;
     color: black;
     font-family: $rh_fonts;
     font-weight: bold;
     font-size: 16px;
     letter-spacing: .32px;
     height: 27px;
+    margin-right: 16px;
   }
   a:hover{
     color: $rh_green;
     cursor: pointer;
-  }
-  a:last-child{
-    margin-left: 16px;
   }
 }
 

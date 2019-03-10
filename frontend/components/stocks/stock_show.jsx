@@ -55,7 +55,7 @@ class StockShow extends React.Component {
           <div id="side-column">
             <div className="fixed">
               <StockTransactionContainer symbol={this.props.info.symbol} price={this.props.info.price} shares={this.props.shares}/>
-              <WatchButtonContainer/>
+              {this.props.currentUser ? <WatchButtonContainer/> : ""}
             </div>
           </div>
         </main>

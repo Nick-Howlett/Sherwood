@@ -1,7 +1,7 @@
 import React from 'react';
 import WatchlistItem from './watchlist_item';
 
-export default props => {
+export default props => { 
   return ( 
     <div id="watchlist">
       <div className="watchlist-header">
