@@ -11,7 +11,7 @@ export default () => {
           <Link className="signup rh-button" to="/signup">Sign Up</Link>
         </div>
         <div className="splash-img">
-          <img src="images/splash_phones.png" />
+          <img src={window.splash_phones} />
         </div>
       </div>
     </div>

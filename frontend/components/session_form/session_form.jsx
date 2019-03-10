@@ -57,7 +57,7 @@ class SessionForm extends React.Component{
     return (
       <div className="session-form">
         <div id="session-img">
-          <img src="images/form_half.png" />
+          <img src={window.form_half} />
         </div>
         <div className="form-side">
           <div className="session-form-container">

@@ -23,7 +23,7 @@ class News extends React.Component {
             const publish = moment.tz(article.publishedAt.slice(0, article.publishedAt.length - 1), "UTC")
             const duration = moment.duration(now.diff(publish))
             return( <a key={i} href={article.url}className="news-item">
-                <img src={article.urlToImage} onError={(e)=>{e.target.onerror = null; e.target.src="images/stock_news.jpg"}}/>
+                <img src={article.urlToImage} onError={(e)=>{e.target.onerror = null; e.target.src=window.stock_news}}/>
                 <div className="news-right">
                   <span className="source">{article.source.name}<span className="hours">{`${duration.days() > 0 ? `${duration.days()} d` : ""} ${duration.hours()}h`}</span></span>
                   <div className="headline-summary">
