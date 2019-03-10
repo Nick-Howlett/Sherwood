@@ -8,7 +8,7 @@ export default (state = {}, action) => {
     case RECEIVE_PREV_CLOSES:
       let total = 0;
       Object.keys(action.prevCloses).forEach(symbol => {
-        total += action.prevCloses[symbol].quote.previousClose * action.stockShares[symbol];
+        total += action.prevCloses[symbol].quote.previousClose * action.shares[symbol];
       });
       const user = Object.assign({}, state[action.id], {prevCloses: total});
       return Object.assign({}, state, {[action.id]: user});

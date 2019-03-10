@@ -5,15 +5,18 @@ export const RECEIVE_SESSION_ERRORS = "RECEIVE_SESSION_ERRORS";
 import * as APIUtil from "../utils/session_api_util";
 
 export const login = user => dispatch => (
-  APIUtil.login(user).then(user => dispatch(receiveUser(user)), ({responseJSON}) => dispatch(receiveErrors(responseJSON)))
+  APIUtil.login(user).then(user => dispatch(receiveUser(user)), 
+    ({responseJSON}) => dispatch(receiveErrors(responseJSON)))
 )
 
 export const logout = () => dispatch => (
-  APIUtil.logout().then(() => dispatch(logoutUser()), ({responseJSON}) => dispatch(receiveErrors(responseJSON)))
+  APIUtil.logout().then(() => dispatch(logoutUser()), 
+    ({responseJSON}) => dispatch(receiveErrors(responseJSON)))
 )
 
 export const signup = user => dispatch => (
-  APIUtil.signup(user).then(user => dispatch(receiveUser(user)), ({responseJSON}) => dispatch(receiveErrors(responseJSON)))
+  APIUtil.signup(user).then(user => dispatch(receiveUser(user)), 
+    ({responseJSON}) => dispatch(receiveErrors(responseJSON)))
 )
 
 export const receiveUser = user => ({

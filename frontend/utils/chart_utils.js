@@ -1,30 +1,6 @@
 import moment from 'moment';
 import tz from 'moment-timezone';
-
-
-// export const createProfileCharts = (stockShares, charts) => {
-//   const symbols = Object.keys(stockShares);
-//   const res = [];
-//   symbols.forEach(symbol => {
-//     const chart = charts[symbol].chart.reverse();
-//     const shares = stockShares[symbol];
-//     for(let i = 0; i < chart.length; i++){
-//       const open = chart[i].open * shares;
-//       const close = chart[i].close * shares;
-//       if(res[i]){
-//         res[i].open += open;
-//         res[i].close += close;
-//       } else {
-//         const datum = {};
-//         datum.open = open;
-//         datum.close = close;
-//         datum.date = chart[i].date;
-//         res[i] = datum;
-//       }
-//     }
-//   });
-//   return createCharts(formatChart(res.reverse(), "5y"));
-// };
+import {countStocks} from '../actions/selectors';
 
 export const createProfileCharts = (transactions, charts) => {
   Object.keys(charts).forEach(symbol => {
@@ -35,7 +11,7 @@ export const createProfileCharts = (transactions, charts) => {
     transaction.time.subtract(7, 'd');
   });
   for(let i = 0; i < baseChart.length; i++){
-    const shares = countStocksAfterTime(baseChart[i].date , transactions);
+    const shares = countStocks(transactions, baseChart[i].date);
     Object.keys(shares).forEach(symbol => {
       if(charts[symbol].chart[i])
         baseChart[i].open += charts[symbol].chart[i].open * shares[symbol];
@@ -45,29 +21,7 @@ export const createProfileCharts = (transactions, charts) => {
   return createCharts(baseChart.reverse());
 };
 
-const countStocksAfterTime = (date, transactions) => {
-  const stocks = {};
-  for(let i = 0; i < transactions.length; i++){
-    if(date.isBefore(transactions[i].time))
-      return stocks;  
-    else{
-      const stock = transactions[i];
-      if(stocks[stock.symbol]){
-        if(stock.transactionType === "purchase"){
-          stocks[stock.symbol] += stock.numShares;
-        } else {
-          stocks[stock.symbol] -= stock.numShares;
-          if(stocks[stock.symbol] === 0){
-            delete stocks[stock.symbol];
-          }
-        }
-      } else {
-        stocks[stock.symbol] = stock.numShares; // we're assuming that the dataset is good, no selling before purchasing.
-      }
-    }
-  }
-  return stocks;
-};
+
 
 const removeValues = chart => {
   chart.forEach(datum => {
@@ -77,17 +31,17 @@ const removeValues = chart => {
   return chart;
 }
 
-export const createProfile1dChart = (stockShares, charts) => {
-  const symbols = Object.keys(stockShares);
+export const createProfile1dChart = (shares, charts) => {
+  const symbols = Object.keys(shares);
   const res = [];
   symbols.forEach(symbol => {
     const chart = formatChart(charts[symbol].chart);
-    const shares = stockShares[symbol];
+    const numShares = shares[symbol];
     for(let i = 0; i < chart.length; i++){
       if(res[i]){
-        res[i].marketOpen += chart[i].marketOpen * shares;
+        res[i].marketOpen += chart[i].marketOpen * numShares;
       } else {
-        chart[i].marketOpen *= shares;
+        chart[i].marketOpen *= numShares;
         res[i] = chart[i];
       }
     }

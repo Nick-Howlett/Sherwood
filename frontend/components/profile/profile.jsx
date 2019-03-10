@@ -13,14 +13,14 @@ class Profile extends React.Component{
         if(Object.entries(this.props.stocks ).length === 0 && this.props.stocks.constructor === Object){ //Code to see if an object is empty taken from https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
             this.props.getSearch();
         }
-        this.symbols = Object.keys(this.props.stockShares);
+        this.symbols = Object.keys(this.props.shares);
         this.ownedStocks = [];
         if(this.symbols.length !== 0){
             getWatchlistInfo(this.symbols).then(info => {
                 this.symbols.forEach(symbol => {
                     const stock_info = {};
                     stock_info.symbol = symbol;
-                    stock_info.shares = this.props.stockShares[symbol];
+                    stock_info.shares = this.props.shares[symbol];
                     stock_info.chart = info[symbol].chart;
                     stock_info.price = info[symbol].quote.latestPrice;
                     stock_info.prev = info[symbol].quote.previousClose;
@@ -30,8 +30,8 @@ class Profile extends React.Component{
         }
         this.props.getNews();
         this.props.getCharts(this.props.transactions);
-        this.props.get1dChart(this.props.stockShares);
-        this.props.getPrevClose(this.props.stockShares, this.props.userId);
+        this.props.get1dChart(this.props.shares);
+        this.props.getPrevClose(this.props.shares, this.props.userId);
         this.props.getWatchlistInfo(this.props.watchedStocks);
     }
     render(){

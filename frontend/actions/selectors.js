@@ -20,31 +20,20 @@ export const numShares = (state, symbol) => {
   return shares;
 };
 
-export const stockShares = state => {
+export const countStocks = (transactions, date = moment()) => {
   const shares = {};
-  const id = state.session.id;
-  Object.keys(state.entities.transactions).forEach(transactionId => {
-    const transaction = state.entities.transactions[transactionId];
-    if(transaction.userId === id){
-      if(transaction.transactionType === "purchase"){
-        if(shares[transaction.symbol]){
-          shares[transaction.symbol] += transaction.numShares;
-        } else{
-          shares[transaction.symbol] = transaction.numShares;
-        }
-      }
-      else{
-        if(shares[transaction.symbol]){
-          shares[transaction.symbol] -= transaction.numShares;
-          if(shares[transaction.symbol] === 0){
-            delete shares[transaction.symbol];
-          }
-        } else{
-          shares[transaction.symbol] = transaction.numShares;
-        }
-      }
+  for(let i = 0; i < transactions.length; i++){
+    if(transactions[i].time.isAfter(date)) return shares; //transaction array is in order, stop counting if we reach transactions after our date.
+    const symbol = transactions[i].symbol;
+    const numShares = transactions[i].numShares;
+    const type = transactions[i].transactionType;
+    if(!shares[symbol]) shares[symbol] = numShares; //assuming we have to start with purchase
+    if(type === "purchase"){
+      shares[symbol] += numShares;
+    } else{
+      shares[symbol] -= numShares;
     }
-  });
+  }
   return shares;
 };
 

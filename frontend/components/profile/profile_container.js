@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {logout} from '../../actions/session_actions';
 import {getSearch, getProfileNews, getProfileCharts, getProfile1dChart, getProfilePrevClose, getWatchlistInfo} from '../../actions/stock_actions';
-import {stockShares, watchedStocks, transactionArray} from "../../actions/selectors";
+import {countStocks, watchedStocks, transactionArray} from "../../actions/selectors";
 import Profile from './profile';
 
 const msp = state => ({
@@ -9,7 +9,7 @@ const msp = state => ({
   stocks: state.entities.search,
   charts: state.entities.charts,
   news: state.entities.news,
-  stockShares: stockShares(state),
+  shares: countStocks(transactionArray(state)),
   prev: state.entities.users[state.session.id].prevCloses,
   watchedStocks: watchedStocks(state),
   transactions: transactionArray(state)
@@ -22,7 +22,7 @@ const mdp = dispatch => ({
   getSearch: () => dispatch(getSearch()),
   getNews: () => dispatch(getProfileNews()),
   getCharts: transactions => dispatch(getProfileCharts(transactions)),
-  get1dChart: stockShares => dispatch(getProfile1dChart(stockShares)),
+  get1dChart: shares => dispatch(getProfile1dChart(shares)),
   getPrevClose: (stocks, id) => dispatch(getProfilePrevClose(stocks, id)),
   getWatchlistInfo: watchedStocks => dispatch(getWatchlistInfo(watchedStocks))
 });

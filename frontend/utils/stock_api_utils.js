@@ -32,17 +32,7 @@ export const getProfileChart = (symbols, range) => (
   })
 );
 
-export const getProfilePrevClose = symbols => (
-  $.ajax({
-    method: "GET",
-    url: `https://api.iextrading.com/1.0/stock/market/batch`,
-    data: {
-      symbols: symbols.join(","),
-      types: "quote",
-      filter: "previousClose"
-    }
-  })
-);
+
 
 export const getInfo = symbol => (
   $.ajax({
@@ -122,4 +112,16 @@ export const getWatchlistInfo = symbols => (
       range: "1d"
     }
   })
-)
+);
+
+export const getProfilePrevClose = symbols => (
+  $.ajax({
+    method: "GET",
+    url: `https://api.iextrading.com/1.0/stock/market/batch`,
+    data: {
+      symbols: symbols.join(","),
+      types: "quote",
+      filter: "previousClose"
+    }
+  })
+);

@@ -23,11 +23,11 @@ export const getInfo = symbol => dispatch => {
   APIUtil.getInfo(symbol).then(info => dispatch(receiveInfo(symbol, info)));
 };
 
-export const getProfilePrevClose = (stockShares, id) => dispatch => {
-  if(Object.entries(stockShares).length === 0 && stockShares.constructor === Object){
-    return dispatch(receivePrevCloses(id, stockShares, {}));
+export const getProfilePrevClose = (shares, id) => dispatch => {
+  if(Object.entries(shares).length === 0 && shares.constructor === Object){
+    return dispatch(receivePrevCloses(id, shares, {}));
   } else{
-    APIUtil.getProfilePrevClose(Object.keys(stockShares)).then(prevCloses => dispatch(receivePrevCloses(id, stockShares, prevCloses)));
+    APIUtil.getProfilePrevClose(Object.keys(shares)).then(prevCloses => dispatch(receivePrevCloses(id, shares, prevCloses)));
   }
 }
 
@@ -56,11 +56,11 @@ export const getProfileCharts = transactions => dispatch => {
   }
 }
 
-export const getProfile1dChart = stockShares => dispatch => {
-  if(Object.entries(stockShares).length === 0 && stockShares.constructor === Object){
+export const getProfile1dChart = shares => dispatch => {
+  if(Object.entries(shares).length === 0 && shares.constructor === Object){
     return dispatch(receiveChart({"1d": []}));
   } else {
-    return APIUtil.getProfileChart(Object.keys(stockShares), "1d").then(charts => dispatch(receiveChart({"1d": createProfile1dChart(stockShares, charts)})));
+    return APIUtil.getProfileChart(Object.keys(shares), "1d").then(charts => dispatch(receiveChart({"1d": createProfile1dChart(shares, charts)})));
   }
 }
 
@@ -94,10 +94,10 @@ export const getWatchlistInfo = watchedStocks => dispatch => {
 }
 
 
-export const receivePrevCloses = (id, stockShares, prevCloses) => ({
+export const receivePrevCloses = (id, shares, prevCloses) => ({
   type: RECEIVE_PREV_CLOSES,
   id,
-  stockShares,
+  shares,
   prevCloses
 });
 
