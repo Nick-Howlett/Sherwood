@@ -4,34 +4,20 @@ export const currentUser = state => {
   return state.entities.users[state.session.id];
 };
 
-export const numShares = (state, symbol) => {
-  let shares = 0;
-  const id = state.session.id;
-  Object.keys(state.entities.transactions).forEach(transactionId => {
-    const transaction = state.entities.transactions[transactionId];
-    if(transaction.userId === id && transaction.symbol === symbol){
-      if(transaction.transactionType === "purchase"){
-        shares += transaction.numShares;
-      } else{
-        shares -= transaction.numShares;
-      }
-    }
-  });
-  return shares;
-};
 
 export const countStocks = (transactions, date = moment()) => {
   const shares = {};
   for(let i = 0; i < transactions.length; i++){
-    if(transactions[i].time.isAfter(date)) return shares; //transaction array is in order, stop counting if we reach transactions after our date.
+    if(date.isBefore(transactions[i].time)) return shares; //transaction array is in order, stop counting if we reach transactions after our date.
     const symbol = transactions[i].symbol;
     const numShares = transactions[i].numShares;
     const type = transactions[i].transactionType;
     if(!shares[symbol]) shares[symbol] = numShares; //assuming we have to start with purchase
-    if(type === "purchase"){
+    else if(type === "purchase"){
       shares[symbol] += numShares;
     } else{
       shares[symbol] -= numShares;
+      if(shares[symbol] === 0) delete shares[symbol];
     }
   }
   return shares;
@@ -88,14 +74,15 @@ export const watchedStocks = state => {
   return res;
 };
 
-export const transactionArray = state => {
+export const transactionArray = (state, symbol = null) => { //optional only for specific stock.
   const res = [];
   const currentUser = state.session.id;
   const transactions = state.entities.transactions;
   Object.keys(transactions).forEach(id => {
-    if(transactions[id].userId === currentUser){
-      transactions[id].time = moment(transactions[id].time);
-      res.push(transactions[id]);
+    const transaction = transactions[id];
+    if(transaction.userId === currentUser && (symbol ? transaction.symbol === symbol : true)){
+        transaction.time = moment(transaction.time);
+        res.push(transaction);
     }
   });
   return res.sort((transaction1, transaction2) => transaction1.time.isBefore(transaction2.time));

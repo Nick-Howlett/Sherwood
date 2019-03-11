@@ -48,7 +48,7 @@ class StockTransaction extends React.Component {
                     id="info-div">
                       {this.state.buySell === "Buy" ? 
                       `${formatMoney(this.props.user.buyingPower)} Buying Power Available` :
-                      `${this.props.shares} Shares Available`}
+                      `${this.props.shares ? this.props.shares : 0} Shares Available`}
               </div> 
               : <></>
     const commission = this.props.user ?  <></> : <div className="form-div bordered"><span>Comissions</span><span>$0.00</span></div>
