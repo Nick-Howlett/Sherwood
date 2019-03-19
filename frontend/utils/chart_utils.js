@@ -7,9 +7,6 @@ export const createProfileCharts = (transactions, charts) => {
     charts[symbol].chart.reverse();
   });
   const baseChart = removeValues(formatChart(charts.AAPL.chart, '5y')); //We ensure that we always have the apple chart and we know it goes back the full five years. O(1) fixed chart length
-  transactions.forEach(transaction => {  //for testing, bring transactions within time period.
-    transaction.time.subtract(7, 'd');
-  });
   for(let i = 0; i < baseChart.length; i++){
     const shares = countStocks(transactions, baseChart[i].date);
     Object.keys(shares).forEach(symbol => {

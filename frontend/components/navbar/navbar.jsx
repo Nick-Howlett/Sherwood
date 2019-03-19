@@ -9,9 +9,9 @@ export default (props) => {
         <div id="rh-logo-nav"></div>
       </a>
       <div id="nav-middle">
-        <SearchContainer/>
+        <SearchContainer />
       </div>
-      <NavbarRightContainer/>
+      <NavbarRightContainer />
     </nav>
   )
 }

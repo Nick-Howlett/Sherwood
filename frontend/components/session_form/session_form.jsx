@@ -6,14 +6,18 @@ class SessionForm extends React.Component{
   constructor(props){
     super(props);
     this.state = {username: "", password: ""};
-
+    this.demoUsername = "xXSherriff_0f_N0ttinghamXx";
+    this.demoPassword = "password";
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.loginUser = this.loginUser.bind(this);
     this.onChange = this.update.bind(this);
   }
 
   componentDidMount(){
     if(this.props.demo){
-      this.loginUser(this.props.demo);
+      setTimeout( () => {
+        this.loginUser(this.props.demo);
+      }, 1000);
     }
   }
 
@@ -28,10 +32,10 @@ class SessionForm extends React.Component{
     }
   }
 
-  loginUser(user){
-    const username = user.username;
-    const password = user.password;
-    const typeSpeed = 50;
+  loginUser(){
+    const username = this.demoUsername;
+    const password = this.demoPassword;
+    const typeSpeed = 75;
     for(let i = 0; i < username.length; i++){
       setTimeout(() => {
         this.setState({username: this.state.username + username[i]});
@@ -74,6 +78,7 @@ class SessionForm extends React.Component{
               </div>
               <input className="submit-button" type="submit" value={this.props.formType}/>
             </form>
+            <button className="submit-button demo-login" onClick={this.loginUser}>Demo Login</button>
           </div>
         </div>
       </div>

@@ -90,6 +90,7 @@ export const removeWatch = id => dispatch => {
 
 
 export const getWatchlistInfo = watchedStocks => dispatch => {
+  if(Object.keys(watchedStocks).length === 0) return null;
   return APIUtil.getWatchlistInfo(watchedStocks.map(stock => stock.symbol)).then(info => dispatch(receiveWatchlistInfo(info, watchedStocks)));
 }
 
