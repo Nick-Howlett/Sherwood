@@ -17,7 +17,7 @@ class SessionForm extends React.Component{
     if(this.props.demo){
       setTimeout( () => {
         this.loginUser(this.props.demo);
-      }, 1000);
+      }, 500);
     }
   }
 

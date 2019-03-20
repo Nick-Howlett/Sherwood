@@ -119,6 +119,7 @@ export const formatChart = (chart, type) => {
         return [];
       }
       let date = chart[i].date;
+      if(!date) date = chart[i + 1].date; //sometimes the first minute of the day doesn't have an associated date.
       let minute = chart[i].minute;  
       datum.time = moment.tz(`${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)} ${minute}-05:00`, "America/New_York"); //ugly date formatting to ISO String so that moment can read it.
       datum.label = `${datum.time.format("hh:mm A")} ET`; 

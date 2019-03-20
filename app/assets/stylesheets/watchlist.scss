@@ -15,7 +15,22 @@
 
 #watchlist{
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.01), 0 3px 24px rgba(48, 51, 51, 0.09);
-  padding: 0 24px;
+  padding: 0 6px;
+  overflow-y: scroll;
+  max-height: 800px;
+  h3{
+    font-weight: 400;
+    line-height: 22px;
+  }
+  .watchlist-header h3{
+    font-weight: 550;
+  }
+}
+
+
+::-webkit-scrollbar {
+  width: 0px;  /* remove scrollbar space */
+  background: transparent;  /* optional: just make scrollbar invisible */
 }
 
 .watchlist-item{
@@ -25,12 +40,8 @@
   align-items: center;
   justify-content: space-between;
   font-size: 13px;
-  margin: 0 -24px;
   padding: 0 24px;
   cursor: pointer;
-  div{
-    font-weight: 550;
-  }
   svg{
     cursor:pointer;
   }
@@ -41,17 +52,16 @@
 }
 
 .watchlist-item:hover{
-  background-color: $rh_lgrey;
+  background-color: $rh_lightergrey;
 }
 
 .watchlist-header{
   height: 52px;
   width: 227px;
   border-bottom: 1px solid $rh_lgrey;
-  padding: 4px 24px, 0;
   padding: 4px 24px 0;
-  margin: 0 -24px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
+
 }

@@ -110,6 +110,10 @@ h3{
   }
 } 
 
+.news-item:hover{
+  background: $rh_lightergrey;
+}
+
 .news-right{
   display: flex;
   flex-direction: column;
