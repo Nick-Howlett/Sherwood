@@ -1,12 +1,11 @@
 import moment from 'moment';
-import tz from 'moment-timezone';
 import {countStocks} from '../actions/selectors';
 
 export const createProfileCharts = (transactions, charts) => {
   Object.keys(charts).forEach(symbol => {
     charts[symbol].chart.reverse();
   });
-  const baseChart = removeValues(formatChart(charts.AAPL.chart, '5y')); //We ensure that we always have the apple chart and we know it goes back the full five years. O(1) fixed chart length
+  const baseChart = removeValues(formatChart(charts["AAPL"].chart, '5y')); //We ensure that we always have the apple chart and we know it goes back the full five years. O(1) fixed chart length
   for(let i = 0; i < baseChart.length; i++){
     const shares = countStocks(transactions, baseChart[i].date);
     Object.keys(shares).forEach(symbol => {
@@ -26,7 +25,7 @@ const removeValues = chart => {
     datum.open = 0;
   });
   return chart;
-}
+};
 
 export const createProfile1dChart = (shares, charts) => {
   const symbols = Object.keys(shares);
@@ -70,54 +69,24 @@ export const formatChart = (chart, type) => {
   } else{
     for(let i = 0; i < chart.length; i += 5){
       let datum = {};
+      let noData = true;
       if(chart[i].marketOpen){
         datum.marketOpen = chart[i].marketOpen;
-      } else if(chart[i].open){ //fix those last three data points
-        datum.marketOpen = chart[i].open;
-      } else if(chart[i + 1] && chart[i + 1].marketOpen){
-       datum.marketOpen = chart[i + 1].marketOpen;
-      } else if(chart[i - 1] && chart[i - 1].marketOpen){
-       datum.marketOpen = chart[i - 1].marketOpen;
-      } else if(chart[i + 2] && chart[i + 2].marketOpen){
-       datum.marketOpen = chart[i + 2].marketOpen;
-      } else if(chart[i - 2] && chart[i - 2].marketOpen){
-       datum.marketOpen = chart[i - 2].marketOpen;
+        noData = false;
+      } else {
+        for(j = i - 4; j < i + 5; i++){
+          if(chart[j].marketOpen){
+            datum.marketOpen = chart[j].marketOpen;
+            noData = false;
+            break;
+          } else if(chart[j].open){
+            datum.marketOpen = chart[i].open;
+            noData = false;
+            break;
+          }
+        }
       }
-      else if(chart[i + 3] && chart[i + 3].marketOpen){
-       datum.marketOpen = chart[i + 3].marketOpen;
-      }
-      else if(chart[i - 3] && chart[i - 3].marketOpen){
-       datum.marketOpen = chart[i - 3].marketOpen;
-      } 
-      else if(chart[i + 4] && chart[i + 4].marketOpen){
-        datum.marketOpen = chart[i + 4].marketOpen;
-      }
-      else if(chart[i - 4] && chart[i - 4].marketOpen){
-        datum.marketOpen = chart[i - 4].marketOpen;
-      } else if(chart[i + 1] && chart[i + 1].open){ //start checking opens instead, for last 15 minutes of graph where there are only opens, no marketOpens.
-        datum.marketOpen = chart[i + 1].open;
-      } else if(chart[i - 1] && chart[i - 1].open){
-        datum.marketOpen = chart[i - 1].open;
-      } else if(chart[i + 2] && chart[i + 2].open){
-        datum.marketOpen = chart[i + 2].open;
-      } else if(chart[i - 2] && chart[i - 2].open){
-        datum.marketOpen = chart[i - 2].open;
-      }
-      else if(chart[i + 3] && chart[i + 3].open){
-        datum.marketOpen = chart[i + 3].open;
-      }
-      else if(chart[i - 3] && chart[i - 3].open){
-        datum.marketOpen = chart[i - 3].open;
-      } 
-      else if(chart[i + 4] && chart[i + 4].open){
-        datum.marketOpen = chart[i + 4].open;
-      }
-      else if(chart[i - 4] && chart[i - 4].open){
-        datum.marketOpen = chart[i - 4].open;
-      } 
-      else{
-        return [];
-      }
+      if(noData) return [];
       let date = chart[i].date;
       if(!date) date = chart[i + 1].date; //sometimes the first minute of the day doesn't have an associated date.
       let minute = chart[i].minute;  
@@ -127,10 +96,9 @@ export const formatChart = (chart, type) => {
     }
   }
   return res;
-}
+};
 
 
-//TODO what does the call return before the markets open on a day?
 /*
   Pad Chart -
   adds data points to the beginning and end of the chart to create a full day's chart
@@ -161,4 +129,4 @@ export const padChart =  chart => {
     currentTime.add(5, 'm');
   }
   return padLeft.concat(chart, padRight);
-}
+};
