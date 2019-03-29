@@ -75,12 +75,13 @@ export const formatChart = (chart, type) => {
         noData = false;
       } else {
         for(let j = i - 4; j < i + 5; j++){
+          if(!chart[j]) continue;
           if(chart[j].marketOpen){
             datum.marketOpen = chart[j].marketOpen;
             noData = false;
             break;
           } else if(chart[j].open){
-            datum.marketOpen = chart[i].open;
+            datum.marketOpen = chart[j].open;
             noData = false;
             break;
           }
