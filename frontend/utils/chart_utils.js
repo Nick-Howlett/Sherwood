@@ -74,7 +74,7 @@ export const formatChart = (chart, type) => {
         datum.marketOpen = chart[i].marketOpen;
         noData = false;
       } else {
-        for(let j = i - 4; j < i + 5; i++){
+        for(let j = i - 4; j < i + 5; j++){
           if(chart[j].marketOpen){
             datum.marketOpen = chart[j].marketOpen;
             noData = false;
