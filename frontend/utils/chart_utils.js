@@ -2,24 +2,24 @@ import moment from 'moment';
 import {countStocks} from '../actions/selectors';
 
 export const createProfileCharts = (transactions, charts) => {
-  Object.keys(charts).forEach(symbol => {
-    charts[symbol].chart.reverse();
-  });
-  const baseChart = removeValues(formatChart(charts["AAPL"].chart, '5y')); //We ensure that we always have the apple chart and we know it goes back the full five years. O(1) fixed chart length
-  for(let i = 0; i < baseChart.length; i++){
-    const shares = countStocks(transactions, baseChart[i].date);
-    Object.keys(shares).forEach(symbol => {
-      if(charts[symbol].chart[i])
-        baseChart[i].open += charts[symbol].chart[i].open * shares[symbol];
-        baseChart[i].close += charts[symbol].chart[i].close * shares[symbol];
+  //we reverse to line the charts up. Not all charts have 5 years of data, but all have data starting from now going back
+  Object.keys(charts).forEach(symbol => charts[symbol].chart.reverse()); 
+  const baseChart = createBlankChart(formatChart(charts["AAPL"].chart, '5y')); //We ensure that we always have the apple chart and we know it goes back the full five years
+  baseChart.forEach((day, i) => {
+    const numSharesOnDay = countStocks(transactions, day.date); //how many and which stocks did the user have on this day?
+    Object.keys(numSharesOnDay).forEach(symbol => {
+      const dayPrice = charts[symbol].chart[i];
+      const numShares = numSharesOnDay[symbol];
+      day.open += dayPrice.open * numShares;
+      day.close += dayPrice.close * numShares;
     });
-  }
-  return createCharts(baseChart.reverse());
+  });
+  return createDateRangeCharts(baseChart.reverse());
 };
 
 
 
-const removeValues = chart => {
+const createBlankChart = chart => {
   chart.forEach(datum => {
     datum.close = 0;
     datum.open = 0;
@@ -45,7 +45,7 @@ export const createProfile1dChart = (shares, charts) => {
   return padChart(res);
 };
 
-export const createCharts = chart => {
+export const createDateRangeCharts = chart => {
   const charts = {};
   charts["5y"] = chart;
   charts["1y"] = chart.slice(chart.length - 252);

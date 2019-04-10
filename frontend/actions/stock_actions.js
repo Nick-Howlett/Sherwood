@@ -1,5 +1,5 @@
 import * as APIUtil from "../utils/stock_api_utils";
-import {padChart, formatChart, createCharts, createProfileCharts, createProfile1dChart} from '../utils/chart_utils';
+import {padChart, formatChart, createDateRangeCharts, createProfileCharts, createProfile1dChart} from '../utils/chart_utils';
 import {uniq} from 'lodash';
 
 export const RECEIVE_CHART = "RECEIVE_CHART";
@@ -39,7 +39,7 @@ export const makeTransaction = transaction => dispatch => {
 export const getCharts = symbol => dispatch => {
   const charts = {};
   return APIUtil.getChart(symbol, "5y").then(chart => {
-    Object.assign(charts, createCharts(formatChart(chart, "5y")));
+    Object.assign(charts, createDateRangeCharts(formatChart(chart, "5y")));
     return APIUtil.getChart(symbol, '1d').then(chart => {
       Object.assign(charts, {"1d": padChart(formatChart(chart, "1d"))});
       dispatch(receiveChart(charts));
