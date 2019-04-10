@@ -3,7 +3,7 @@
 ## About
 [Live Demo](https://sherwoodapp.herokuapp.com?utm_source=readme&medium=body)
 
-Sherwood is a clone of the popular stock trading site robinhood.com. 
+Sherwood is a single page app clone of the popular stock trading site robinhood.com featuring over 8,000 publicly traded companies complete with company information, real-time stock data, and interactive charts of stock and portfolio performance.
 
 ## Site Features
   * Account creation/User authentication
@@ -15,7 +15,7 @@ Sherwood is a clone of the popular stock trading site robinhood.com.
   * Ability to 'buy' and 'sell' stocks within Sherwood's ecosystem.
   
 ### Profile Chart
-<img src="https://raw.githubusercontent.com/Nick-Howlett/Sherwood/master/app/assets/images/Screenshot_profile.png"/>
+<img src="https://raw.githubusercontent.com/Nick-Howlett/Sherwood/master/app/assets/images/gif-profile.gif"/>
 
 
 ## Technologies
