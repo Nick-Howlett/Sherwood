@@ -36,7 +36,7 @@ export const createProfileCharts = (transactions, charts) => {
   return createDateRangeCharts(baseChart.reverse());
 };
 ```
-The first issue was, of course, avoiding high runtimes as a user could have a massive volume of transactions over a five year period. Fortunately, because each chart can have up to around 1,200 data points, any manipulation of charts remains constant time. The algorithm is therefore O(m * n) where m is the number of transactions and n is the number of different stocks the user owns. 
+The first issue was, of course, avoiding high runtimes as a user could have a massive volume of transactions over a five year period. Fortunately, because each chart can have up to around 1,200 data points, any manipulation of charts remains constant time. By calculating the number of each stock the user has each day, and iterating through each symbol of stocks owned that day, our algorithm is worst case O(m * n) where m is the number of transactions and n is the number of different stocks the user owns, as at most we iterate through m transactions and all n symbols the user owns for each of 1,200 days.
 
 Another early roadblock was lining up companies which hadn't been public the full five years. If company A went public four years ago, then their first chart data point will be on a different date from company B who went public five years ago. I came to the conclusion that the best solution was to simply reverse the charts to line them up, such that the first data point for both company A and B is yesterday. 
 
