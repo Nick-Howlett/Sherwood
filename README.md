@@ -46,5 +46,5 @@ The final issue was showing five years of data if the user had no stocks as old 
 <img src="https://raw.githubusercontent.com/Nick-Howlett/Sherwood/master/app/assets/images/gif-stock-page.gif"/>
 
 ## Technologies
-Sherwood uses a Ruby on Rails backend with a Postgresql database to store non-real time external information such as certain stock details(company name, location, number of employees) as well as users, transactions, and watchlists. Sherwood's frontend is built in React/Redux, with chart data displayed by Recharts, Stock information provided by the [IEX API](https://iextrading.com/developer/docs/) and news provided by the [News Api](https://newsapi.org/). 
+Sherwood uses a Ruby on Rails backend with a PostgreSQL database to store non-real time external information such as certain stock details(company name, location, number of employees) as well as users, transactions, and watchlists. Sherwood's frontend is built in React/Redux, with chart data displayed using Recharts, Stock information provided by the [IEX API](https://iextrading.com/developer/docs/) and news provided by the [News Api](https://newsapi.org/). 
 
