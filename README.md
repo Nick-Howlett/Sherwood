@@ -25,7 +25,7 @@ export const createProfileCharts = (transactions, charts) => {
   Object.keys(charts).forEach(symbol => charts[symbol].chart.reverse()); 
   //We have configured charts to always contain apple and we know it goes back the full five years, so we build our base from it.
   baseChart.forEach((day, i) => {
-    const numSharesOnDay = countStocks(transactions, day.date); //how many and which stocks did the user have on this day?
+    const numSharesOnDay = countStocks(transactions, day.date);
     Object.keys(numSharesOnDay).forEach(symbol => {
       const dayPrice = charts[symbol].chart[i];
       const numShares = numSharesOnDay[symbol];
