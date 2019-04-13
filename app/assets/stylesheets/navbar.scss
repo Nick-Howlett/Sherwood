@@ -15,7 +15,15 @@
     align-items: center;
     justify-content: center;
     left: 48px;
+    svg{
+      width: 25px;
+      height: 25px;
+    }
   }
+}
+
+.logo:hover path{
+  fill: $rh_green;
 }
 
 #logout{
@@ -23,16 +31,16 @@
 }
 
 #rh-logo-nav{
-  background-image: url("sherwood_logo_black.png");
   background-size: 100%, 100%;
   background-repeat: no-repeat;
   width: 25px;
   height: 35px;
+  svg{
+    width: 25px;
+    height: 35px;
+  }
 }
 
-#rh-logo-nav:hover{
-  background-image: url("sherwood_logo_green.png");
-}
 
 #navbar-right{
   position: absolute;

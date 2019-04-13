@@ -9,11 +9,12 @@
 }
 
 .splash-logo{
-  background-image: url("sherwood_logo_black.png");
   width: 25px;
   height: 35px;
-  background-size: 100%, 100%;
-  background-repeat: no-repeat;
+  svg{
+    width: 25px;
+    height: 35px;
+  }
   margin-top: 5px;
 }
 
@@ -73,8 +74,8 @@
 .splash-left:hover{
   color: $rh_green;
   cursor: pointer;
-  .splash-logo{
-    background-image: url("sherwood_logo_green.png");
+  path{
+    fill: $rh_green;
   }
 }
 

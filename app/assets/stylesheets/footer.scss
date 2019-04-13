@@ -6,23 +6,8 @@ footer{
   a{
     margin: 0 30px;
   }
-  a.github{
-    background-image: url("GitHub-Mark-64px.png");
-    background-size: 100% 100%;
-    width: 64px;
-    height: 64px;
-  }
-  a.github:hover{
-    background-image: url("GitHub-Mark-64px_green.png");
-  }
-  a.linkedin{
-    background-image: url("linkedin_logo.png");
-    background-size: 100% 100%;
-    width: 64px;
-    height: 64px;
-  }
-  a.linkedin:hover{
-    background-image: url("linkedin_logo_green.png");
+  a:hover{
+    color: $rh_green;
   }
 }
 

@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import Logo from "../logo";
 
 
 
@@ -7,7 +8,9 @@ export default props => {
   return (
     <nav className="splash-nav">
       <a href="/" className="splash-left">
-        <div className="splash-logo"></div>
+        <div className="splash-logo">
+          <Logo/>
+        </div>
         <span>sherwood</span>
       </a>
       <div className="splash-right">
