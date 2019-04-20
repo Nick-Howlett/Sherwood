@@ -29,7 +29,7 @@ class StockChart extends React.Component{
             <div className="data-error">
               <span style={{fontSize: "16", color:"red"}}>The Investor's exchange API is in the process of being deprecated, and as a result we are currently unable to display intraday data.<br></br>
               We apologize for the inconvenience as we switch to a new provider! To see a historic GIF of intraday data display please visit </span>
-                <a href="https://raw.githubusercontent.com/Nick-Howlett/Sherwood/master/app/assets/images/gif-profile.gif">This link</a> 
+                <a href="https://raw.githubusercontent.com/Nick-Howlett/Sherwood/master/app/assets/images/gif-profile.gif">Here</a> 
             </div> : ""}
         <h1 id="stock-name">{this.props.name}</h1>
         <LineChart width={676} height={196} data={data}>
