@@ -18,7 +18,6 @@ export const createProfileCharts = (transactions, charts) => {
 };
 
 
-
 const createBlankChart = chart => {
   chart.forEach(datum => {
     datum.close = 0;
@@ -59,35 +58,22 @@ export const formatChart = (chart, type) => {
   const res = [];
   if(type === '5y'){
     for(let i = 0; i < chart.length; i++){
-      let datum = {};
-      datum.close = chart[i].close;
-      datum.open = chart[i].open;
-      datum.date = moment(chart[i].date);
-      datum.label = datum.date.format("MMM DD YYYY");
+      let datum = {
+        close: chart[i].close,
+        open: chart[i].open,
+        date: moment(chart[i].date)
+      };
+      datum.label = datum.date.format("MMM DD YYYY"); //chart label for display
       res.push(datum);
     }
   } else{
     for(let i = 0; i < chart.length; i += 5){
       let datum = {};
-      let noData = true;
       if(chart[i].marketOpen){
         datum.marketOpen = chart[i].marketOpen;
-        noData = false;
       } else {
-        for(let j = i - 4; j < i + 5; j++){
-          if(!chart[j]) continue;
-          if(chart[j].marketOpen){
-            datum.marketOpen = chart[j].marketOpen;
-            noData = false;
-            break;
-          } else if(chart[j].open){
-            datum.marketOpen = chart[j].open;
-            noData = false;
-            break;
-          }
-        }
+        if(!checkSurroundingPoints(datum, chart, i)) return [];
       }
-      if(noData) return [];
       let date = chart[i].date;
       if(!date) date = chart[i + 1].date; //sometimes the first minute of the day doesn't have an associated date.
       let minute = chart[i].minute;  
@@ -97,6 +83,20 @@ export const formatChart = (chart, type) => {
     }
   }
   return res;
+};
+
+export const checkSurroundingPoints = (datum, chart, i) => {
+  for(let j = i - 4; j < i + 5; j++){
+    if(!chart[j]) continue;
+    if(chart[j].marketOpen){
+      datum.marketOpen = chart[j].marketOpen;
+      return true;
+    } else if(chart[j].open){
+      datum.marketOpen = chart[j].open;
+      return true;
+    }
+  }
+  return false;
 };
 
 
