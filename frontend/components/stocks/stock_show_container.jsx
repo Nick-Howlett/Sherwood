@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import StockShow from "./stock_show";
-import {getStock, getNews, getSearch} from '../../actions/stock_actions';
+import {getStockDisplay, getStockHistoricalCharts, getNews, getSearch} from '../../actions/stock_actions';
 import {withRouter} from "react-router-dom";
 import {countStocks, transactionArray} from '../../actions/selectors';
 
@@ -16,7 +16,8 @@ const msp = (state, ownProps) => ({
 
 
 const mdp = dispatch => ({
-  getStock: symbol => dispatch(getStock(symbol)),
+  getStockDisplay: symbol => dispatch(getStockDisplay([symbol])),
+  getStockHistoricalCharts: symbol => dispatch(getStockHistoricalCharts([symbol])),
   getNews: name => dispatch(getNews(name)),
   getSearch: () => dispatch(getSearch())
 });

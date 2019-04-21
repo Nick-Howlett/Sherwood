@@ -22,22 +22,30 @@ class Profile extends React.Component{
         const watchSymbols = Object.keys(this.props.watchedStocks).map(key => this.props.watchedStocks[key].symbol);
         symbols = symbols.concat(watchSymbols, ["AAPL"]);
         symbols = [...new Set(symbols)];
-        const promises = symbols.map(symbol => this.props.getStock(symbol));
-        Promise.all(promises).then(() => {
+        this.props.getStockDisplay(symbols)
+        .then(() => {
+            console.log(this.props.shares);
+            console.log(this.props.stocks);
             this.setState({ownedStocks: Object.keys(this.props.shares).map(symbol => Object.assign(this.props.stocks[symbol], {shares: this.props.shares[symbol]}))});
             this.setState({watchedStocks: watchSymbols.map(symbol => Object.assign(this.props.stocks[symbol], {shares: null}))});
             let total = 0;
             this.state.ownedStocks.forEach(stock => total += parseFloat(stock.close_yesterday) * this.props.shares[stock.symbol]);
             this.setState({prev: total});
-            const fiveYearCharts = {};
-            symbols.forEach(symbol => fiveYearCharts[symbol] = this.props.stocks[symbol].charts["5y"]);
             const oneDayCharts = {};
+            const profileCharts = {};
             symbols.forEach(symbol => oneDayCharts[symbol] = this.props.stocks[symbol].charts["1d"]);
-            const profileCharts = createProfileCharts(this.props.transactions, fiveYearCharts);
-            profileCharts["1d"] = createProfile1dChart(this.props.shares, oneDayCharts);
+            Object.assign(profileCharts, {"1d": createProfile1dChart(this.props.shares, oneDayCharts)});
             this.setState({profileCharts: profileCharts});
+        })
+        .then(() => {
+            this.props.getStockHistory(symbols)
+            .then(() => {
+                const fiveYearCharts = {};
+                symbols.forEach(symbol => fiveYearCharts[symbol] = this.props.stocks[symbol].charts["5y"]);
+                this.setState({profileCharts: Object.assign(this.state.profileCharts, createProfileCharts(this.props.transactions, fiveYearCharts))});
+            });
+
         });
-    
         this.props.getNews();
     }
     render(){

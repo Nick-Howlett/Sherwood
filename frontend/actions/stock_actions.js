@@ -1,8 +1,7 @@
 import * as APIUtil from "../utils/stock_api_utils";
 import {formatChart, createProfileCharts, createProfile1dChart} from '../utils/chart_utils';
-import {uniq} from 'lodash';
 
-export const RECEIVE_STOCK = "RECEIVE_STOCK";
+export const RECEIVE_STOCKS = "RECEIVE_STOCKS";
 export const RECEIVE_CHART = "RECEIVE_CHART";
 export const RECEIVE_NEWS = "RECEIVE_NEWS";
 export const RECEIVE_TRANSACTION = "RECEIVE_TRANSACTION";
@@ -14,18 +13,35 @@ export const DELETE_WATCH = "DELETE_WATCH";
 export const RECEIVE_WATCHLIST_INFO = "RECEIVE_WATCHLIST_INFO";
 
 
-export const getStock = symbol => dispatch => {
-  const stock = {};
-  const charts = {};
-  return Promise.all([APIUtil.fetchStock(symbol), 
-               APIUtil.getInfo(symbol), 
-               APIUtil.getHistoricalChart(symbol),
-               APIUtil.getIntradayChart(symbol)])
-  .then(values => {
-      values.slice(0, 2).forEach(value => Object.assign(stock, value));
-      values.slice(2).forEach(value => Object.assign(charts, formatChart(value)));
-      stock.charts = charts;
-      return dispatch(receiveStock({[symbol]: stock}));
+export const getStockDisplay = symbols => dispatch => { //Get any info we need to display the page's initial state
+  const stocks = {};
+  const promises = [];
+  symbols.forEach(symbol => {
+      promises.push(Promise.all([APIUtil.fetchStock(symbol), 
+                  APIUtil.getInfo(symbol),
+                  APIUtil.getIntradayChart(symbol)])
+      .then(values => {
+          values.slice(0, 2).forEach(value => Object.assign(stocks, {[symbol]: value}));
+          const charts = {};
+          Object.assign(charts, formatChart(values[2]));
+          stocks[symbol].charts = charts;
+      }));
+  });
+  return Promise.all(promises).then(() => {
+    dispatch(receiveStocks(stocks));
+  });
+};
+
+export const getStockHistoricalCharts = symbols => dispatch => { //load in additional stock charts
+  const stocks = {};
+  const promises = [];
+  symbols.forEach(symbol => {
+    promises.push(APIUtil.getHistoricalChart(symbol).then(chart => {
+      Object.assign(stocks, {[symbol]: {charts: formatChart(chart)}});
+    }));
+  });
+  return Promise.all(promises).then(() => {
+    dispatch(receiveStocks(stocks));
   });
 };
 
@@ -69,9 +85,9 @@ export const receiveTransactions = transactions => ({
 });
 
 
-export const receiveStock = stock => ({
-  type: RECEIVE_STOCK,
-  stock
+export const receiveStocks = stocks => ({
+  type: RECEIVE_STOCKS,
+  stocks
 });
 
 export const receiveNews = news => ({

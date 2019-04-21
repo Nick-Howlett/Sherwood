@@ -16,7 +16,7 @@ class StockShow extends React.Component {
 
   getData(symbol){
     this.props.getSearch().then(() => {
-      this.props.getStock(symbol);
+      this.props.getStockDisplay(symbol).then(this.props.getStockHistoricalCharts(symbol));
       this.props.getNews(this.props.stocks[symbol.toUpperCase()].name);
     });
   }

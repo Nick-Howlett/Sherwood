@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {logout} from '../../actions/session_actions';
-import {getSearch, getStock, getNews} from '../../actions/stock_actions';
+import {getSearch, getStockDisplay, getStockHistoricalCharts, getNews} from '../../actions/stock_actions';
 import {countStocks, watchedStocks, transactionArray} from "../../actions/selectors";
 import Profile from './profile';
 
@@ -23,7 +23,8 @@ const msp = state => {
 const mdp = dispatch => ({
   logout: () => dispatch(logout()),
   getSearch: () => dispatch(getSearch()),
-  getStock: symbol => dispatch(getStock(symbol)),
+  getStockDisplay: symbols => dispatch(getStockDisplay(symbols)),
+  getStockHistory: symbols => dispatch(getStockHistoricalCharts(symbols)),
   getNews: () => dispatch(getNews())
 });
 

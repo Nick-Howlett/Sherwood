@@ -1,10 +1,12 @@
-import {RECEIVE_STOCK} from "../actions/stock_actions";
+import {RECEIVE_STOCKS} from "../actions/stock_actions";
 
 export default  (state = {}, action) => {
-  let stock;
   switch(action.type){
-    case RECEIVE_STOCK:
-      return Object.assign({}, state, action.stock);
+    case RECEIVE_STOCKS:
+      Object.keys(action.stocks).forEach(symbol => {
+        if(state[symbol]) action.stocks[symbol].charts = Object.assign(state[symbol].charts, action.stocks[symbol].charts);
+      });
+      return Object.assign({}, state, action.stocks);
     default:
       return state;
   }
