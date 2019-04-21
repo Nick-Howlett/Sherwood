@@ -26,7 +26,9 @@ class Profile extends React.Component{
         Promise.all(promises).then(() => {
             this.setState({ownedStocks: Object.keys(this.props.shares).map(symbol => Object.assign(this.props.stocks[symbol], {shares: this.props.shares[symbol]}))});
             this.setState({watchedStocks: watchSymbols.map(symbol => Object.assign(this.props.stocks[symbol], {shares: null}))});
-            this.setState({prev: this.state.ownedStocks.length > 0 ? this.state.ownedStocks.reduce((acc, stock) => acc += stock.close_yesterday * this.props.shares[stock.symbol]) : 0});
+            let total = 0;
+            this.state.ownedStocks.forEach(stock => total += parseFloat(stock.close_yesterday) * this.props.shares[stock.symbol]);
+            this.setState({prev: total});
             const fiveYearCharts = {};
             symbols.forEach(symbol => fiveYearCharts[symbol] = this.props.stocks[symbol].charts["5y"]);
             const oneDayCharts = {};

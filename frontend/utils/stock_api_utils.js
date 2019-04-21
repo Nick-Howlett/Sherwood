@@ -30,18 +30,6 @@ export const getHistoricalChart = symbol => {
   });
 };
 
-export const getProfileChart = (symbols, range) => (
-  $.ajax({
-    method: "GET",
-    url:`https://api.iextrading.com/1.0/stock/market/batch`,
-    data: {
-      symbols: symbols.join(","),
-      types: "chart",
-      range: range
-    }
-  })
-);
-
 export const getInfo = symbol => {
   return $.ajax({
     method: "GET",
@@ -98,17 +86,5 @@ export const deleteWatch = id => (
   $.ajax({
     method: "DELETE",
     url: `api/stock_watches/${id}`
-  })
-);
-
-export const getProfilePrevClose = symbols => (
-  $.ajax({
-    method: "GET",
-    url: `https://api.iextrading.com/1.0/stock/market/batch`,
-    data: {
-      symbols: symbols.join(","),
-      types: "quote",
-      filter: "previousClose"
-    }
   })
 );

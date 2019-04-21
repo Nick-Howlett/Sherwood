@@ -1,5 +1,5 @@
 import * as APIUtil from "../utils/stock_api_utils";
-import {padChart, formatChart, createDateRangeCharts, createProfileCharts, createProfile1dChart} from '../utils/chart_utils';
+import {formatChart, createProfileCharts, createProfile1dChart} from '../utils/chart_utils';
 import {uniq} from 'lodash';
 
 export const RECEIVE_STOCK = "RECEIVE_STOCK";
@@ -29,36 +29,11 @@ export const getStock = symbol => dispatch => {
   });
 };
 
-export const getProfilePrevClose = (shares, id) => dispatch => {
-  if(Object.entries(shares).length === 0 && shares.constructor === Object){
-    return dispatch(receivePrevCloses(id, shares, {}));
-  } else{
-    APIUtil.getProfilePrevClose(Object.keys(shares)).then(prevCloses => dispatch(receivePrevCloses(id, shares, prevCloses)));
-  }
-};
 
 export const makeTransaction = transaction => dispatch => {
   return APIUtil.makeTransaction(transaction).then(payload => dispatch(receiveTransaction(payload)), 
   ({responseJSON}) => dispatch(receiveErrors(responseJSON)));
 };
-
-
-export const getProfileCharts = transactions => dispatch => {
-  const symbols = uniq(transactions.map(transaction => transaction.symbol));
-  if(transactions.length === 0){
-    return dispatch(receiveChart({"1w": [], "1m": [], "3m": [], "1y": [], "5y": []}));
-  } else{
-    return APIUtil.getProfileChart(['AAPL', ...symbols], "5y").then(charts => dispatch(receiveChart(createProfileCharts(transactions, charts))));
-  }
-}
-
-export const getProfile1dChart = shares => dispatch => {
-  if(Object.entries(shares).length === 0 && shares.constructor === Object){
-    return dispatch(receiveChart({"1d": []}));
-  } else {
-    return APIUtil.getProfileChart(Object.keys(shares), "1d").then(charts => dispatch(receiveChart({"1d": createProfile1dChart(shares, charts)})));
-  }
-}
 
 export const getNews = name => dispatch => {
   APIUtil.getNews(name).then(news => dispatch(receiveNews(news)));
@@ -77,11 +52,6 @@ export const removeWatch = id => dispatch => {
   return APIUtil.deleteWatch(id).then(({id}) => dispatch(deleteWatch(id)));
 };
 
-
-export const getWatchlistInfo = watchedStocks => dispatch => {
-  if(Object.keys(watchedStocks).length === 0) return null;
-  return APIUtil.getWatchlistInfo(watchedStocks.map(stock => stock.symbol)).then(info => dispatch(receiveWatchlistInfo(info, watchedStocks)));
-};
 
 export const receiveErrors = errors => ({
   type: RECEIVE_TRANSACTION_ERRORS,

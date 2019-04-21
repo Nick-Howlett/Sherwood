@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {logout} from '../../actions/session_actions';
-import {getSearch, getStock, getNews, getWatchlistInfo} from '../../actions/stock_actions';
+import {getSearch, getStock, getNews} from '../../actions/stock_actions';
 import {countStocks, watchedStocks, transactionArray} from "../../actions/selectors";
 import Profile from './profile';
 
