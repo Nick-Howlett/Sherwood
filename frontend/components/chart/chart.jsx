@@ -19,7 +19,7 @@ class StockChart extends React.Component{
     end = currentStocks[currentStocks.length - 1];
     return (
       <div id="stock-chart">
-        {this.state.currentChart === "1d" && this.state.charts[current].length === 0 ? 
+        {this.state.currentChart === "1d" && this.props.charts[current].length === 0 ? 
             <div className="data-error">
               <span style={{fontSize: "16", color:"red"}}> Insufficient data for intraday chart </span>
             </div> : ""}
