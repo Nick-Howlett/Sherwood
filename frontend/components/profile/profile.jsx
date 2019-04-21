@@ -19,14 +19,14 @@ class Profile extends React.Component{
             this.props.getSearch();
         }
         let symbols = this.props.transactions.map(transaction => transaction.symbol);
-        const watchSymbols = Object.keys(this.props.watchedStocks).map(key => this.props.watchedStocks[key].symbol)
+        const watchSymbols = Object.keys(this.props.watchedStocks).map(key => this.props.watchedStocks[key].symbol);
         symbols = symbols.concat(watchSymbols, ["AAPL"]);
         symbols = [...new Set(symbols)];
         const promises = symbols.map(symbol => this.props.getStock(symbol));
         Promise.all(promises).then(() => {
             this.setState({ownedStocks: Object.keys(this.props.shares).map(symbol => Object.assign(this.props.stocks[symbol], {shares: this.props.shares[symbol]}))});
             this.setState({watchedStocks: watchSymbols.map(symbol => Object.assign(this.props.stocks[symbol], {shares: null}))});
-            this.setState({prev: this.state.ownedStocks.reduce((acc, stock) => acc += stock.close_yesterday * this.props.shares[stock.symbol])});
+            this.setState({prev: this.state.ownedStocks.length > 0 ? this.state.ownedStocks.reduce((acc, stock) => acc += stock.close_yesterday * this.props.shares[stock.symbol]) : 0});
             const fiveYearCharts = {};
             symbols.forEach(symbol => fiveYearCharts[symbol] = this.props.stocks[symbol].charts["5y"]);
             const oneDayCharts = {};
