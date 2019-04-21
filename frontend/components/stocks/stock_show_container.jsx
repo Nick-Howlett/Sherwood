@@ -1,12 +1,12 @@
 import {connect} from 'react-redux';
 import StockShow from "./stock_show";
-import {fetchStock, getInfo, getNews, getCharts, getPrice, getSearch} from '../../actions/stock_actions';
+import {getStock, getNews, getSearch} from '../../actions/stock_actions';
 import {withRouter} from "react-router-dom";
 import {countStocks, transactionArray} from '../../actions/selectors';
 
 
 const msp = (state, ownProps) => ({
-  charts: state.entities.charts,
+  charts: state.entities.stocks[ownProps.match.params.symbol] ? state.entities.stocks[ownProps.match.params.symbol].charts : null,
   info: state.entities.stocks[ownProps.match.params.symbol],
   news: state.entities.news,
   currentUser: state.entities.users[state.session.id],
@@ -16,11 +16,8 @@ const msp = (state, ownProps) => ({
 
 
 const mdp = dispatch => ({
-  fetchStock: symbol => dispatch(fetchStock(symbol)),
-  getInfo: symbol => dispatch(getInfo(symbol)),
+  getStock: symbol => dispatch(getStock(symbol)),
   getNews: name => dispatch(getNews(name)),
-  getCharts: symbol => dispatch(getCharts(symbol)),
-  getPrice: symbol => dispatch(getPrice(symbol)),
   getSearch: () => dispatch(getSearch())
 });
 

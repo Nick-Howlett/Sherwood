@@ -3,12 +3,12 @@ import {countStocks} from '../actions/selectors';
 
 export const createProfileCharts = (transactions, charts) => {
   //we reverse to line the charts up. Not all charts have 5 years of data, but all have data starting from now going back
-  Object.keys(charts).forEach(symbol => charts[symbol].chart.reverse()); 
-  const baseChart = createBlankChart(formatChart(charts["AAPL"].chart, '5y')); //We ensure that we always have the apple chart and we know it goes back the full five years
+  Object.keys(charts).forEach(symbol => charts[symbol].reverse()); 
+  const baseChart = createBlankChart(charts["AAPL"]); //We ensure that we always have the apple chart and we know it goes back the full five years
   baseChart.forEach((day, i) => {
     const numSharesOnDay = countStocks(transactions, day.date); //how many and which stocks did the user have on this day?
     Object.keys(numSharesOnDay).forEach(symbol => {
-      const dayPrice = charts[symbol].chart[i];
+      const dayPrice = charts[symbol][i];
       const numShares = numSharesOnDay[symbol];
       day.open += dayPrice.open * numShares;
       day.close += dayPrice.close * numShares;
@@ -23,6 +23,7 @@ const createBlankChart = chart => {
   chart.forEach(datum => {
     datum.close = 0;
     datum.open = 0;
+    datum.date = moment(datum.date);
   });
   return chart;
 };
@@ -31,18 +32,18 @@ export const createProfile1dChart = (shares, charts) => {
   const symbols = Object.keys(shares);
   const res = [];
   symbols.forEach(symbol => {
-    const chart = formatChart(charts[symbol].chart);
+    const chart = charts[symbol];
     const numShares = shares[symbol];
     for(let i = 0; i < chart.length; i++){
       if(res[i]){
-        res[i].marketOpen += chart[i].marketOpen * numShares;
+        res[i].open += chart[i].open * numShares;
       } else {
-        chart[i].marketOpen *= numShares;
+        chart[i].open *= numShares;
         res[i] = chart[i];
       }
     }
   });
-  return padChart(res);
+  return res;
 };
 
 export const createDateRangeCharts = chart => {
@@ -55,48 +56,19 @@ export const createDateRangeCharts = chart => {
   return charts;
 };
 
-export const formatChart = (chart, type) => {
-  const res = [];
-  if(type === '5y'){
-    for(let i = 0; i < chart.length; i++){
-      let datum = {};
-      datum.close = chart[i].close;
-      datum.open = chart[i].open;
-      datum.date = moment(chart[i].date);
-      datum.label = datum.date.format("MMM DD YYYY");
-      res.push(datum);
-    }
-  } else{
-    for(let i = 0; i < chart.length; i += 5){
-      let datum = {};
-      let noData = true;
-      if(chart[i].marketOpen){
-        datum.marketOpen = chart[i].marketOpen;
-        noData = false;
-      } else {
-        for(let j = i - 4; j < i + 5; j++){
-          if(!chart[j]) continue;
-          if(chart[j].marketOpen){
-            datum.marketOpen = chart[j].marketOpen;
-            noData = false;
-            break;
-          } else if(chart[j].open){
-            datum.marketOpen = chart[j].open;
-            noData = false;
-            break;
-          }
-        }
-      }
-      if(noData) return [];
-      let date = chart[i].date;
-      if(!date) date = chart[i + 1].date; //sometimes the first minute of the day doesn't have an associated date.
-      let minute = chart[i].minute;  
-      datum.time = moment.tz(`${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)} ${minute}-05:00`, "America/New_York"); //ugly date formatting to ISO String so that moment can read it.
-      datum.label = `${datum.time.format("hh:mm A")} ET`; 
-      res.push(datum);
-    }
-  }
-  return res;
+export const formatChart = chart => {
+  const chartData = chart.history || chart.intraday;
+  const formattedChart = Object.keys(chartData).map(date => {
+    const datum = chartData[date];
+    const momentDate = moment.tz(date, "America/New_York");
+    return {open: datum.open, 
+            close: datum.close, 
+            high: datum.high, 
+            low: datum.low, 
+            date: momentDate,
+            label: chart.history ? momentDate.format("MMM DD YYYY") : `${momentDate.format("hh:mm A")} ET`}; //different format for intraday
+  }).reverse();
+  return chart.history ? createDateRangeCharts(formattedChart) : {"1d": padChart(formattedChart)};
 };
 
 
@@ -107,26 +79,26 @@ export const formatChart = (chart, type) => {
 */
 export const padChart =  chart => {
   if(chart.length === 0) return chart;
-  const firstPrice = chart[0].marketOpen;
-  const lastPrice = chart[chart.length - 1].marketOpen;
-  let startTime = moment(`${chart[0].time.format("YYYY-MM-DD")}T09:00-05:00`);
-  const firstTime = chart[0].time;
-  let lastTime = chart[chart.length - 1].time;
+  const firstPrice = chart[0].open;
+  const lastPrice = chart[chart.length - 1].open;
+  let startTime = moment.tz(`${chart[0].date.format("YYYY-MM-DD")}T09:00`, "America/New_York");
+  const firstTime = chart[0].date;
+  let lastTime = chart[chart.length - 1].date;
   let currentTime = moment();
-  const endTime = moment(`${chart[0].time.format("YYYY-MM-DD")}T18:00-05:00`);
+  const endTime = moment.tz(`${chart[0].date.format("YYYY-MM-DD")}T18:00`, "America/New_York");
   const padLeft = [];
   const padRight = [];
   while(startTime.isBefore(firstTime)){
-    padLeft.push({time: startTime, marketOpen: firstPrice, label: `${startTime.format("hh:mm A")} ET`});
+    padLeft.push({date: startTime, open: firstPrice, label: `${startTime.format("hh:mm A")} ET`});
     startTime.add(5, "m");
   }
   if(currentTime.isAfter(endTime)) currentTime = endTime;
   while(lastTime.isBefore(currentTime)){
     lastTime.add(5, 'm');
-    padRight.push({time: lastTime, marketOpen: lastPrice, label: `${lastTime.format("hh:mm A")} ET`});  
+    padRight.push({date: lastTime, open: lastPrice, label: `${lastTime.format("hh:mm A")} ET`});  
   }
   while(currentTime.isBefore(endTime)){
-    padRight.push({time: currentTime, marketOpen: null, label: `${currentTime.format("hh:mm A")} ET`});
+    padRight.push({date: currentTime, open: null, label: `${currentTime.format("hh:mm A")} ET`});
     currentTime.add(5, 'm');
   }
   return padLeft.concat(chart, padRight);

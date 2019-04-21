@@ -5,41 +5,43 @@ import Chart from '../chart/chart';
 import Loading from '../loading';
 import WatchList from '../watchlist/watchlist';
 import Footer from '../footer';
-import {getWatchlistInfo} from '../../utils/stock_api_utils';
+import { createProfileCharts, createProfile1dChart } from '../../utils/chart_utils';
 
 class Profile extends React.Component{
 
+    constructor(props){
+        super(props);
+        this.state = {prev: null, ownedStocks: [], watchedStocks: [], profileCharts: {"1d": []}};
+    }
+
     componentDidMount(){
-        if(Object.entries(this.props.stocks ).length === 0 && this.props.stocks.constructor === Object){ //Code to see if an object is empty taken from https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
+        if(Object.entries(this.props.stocks).length === 0 && this.props.stocks.constructor === Object){ //Code to see if an object is empty taken from https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
             this.props.getSearch();
         }
-        this.symbols = Object.keys(this.props.shares);
-        this.ownedStocks = [];
-        if(this.symbols.length !== 0){
-            getWatchlistInfo(this.symbols).then(info => {
-                this.symbols.forEach(symbol => {
-                    const stock_info = {};
-                    stock_info.symbol = symbol;
-                    stock_info.shares = this.props.shares[symbol];
-                    stock_info.chart = info[symbol].chart;
-                    stock_info.price = info[symbol].quote.latestPrice;
-                    stock_info.prev = info[symbol].quote.previousClose;
-                    this.ownedStocks.push(stock_info);
-                });
-            });
-        }
+        let symbols = this.props.transactions.map(transaction => transaction.symbol);
+        const watchSymbols = Object.keys(this.props.watchedStocks).map(key => this.props.watchedStocks[key].symbol)
+        symbols = symbols.concat(watchSymbols, ["AAPL"]);
+        symbols = [...new Set(symbols)];
+        const promises = symbols.map(symbol => this.props.getStock(symbol));
+        Promise.all(promises).then(() => {
+            this.setState({ownedStocks: Object.keys(this.props.shares).map(symbol => Object.assign(this.props.stocks[symbol], {shares: this.props.shares[symbol]}))});
+            this.setState({watchedStocks: watchSymbols.map(symbol => Object.assign(this.props.stocks[symbol], {shares: null}))});
+            this.setState({prev: this.state.ownedStocks.reduce((acc, stock) => acc += stock.close_yesterday * this.props.shares[stock.symbol])});
+            const fiveYearCharts = {};
+            symbols.forEach(symbol => fiveYearCharts[symbol] = this.props.stocks[symbol].charts["5y"]);
+            const oneDayCharts = {};
+            symbols.forEach(symbol => oneDayCharts[symbol] = this.props.stocks[symbol].charts["1d"]);
+            const profileCharts = createProfileCharts(this.props.transactions, fiveYearCharts);
+            profileCharts["1d"] = createProfile1dChart(this.props.shares, oneDayCharts);
+            this.setState({profileCharts: profileCharts});
+        });
+    
         this.props.getNews();
-        this.props.getCharts(this.props.transactions);
-        this.props.get1dChart(this.props.shares);
-        this.props.getPrevClose(this.props.shares, this.props.userId);
-        this.props.getWatchlistInfo(this.props.watchedStocks);
     }
     render(){
-      if(!this.props.stocks.AAPL ||
-         !this.props.charts["1d"] ||
-         !this.props.charts["3m"] ||
-         !this.props.news ||
-         this.props.prev === undefined){
+      if(!this.props.news ||
+         !this.state.ownedStocks ||
+         this.state.prev === null){
           return <Loading />
       }
       return(  
@@ -49,12 +51,12 @@ class Profile extends React.Component{
                 </div>
                 <main id="main-page">
                 <div>
-                    <Chart charts={this.props.charts} name={null} prev={this.props.prev}/>
+                    <Chart charts={this.state.profileCharts} name={null} prev={this.state.prev}/>
                     <News news={this.props.news} />
                 </div>
                 <div id="side-column">
                   <div className="fixed">
-                    <WatchList ownedStocks={this.ownedStocks ? this.ownedStocks : []} watchedStocks={this.props.watchedStocks ? this.props.watchedStocks : []}/>
+                    <WatchList ownedStocks={this.state.ownedStocks} watchedStocks={this.state.watchedStocks}/>
                   </div>
                 </div>
             </main>
@@ -63,6 +65,7 @@ class Profile extends React.Component{
         )
     }
 }   
+
 
 
 export default Profile;

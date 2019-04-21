@@ -15,7 +15,7 @@ export default (state = {}, action) => {
         const symbol = watch.symbol;
         watch.chart = formatChart(action.info[symbol].chart);
         watch.price = action.info[symbol].quote.latestPrice;
-        watch.prev = action.info[symbol].quote.previousClose;
+        watch.prev = action.info[symbol].quote.close_yesterday;
         newState[watch.id] = watch;
       });
       return newState;

@@ -2,25 +2,31 @@ import * as APIUtil from "../utils/stock_api_utils";
 import {padChart, formatChart, createDateRangeCharts, createProfileCharts, createProfile1dChart} from '../utils/chart_utils';
 import {uniq} from 'lodash';
 
+export const RECEIVE_STOCK = "RECEIVE_STOCK";
 export const RECEIVE_CHART = "RECEIVE_CHART";
-export const RECEIVE_INFO = "RECEIVE_INFO";
 export const RECEIVE_NEWS = "RECEIVE_NEWS";
 export const RECEIVE_TRANSACTION = "RECEIVE_TRANSACTION";
 export const RECEIVE_TRANSACTIONS = "RECEIVE_TRANSACTIONS";
-export const RECEIVE_PREV_CLOSES = "RECEIVE_PREV_CLOSES";
-export const RECEIVE_PRICE = "RECEIVE_PRICE";
 export const RECEIVE_SEARCH = "RECEIVE_SEARCH";
 export const RECEIVE_TRANSACTION_ERRORS = "RECEIVE_TRANSACTION_ERRORS";
 export const RECEIVE_WATCH = "RECEIVE_WATCH";
 export const DELETE_WATCH = "DELETE_WATCH";
 export const RECEIVE_WATCHLIST_INFO = "RECEIVE_WATCHLIST_INFO";
 
-export const fetchStock = symbol => dispatch => {
-  APIUtil.fetchStock(symbol).then(info => dispatch(receiveInfo(symbol, info)));
-};
 
-export const getInfo = symbol => dispatch => {
-  APIUtil.getInfo(symbol).then(info => dispatch(receiveInfo(symbol, info)));
+export const getStock = symbol => dispatch => {
+  const stock = {};
+  const charts = {};
+  return Promise.all([APIUtil.fetchStock(symbol), 
+               APIUtil.getInfo(symbol), 
+               APIUtil.getHistoricalChart(symbol),
+               APIUtil.getIntradayChart(symbol)])
+  .then(values => {
+      values.slice(0, 2).forEach(value => Object.assign(stock, value));
+      values.slice(2).forEach(value => Object.assign(charts, formatChart(value)));
+      stock.charts = charts;
+      return dispatch(receiveStock({[symbol]: stock}));
+  });
 };
 
 export const getProfilePrevClose = (shares, id) => dispatch => {
@@ -29,23 +35,13 @@ export const getProfilePrevClose = (shares, id) => dispatch => {
   } else{
     APIUtil.getProfilePrevClose(Object.keys(shares)).then(prevCloses => dispatch(receivePrevCloses(id, shares, prevCloses)));
   }
-}
+};
 
 export const makeTransaction = transaction => dispatch => {
   return APIUtil.makeTransaction(transaction).then(payload => dispatch(receiveTransaction(payload)), 
   ({responseJSON}) => dispatch(receiveErrors(responseJSON)));
 };
 
-export const getCharts = symbol => dispatch => {
-  const charts = {};
-  return APIUtil.getChart(symbol, "5y").then(chart => {
-    Object.assign(charts, createDateRangeCharts(formatChart(chart, "5y")));
-    return APIUtil.getChart(symbol, '1d').then(chart => {
-      Object.assign(charts, {"1d": padChart(formatChart(chart, "1d"))});
-      dispatch(receiveChart(charts));
-    });
-  });
-};
 
 export const getProfileCharts = transactions => dispatch => {
   const symbols = uniq(transactions.map(transaction => transaction.symbol));
@@ -68,13 +64,6 @@ export const getNews = name => dispatch => {
   APIUtil.getNews(name).then(news => dispatch(receiveNews(news)));
 };
 
-export const getProfileNews = () => dispatch => {
-  APIUtil.getProfileNews().then(news => dispatch(receiveNews(news)));
-};
-
-export const getPrice = symbol => dispatch => {
-  APIUtil.getPrice(symbol).then(price => dispatch(receivePrice(symbol, price)));
-}
 
 export const getSearch = () => dispatch => {
   return APIUtil.getSearch().then(search => dispatch(receiveSearch(search)));
@@ -92,27 +81,12 @@ export const removeWatch = id => dispatch => {
 export const getWatchlistInfo = watchedStocks => dispatch => {
   if(Object.keys(watchedStocks).length === 0) return null;
   return APIUtil.getWatchlistInfo(watchedStocks.map(stock => stock.symbol)).then(info => dispatch(receiveWatchlistInfo(info, watchedStocks)));
-}
-
-
-export const receivePrevCloses = (id, shares, prevCloses) => ({
-  type: RECEIVE_PREV_CLOSES,
-  id,
-  shares,
-  prevCloses
-});
+};
 
 export const receiveErrors = errors => ({
   type: RECEIVE_TRANSACTION_ERRORS,
   errors
-})
-
-
-export const receivePrice = (symbol, price) => ({
-  type: RECEIVE_PRICE,
-  symbol,
-  price
-})
+});
 
 export const receiveTransaction = payload => ({
   type: RECEIVE_TRANSACTION,
@@ -122,19 +96,18 @@ export const receiveTransaction = payload => ({
 export const receiveTransactions = transactions => ({
   type: RECEIVE_TRANSACTIONS,
   transactions
-})
+});
 
 
-export const receiveInfo = (symbol, info) => ({
-  type: RECEIVE_INFO,
-  symbol,
-  info
+export const receiveStock = stock => ({
+  type: RECEIVE_STOCK,
+  stock
 });
 
 export const receiveNews = news => ({
   type: RECEIVE_NEWS,
   news
-})
+});
 
 
 export const receiveChart = chart => ({

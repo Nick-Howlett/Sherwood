@@ -13,7 +13,7 @@ class StockAbout extends React.Component{
     toggleState(field){
       return () => {
         this.setState({[field]: !this.state[field]});
-      }
+      };
     }
 
     render(){
@@ -31,16 +31,15 @@ class StockAbout extends React.Component{
                          "Employees": info.employees, 
                          "Headquarters": info.headquarters, 
                          "Founded": info.founded, 
-                         "Market Cap": info.marketCap, 
-                         "Price-Earnings Ratio": info.peRatio,
+                         "Market Cap": info.market_cap, 
                          "Dividend Yield": info.dividendYield,
-                         "Average Volume": info.avgTotalVolume,
-                         "High Today": formatMoney(info.high),
-                         "Low Today": formatMoney(info.low),
-                         "Open Price": formatMoney(info.open),
-                         "Volume": info.latestVolume,
-                         "52 Week High": formatMoney(info.week52High),
-                         "52 Week Low": formatMoney(info.week52Low)}
+                         "Average Volume": info.volume_avg,
+                         "High Today": formatMoney(info.day_high),
+                         "Low Today": formatMoney(info.day_low),
+                         "Open Price": formatMoney(info.price_open),
+                         "Volume": info.volume,
+                         "52 Week High": formatMoney(info["52_week_high"]),
+                         "52 Week Low": formatMoney(info["52_week_low"])};
       if(info.ceo === "—" && info.employees === "—" && info.founded === "—" && info.headquarters === "—"){ //Robinhood removes the top row if it has none of the four.
         delete gridValues["CEO"];
         delete gridValues["Employees"];

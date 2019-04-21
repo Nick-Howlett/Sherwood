@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const fetchStock = symbol => (
   $.ajax({
     method: "GET",
@@ -13,12 +15,20 @@ export const makeTransaction = transaction => (
   })
 );
 
-export const getChart = (symbol, range) => (
+export const getIntradayChart = symbol => (
   $.ajax({
     method: "GET",
-    url:`https://api.iextrading.com/1.0/stock/${symbol}/chart/${range}`
+    url:`https://www.worldtradingdata.com/api/v1/intraday?symbol=${symbol}&range=1&interval=5&api_token=XRILYfvsaaBx3J3bVFWvmYEWEH7TQI91gJrqQl0j3joYtOXxpEQmtUlsQBwn`
   })
 );
+
+export const getHistoricalChart = symbol => {
+  const dateEnd = moment().subtract(5, 'years').format("YYYY-MM-DD");
+  return $.ajax({
+    method: "GET",
+    url:`https://www.worldtradingdata.com/api/v1/history?symbol=${symbol}&date_from=${dateEnd}&api_token=XRILYfvsaaBx3J3bVFWvmYEWEH7TQI91gJrqQl0j3joYtOXxpEQmtUlsQBwn`
+  });
+};
 
 export const getProfileChart = (symbols, range) => (
   $.ajax({
@@ -32,50 +42,39 @@ export const getProfileChart = (symbols, range) => (
   })
 );
 
-
-
-export const getInfo = symbol => (
-  $.ajax({
+export const getInfo = symbol => {
+  return $.ajax({
     method: "GET",
-    url: `https://api.iextrading.com/1.0/stock/${symbol}/quote`,
-    data: {
-      filter: "previousClose, marketCap, peRatio, avgTotalVolume, high, low, open, latestVolume, week52High, week52Low"
-    }
-  })
-);
+    url: `https://www.worldtradingdata.com/api/v1/stock?symbol=${symbol}&api_token=XRILYfvsaaBx3J3bVFWvmYEWEH7TQI91gJrqQl0j3joYtOXxpEQmtUlsQBwn`
+  }).then(info => info.data[0]);
+};
 
-export const getNews = name => (
-  $.ajax({
-    method: "GET",
-    url: `https://newsapi.org/v2/everything`,
-    data: {
-      q: name,
-      language: "en",
-      apiKey: window.newsAPIKey,
-      pageSize: 5
-    }
-  })
-);
+export const getNews = name => {
+  if(name){
+    return $.ajax({
+      method: "GET",
+      url: `https://newsapi.org/v2/everything`,
+      data: {
+        q: name,
+        language: "en",
+        apiKey: window.newsAPIKey,
+        pageSize: 5
+      }
+    });
+  } else {
+    return $.ajax({
+      method: "GET",
+      url: `https://newsapi.org/v2/top-headlines`,
+      data: {
+        category: "business",
+        country: "us",
+        apiKey: window.newsAPIKey,
+        pageSize: 5
+      }
+    });
+  }
+};
 
-export const getProfileNews = () => (
-  $.ajax({
-    method: "GET",
-    url: `https://newsapi.org/v2/top-headlines`,
-    data: {
-      category: "business",
-      country: "us",
-      apiKey: window.newsAPIKey,
-      pageSize: 5
-    }
-  })
-);
-
-export const getPrice = symbol => (
-  $.ajax({
-    method: "GET",
-    url: `https://api.iextrading.com/1.0/stock/${symbol}/price`
-  })
-);
 
 export const getSearch = () => (
   $.ajax({
@@ -99,18 +98,6 @@ export const deleteWatch = id => (
   $.ajax({
     method: "DELETE",
     url: `api/stock_watches/${id}`
-  })
-);
-
-export const getWatchlistInfo = symbols => (
-  $.ajax({
-    method: "GET",
-    url: `https://api.iextrading.com/1.0/stock/market/batch`,
-    data: {
-      symbols: symbols.join(","),
-      types: "chart,quote",
-      range: "1d"
-    }
   })
 );
 

@@ -16,11 +16,8 @@ class StockShow extends React.Component {
 
   getData(symbol){
     this.props.getSearch().then(() => {
-      this.props.fetchStock(symbol);
-      this.props.getInfo(symbol);
-      this.props.getCharts(symbol);
+      this.props.getStock(symbol);
       this.props.getNews(this.props.stocks[symbol.toUpperCase()].name);
-      this.props.getPrice(symbol);
     });
   }
 
@@ -34,10 +31,6 @@ class StockShow extends React.Component {
   render(){
     if(!this.props.info ||
        !this.props.info.price ||
-       !this.props.info.previousClose ||
-       this.props.info.description === undefined || 
-       !this.props.charts["1d"] ||
-       !this.props.charts["3m"] ||
        !this.props.news){
       return <Loading/>
     } 
@@ -48,7 +41,7 @@ class StockShow extends React.Component {
         </div>
         <main id="main-page">
           <div>
-            <Chart charts={this.props.charts} name={this.props.info.name} prev={this.props.info.previousClose}/>
+            <Chart charts={this.props.charts} name={this.props.info.name} prev={this.props.info.close_yesterday}/>
             <StockAbout info={this.props.info} />
             <News news={this.props.news} />
           </div>

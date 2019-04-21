@@ -12,17 +12,11 @@ class StockChart extends React.Component{
   render(){
     const current = this.state.currentChart;
     let data = this.props.charts[current];
-    const value = current === "1d" ? "marketOpen" : "close";
+    const value = current === "1d" ? "open" : "close";
     let min, end;
-    if(typeof data === "string"){
-      data = [{open: 0}];
-      min = 0;
-      end = {[value]: 0};
-    } else{
-      const currentStocks = data.filter(datum => datum[value]);
-      min = current === "1d" ? Math.min(this.props.prev, ...currentStocks.map(datum => datum[value])) : "dataMin";
-      end = currentStocks[currentStocks.length - 1];
-    }
+    const currentStocks = data.filter(datum => datum[value]);
+    min = current === "1d" ? Math.min(this.props.prev, ...currentStocks.map(datum => datum[value])) : "dataMin";
+    end = currentStocks[currentStocks.length - 1];
     return (
       <div id="stock-chart">
         <h1 id="stock-name">{this.props.name}</h1>
@@ -49,7 +43,7 @@ class StockChart extends React.Component{
             domain={[min, 'dataMax']} />
           <XAxis 
             hide
-            dataKey="minute"/>
+            dataKey="date"/>
         </LineChart>
       <nav id="chart-buttons">
           {["1d", "1w", "1m", "3m", "1y", "5y"].map(range => {
