@@ -18,7 +18,6 @@ export const createProfileCharts = (transactions, charts) => {
 };
 
 
-
 const createBlankChart = chart => {
   chart.forEach(datum => {
     datum.close = 0;
@@ -69,6 +68,20 @@ export const formatChart = chart => {
             label: chart.history ? momentDate.format("MMM DD YYYY") : `${momentDate.format("hh:mm A")} ET`}; //different format for intraday
   }).reverse();
   return chart.history ? createDateRangeCharts(formattedChart) : {"1d": padChart(formattedChart)};
+};
+
+export const checkSurroundingPoints = (datum, chart, i) => {
+  for(let j = i - 4; j < i + 5; j++){
+    if(!chart[j]) continue;
+    if(chart[j].marketOpen){
+      datum.marketOpen = chart[j].marketOpen;
+      return true;
+    } else if(chart[j].open){
+      datum.marketOpen = chart[j].open;
+      return true;
+    }
+  }
+  return false;
 };
 
 
