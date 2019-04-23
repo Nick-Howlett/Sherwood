@@ -28,10 +28,11 @@ const createBlankChart = chart => {
 };
 
 export const createProfile1dChart = (shares, charts) => {
+  debugger;
   const symbols = Object.keys(shares);
   const res = [];
   symbols.forEach(symbol => {
-    const chart = charts[symbol]["1d"];
+    const chart = charts[symbol];
     const numShares = shares[symbol];
     for(let i = 0; i < chart.length; i++){
       if(!res[i]) res[i] = Object.assign({}, chart[i]);
@@ -63,7 +64,7 @@ export const formatChart = chart => {
             date: momentDate,
             label: chart.history ? momentDate.format("MMM DD YYYY") : `${momentDate.format("hh:mm A")} ET`}; //different format for intraday
   }).reverse();
-  return chart.history ? formattedChart : {"1d": padChart(formattedChart)};
+  return formattedChart;
 };
 
 export const checkSurroundingPoints = (datum, chart, i) => {

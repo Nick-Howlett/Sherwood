@@ -1,5 +1,5 @@
 import * as APIUtil from "../utils/stock_api_utils";
-import {formatChart, createProfile1dChart, createProfileCharts, createDateRangeCharts} from '../utils/chart_utils';
+import {formatChart, createProfile1dChart, createProfileCharts, createDateRangeCharts, padChart} from '../utils/chart_utils';
 
 export const RECEIVE_STOCK = "RECEIVE_STOCK";
 export const RECEIVE_OWNED_STOCK = "RECEIVE_OWNED_STOCK";
@@ -39,7 +39,7 @@ export const getStockDisplay = (symbols, shares = {}, watchedStocks = new Set())
           const watchlistItem = {symbol, 
                                  prev: stock[symbol].close_yesterday, 
                                  price: stock[symbol].price, 
-                                 chart: chart['1d']};
+                                 chart: chart};
           if(watchedStocks.has(symbol)) {
             dispatch(receiveWatchlistItem(Object.assign({}, watchlistItem)));
           }
@@ -51,7 +51,8 @@ export const getStockDisplay = (symbols, shares = {}, watchedStocks = new Set())
   });
   return Promise.all(promises)
   .then(() => {
-    const returnChart = symbols.length === 1 ? allCharts[symbols[0]] : {"1d": createProfile1dChart(shares, allCharts)};
+    const returnChart = symbols.length === 1 ? {"1d": padChart(allCharts[symbols[0]])} : {"1d": padChart(createProfile1dChart(shares, allCharts))};
+    
     dispatch(receiveChart(returnChart));
     dispatch(receivePrevClose(prev));
   });

@@ -2,11 +2,13 @@ import ReactDOM from "react-dom";
 import React from "react";
 import configureStore from "./store/store";
 import Root from './components/root';
+import moment from "moment";
 
 
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("root");
+  window.moment = moment;
   let store;
   if(window.currentUser){
     const preloadedState = {
