@@ -13,6 +13,7 @@ export const RECEIVE_TRANSACTION_ERRORS = "RECEIVE_TRANSACTION_ERRORS";
 export const RECEIVE_WATCH = "RECEIVE_WATCH";
 export const DELETE_WATCH = "DELETE_WATCH";
 export const RECEIVE_WATCHLIST_ITEM = "RECEIVE_WATCHLIST_ITEM";
+export const CLEAR_CHARTS = "CLEAR_CHARTS";
 
 
 export const getStockDisplay = (symbols, shares = {}, watchedStocks = new Set()) => dispatch => { //Get any info we need to display the page's initial state
@@ -71,6 +72,10 @@ export const getStockHistoricalCharts = (symbols, transactions) => dispatch => {
     dispatch(receiveChart(returnChart));
   });
 };
+
+export const clearCharts = () => ({
+  type: CLEAR_CHARTS
+});
 
 export const makeTransaction = transaction => dispatch => {
   return APIUtil.makeTransaction(transaction).then(payload => dispatch(receiveTransaction(payload)), 

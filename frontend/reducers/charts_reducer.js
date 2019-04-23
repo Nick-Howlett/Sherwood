@@ -5,6 +5,8 @@ export default (state = {}, action) => {
       return Object.assign({}, state, action.chart);
     case RECEIVE_PREV_CLOSE:
       return Object.assign({}, state, {prev: action.prev});
+    case CLEAR_CHARTS:
+      return {};
     default:
       return state;
   }

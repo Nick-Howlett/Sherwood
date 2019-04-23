@@ -25,6 +25,10 @@ class Profile extends React.Component{
         this.props.getStockDisplay(symbols, this.props.shares, new Set(watchSymbols))
         .then(this.props.getStockHistoricalCharts(symbols, this.props.transactions));
     }
+
+    componentWillUnmount(){
+        this.props.clearCharts();
+    }
     render(){
       if(!this.props.news.articles) return <Loading id={"loading-center"}/>
       return(  
