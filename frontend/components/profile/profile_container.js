@@ -12,9 +12,11 @@ const msp = state => {
     stocks: state.entities.stocks,
     charts: state.entities.charts,
     news: state.entities.news,
+    ownedStocks: state.entities.ownedStocks,
     shares,
     watchedStocks: watchedStocks(state),
-    transactions
+    transactions,
+    prev: state.entities.users[state.session.id].prev
   };
 };
 
@@ -23,8 +25,8 @@ const msp = state => {
 const mdp = dispatch => ({
   logout: () => dispatch(logout()),
   getSearch: () => dispatch(getSearch()),
-  getStockDisplay: symbols => dispatch(getStockDisplay(symbols)),
-  getStockHistory: symbols => dispatch(getStockHistoricalCharts(symbols)),
+  getStockDisplay: (symbols, shares, watchedStocks) => dispatch(getStockDisplay(symbols, shares, watchedStocks)),
+  getStockHistoricalCharts: (symbols, transactions) => dispatch(getStockHistoricalCharts(symbols, transactions)),
   getNews: () => dispatch(getNews())
 });
 

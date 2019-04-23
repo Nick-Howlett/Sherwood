@@ -1,6 +1,5 @@
 import {RECEIVE_USER} from "../actions/session_actions";
-import {RECEIVE_WATCH, DELETE_WATCH, RECEIVE_WATCHLIST_INFO} from '../actions/stock_actions';
-import {formatChart} from "../utils/chart_utils";
+import {RECEIVE_WATCH, DELETE_WATCH, RECEIVE_WATCHLIST_ITEM} from '../actions/stock_actions';
 
 export default (state = {}, action) => {
   let newState;
@@ -9,15 +8,9 @@ export default (state = {}, action) => {
       return Object.assign({}, state, action.user.watchlist);
     case RECEIVE_WATCH:
       return Object.assign({}, state, {[action.watch.id]: action.watch});
-    case RECEIVE_WATCHLIST_INFO:
-      newState = Object.assign({}, state);
-      action.watchedStocks.forEach(watch => {
-        const symbol = watch.symbol;
-        watch.chart = formatChart(action.info[symbol].chart);
-        watch.price = action.info[symbol].quote.latestPrice;
-        watch.prev = action.info[symbol].quote.close_yesterday;
-        newState[watch.id] = watch;
-      });
+    case RECEIVE_WATCHLIST_ITEM:
+      const newState = Object.assign({}, state);
+      newState.watchList ? newState.watchList.push(action.item) : newState.watchList = [action.item];
       return newState;
     case DELETE_WATCH:
       newState = Object.assign({}, state);

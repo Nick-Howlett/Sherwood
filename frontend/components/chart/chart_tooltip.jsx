@@ -12,7 +12,7 @@ export default ({active, payload, value, prev, coordinate}) => {
   }
   const diff = (stockValue - prev);
   const showDiff = diff.toFixed(2);
-  let percent = (diff / prev) * 100; 
+  let percent = prev === 0 ? 0 : (diff / prev) * 100; 
   const showPercent = percent.toFixed(2);
   return (
     <div>

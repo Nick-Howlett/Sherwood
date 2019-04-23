@@ -31,15 +31,11 @@ export const createProfile1dChart = (shares, charts) => {
   const symbols = Object.keys(shares);
   const res = [];
   symbols.forEach(symbol => {
-    const chart = charts[symbol];
+    const chart = charts[symbol]["1d"];
     const numShares = shares[symbol];
     for(let i = 0; i < chart.length; i++){
-      if(res[i]){
-        res[i].open += chart[i].open * numShares;
-      } else {
-        chart[i].open *= numShares;
-        res[i] = chart[i];
-      }
+      if(!res[i]) res[i] = Object.assign({}, chart[i]);
+      res[i].open += chart[i].open * numShares;
     }
   });
   return res;
@@ -60,14 +56,14 @@ export const formatChart = chart => {
   const formattedChart = Object.keys(chartData).map(date => {
     const datum = chartData[date];
     const momentDate = moment.tz(date, "America/New_York");
-    return {open: datum.open, 
-            close: datum.close, 
-            high: datum.high, 
-            low: datum.low, 
+    return {open: parseFloat(datum.open), 
+            close: parseFloat(datum.close), 
+            high: parseFloat(datum.high), 
+            low: parseFloat(datum.low), 
             date: momentDate,
             label: chart.history ? momentDate.format("MMM DD YYYY") : `${momentDate.format("hh:mm A")} ET`}; //different format for intraday
   }).reverse();
-  return chart.history ? createDateRangeCharts(formattedChart) : {"1d": padChart(formattedChart)};
+  return chart.history ? formattedChart : {"1d": padChart(formattedChart)};
 };
 
 export const checkSurroundingPoints = (datum, chart, i) => {

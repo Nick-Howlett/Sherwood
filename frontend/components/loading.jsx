@@ -4,18 +4,21 @@ import { BarLoader } from 'react-spinners';
 
 const override = css`
       display: block;
-      margin: 0 auto; 
+      margin: 0 auto;
+      position: absolute;
 `;
 
-export default () => {
+export default ({id}) => {
+
   return(
-  <div id="loading-center">
+  <div id={id}>
      <BarLoader
       css={override}
-      sizeUnit={"px"}
-      size={800}
-      width={400}
-      height={10}
+      sizeUnit={"%"}
+      heightUnit={"%"}
+      widthUnit={"%"}
+      width={25}
+      height={100}
       color={'#21ce99'} />
   </div>
   )

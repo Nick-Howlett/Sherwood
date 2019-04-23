@@ -4,4 +4,22 @@
   align-items: center;
   width: 100%;
   height: 100%;
+  position: absolute;
+  .css-10o5ckz-wrapper-wrapper{
+    height: 1.5%;
+  }
+}
+
+#loading-chart{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 80%;
+  position: absolute;
+  top: 20%;
+  margin-right: 20%;
+  .css-10o5ckz-wrapper-wrapper{
+    height: 2%;
+  }
 }

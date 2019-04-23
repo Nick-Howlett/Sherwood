@@ -6,6 +6,7 @@ import NewsReducer from './news_reducer';
 import TransactionsReducer from './transactions_reducer';
 import SearchReducer from './search_reducer';
 import WatchedStocksReducer from './watched_stocks_reducer';
+import OwnedStocksReducer from './owned_stocks_reducer';
 
 export default combineReducers({
   users: UsersReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   news: NewsReducer,
   transactions: TransactionsReducer,
   search: SearchReducer,
-  watchedStocks: WatchedStocksReducer
+  watchedStocks: WatchedStocksReducer,
+  ownedStocks: OwnedStocksReducer
 });

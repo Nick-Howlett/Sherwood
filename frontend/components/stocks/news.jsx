@@ -12,6 +12,7 @@ class News extends React.Component {
   render(){
     const news = this.props.news; 
     const now = moment.utc();
+    if(!news || news.length === 0) return null;
     return(
       <div id="news-container">
         <header>

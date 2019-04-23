@@ -1,7 +1,9 @@
 import * as APIUtil from "../utils/stock_api_utils";
-import {formatChart, createProfileCharts, createProfile1dChart} from '../utils/chart_utils';
+import {formatChart, createProfile1dChart, createProfileCharts, createDateRangeCharts} from '../utils/chart_utils';
 
-export const RECEIVE_STOCKS = "RECEIVE_STOCKS";
+export const RECEIVE_STOCK = "RECEIVE_STOCK";
+export const RECEIVE_OWNED_STOCK = "RECEIVE_OWNED_STOCK";
+export const RECEIVE_PREV_CLOSE = "RECEIVE_PREV_CLOSE";
 export const RECEIVE_CHART = "RECEIVE_CHART";
 export const RECEIVE_NEWS = "RECEIVE_NEWS";
 export const RECEIVE_TRANSACTION = "RECEIVE_TRANSACTION";
@@ -10,41 +12,65 @@ export const RECEIVE_SEARCH = "RECEIVE_SEARCH";
 export const RECEIVE_TRANSACTION_ERRORS = "RECEIVE_TRANSACTION_ERRORS";
 export const RECEIVE_WATCH = "RECEIVE_WATCH";
 export const DELETE_WATCH = "DELETE_WATCH";
-export const RECEIVE_WATCHLIST_INFO = "RECEIVE_WATCHLIST_INFO";
+export const RECEIVE_WATCHLIST_ITEM = "RECEIVE_WATCHLIST_ITEM";
 
 
-export const getStockDisplay = symbols => dispatch => { //Get any info we need to display the page's initial state
-  const stocks = {};
+export const getStockDisplay = (symbols, shares = {}, watchedStocks = new Set()) => dispatch => { //Get any info we need to display the page's initial state
   const promises = [];
+  const allCharts = {};
+  let prev = 0;
   symbols.forEach(symbol => {
+      const stock = {};
       promises.push(Promise.all([APIUtil.fetchStock(symbol), 
                   APIUtil.getInfo(symbol),
                   APIUtil.getIntradayChart(symbol)])
       .then(values => {
-          values.slice(0, 2).forEach(value => Object.assign(stocks, {[symbol]: value}));
-          const charts = {};
-          Object.assign(charts, formatChart(values[2]));
-          stocks[symbol].charts = charts;
+          const info = values.slice(0,2);
+          const chart = formatChart(values[2]);
+          info.forEach(info => Object.assign(stock, {[symbol]: info}));
+          if(symbol in shares){
+            prev += parseFloat(stock[symbol].close_yesterday) * shares[symbol];
+          } else if(symbols.length === 1) {
+            prev = parseFloat(stock[symbol].close_yesterday);
+          }
+          allCharts[symbol] = chart;
+          dispatch(receiveStock(stock));
+          const watchlistItem = {symbol, 
+                                 prev: stock[symbol].close_yesterday, 
+                                 price: stock[symbol].price, 
+                                 chart: chart['1d']};
+          if(watchedStocks.has(symbol)) {
+            dispatch(receiveWatchlistItem(Object.assign({}, watchlistItem)));
+          }
+          if(symbol in shares){
+            watchlistItem.shares = shares[symbol];
+            dispatch(receiveOwnedStock(watchlistItem));
+          }
       }));
   });
-  return Promise.all(promises).then(() => {
-    dispatch(receiveStocks(stocks));
+  return Promise.all(promises)
+  .then(() => {
+    const returnChart = symbols.length === 1 ? allCharts[symbols[0]] : {"1d": createProfile1dChart(shares, allCharts)};
+    dispatch(receiveChart(returnChart));
+    dispatch(receivePrevClose(prev));
   });
 };
 
-export const getStockHistoricalCharts = symbols => dispatch => { //load in additional stock charts
-  const stocks = {};
+export const getStockHistoricalCharts = (symbols, transactions) => dispatch => { //load in additional stock charts
   const promises = [];
+  const allCharts = {};
   symbols.forEach(symbol => {
-    promises.push(APIUtil.getHistoricalChart(symbol).then(chart => {
-      Object.assign(stocks, {[symbol]: {charts: formatChart(chart)}});
+    promises.push(APIUtil.getHistoricalChart(symbol)
+    .then(chart => {
+      allCharts[symbol] = formatChart(chart);
     }));
   });
-  return Promise.all(promises).then(() => {
-    dispatch(receiveStocks(stocks));
+  return Promise.all(promises)
+  .then(() => {
+    const returnChart = symbols.length === 1 ? createDateRangeCharts(allCharts[symbols[0]]) : createProfileCharts(transactions, allCharts);
+    dispatch(receiveChart(returnChart));
   });
 };
-
 
 export const makeTransaction = transaction => dispatch => {
   return APIUtil.makeTransaction(transaction).then(payload => dispatch(receiveTransaction(payload)), 
@@ -68,6 +94,11 @@ export const removeWatch = id => dispatch => {
   return APIUtil.deleteWatch(id).then(({id}) => dispatch(deleteWatch(id)));
 };
 
+export const receiveOwnedStock = stock => ({
+  type: RECEIVE_OWNED_STOCK,
+  stock
+});
+
 
 export const receiveErrors = errors => ({
   type: RECEIVE_TRANSACTION_ERRORS,
@@ -85,9 +116,9 @@ export const receiveTransactions = transactions => ({
 });
 
 
-export const receiveStocks = stocks => ({
-  type: RECEIVE_STOCKS,
-  stocks
+export const receiveStock = stock => ({
+  type: RECEIVE_STOCK,
+  stock
 });
 
 export const receiveNews = news => ({
@@ -116,9 +147,13 @@ export const deleteWatch = id => ({
   id
 });
 
-export const receiveWatchlistInfo = (info, watchedStocks) => ({
-  type: RECEIVE_WATCHLIST_INFO,
-  info,
-  watchedStocks
+export const receivePrevClose = prev => ({
+  type: RECEIVE_PREV_CLOSE,
+  prev
+});
+
+export const receiveWatchlistItem = item => ({
+  type: RECEIVE_WATCHLIST_ITEM,
+  item
 });
 

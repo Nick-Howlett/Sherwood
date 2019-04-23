@@ -1,5 +1,5 @@
 import React from 'react';
-import Chart from '../chart/chart';
+import ChartContainer from '../chart/chart_container';
 import StockAbout from './stock_about';
 import Navbar from '../navbar/navbar';
 import News from "./news";
@@ -32,7 +32,7 @@ class StockShow extends React.Component {
     if(!this.props.info ||
        !this.props.info.price ||
        !this.props.news){
-      return <Loading/>
+      return <Loading id={"loading-center"}/>
     } 
     return (
       <>
@@ -41,7 +41,7 @@ class StockShow extends React.Component {
         </div>
         <main id="main-page">
           <div>
-            <Chart charts={this.props.charts} name={this.props.info.name} prev={this.props.info.close_yesterday}/>
+            <ChartContainer/>
             <StockAbout info={this.props.info} />
             <News news={this.props.news} />
           </div>

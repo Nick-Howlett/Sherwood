@@ -42,6 +42,7 @@ class Search extends React.Component {
   }
 
   render(){
+    if(Object.keys(this.props.stocks).length === 0) return null;
     return(
       <div ref={wrapper => this.wrapper = wrapper} id="search-container-wrapper">
         <div className={`search-container ${this.state.open && this.state.search !== "" ? "long" : ""}`}>
