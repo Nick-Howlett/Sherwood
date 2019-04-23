@@ -1,4 +1,4 @@
-import {RECEIVE_CHART, RECEIVE_PREV_CLOSE} from "../actions/stock_actions";
+import {RECEIVE_CHART, RECEIVE_PREV_CLOSE, CLEAR_CHARTS} from "../actions/stock_actions";
 export default (state = {}, action) => {
   switch(action.type){
     case RECEIVE_CHART:
