@@ -12,14 +12,17 @@ export default ({id}) => {
 
   return(
   <div id={id}>
-     <BarLoader
-      css={override}
-      sizeUnit={"%"}
-      heightUnit={"%"}
-      widthUnit={"%"}
-      width={25}
-      height={100}
-      color={'#21ce99'} />
+    <div className={"loaderheight"}>
+      <BarLoader
+        css={override}
+        sizeUnit={"%"}
+        heightUnit={"%"}
+        widthUnit={"%"}
+        width={25}
+        height={100}
+        color={'#21ce99'} />
+    </div>
+
   </div>
   )
 };
