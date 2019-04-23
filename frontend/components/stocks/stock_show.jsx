@@ -27,6 +27,10 @@ class StockShow extends React.Component {
     }
   }
 
+  componentWillUnmount(){
+    this.props.clearCharts();
+  }
+
 
   render(){
     if(!this.props.info ||
