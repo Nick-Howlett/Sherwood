@@ -7,6 +7,7 @@ import {withRouter} from "react-router-dom";
 export const msp = (state, ownProps) => ({
   user: currentUser(state),
   shares: countStocks(transactionArray(state, ownProps.match.params.symbol.toUpperCase()))[ownProps.match.params.symbol],
+  transactions: state.transactions,
   errors: state.errors.transaction
 });
 
