@@ -32,7 +32,6 @@ export const getStockDisplay = (symbols, shares = {}, watchedStocks = new Set())
             Object.assign(stock, info);
           });
           if(symbol in shares){
-            console.log(`Adding ${symbol} to prev: ${shares[symbol]} shares at $${stock.close_yesterday}`);
             prev += parseFloat(stock.close_yesterday) * shares[symbol];
           } else if(symbols.length === 1) {
             prev = parseFloat(stock.close_yesterday);
