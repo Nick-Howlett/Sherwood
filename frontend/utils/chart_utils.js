@@ -29,11 +29,12 @@ const createBlankChart = chart => {
 
 export const createProfile1dChart = (shares, charts) => {
   const symbols = Object.keys(shares);
+  const minLength = Math.min(...Object.values(charts).map(chart => chart.length));
   const res = [];
   symbols.forEach(symbol => {
     const chart = charts[symbol];
     const numShares = shares[symbol];
-    for(let i = 0; i < chart.length; i++){
+    for(let i = 0; i < minLength; i++){
       if(!res[i]) res[i] = Object.assign({}, chart[i]);
       res[i].open += chart[i].open * numShares;
     }
