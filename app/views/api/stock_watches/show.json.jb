@@ -1,0 +1,7 @@
+json = {
+  id: @stock_watch.id,
+  symbol: @stock_watch.symbol,
+  userId: @stock_watch.user_id
+}
+
+json

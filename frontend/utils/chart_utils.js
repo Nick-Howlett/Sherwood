@@ -28,7 +28,6 @@ const createBlankChart = chart => {
 };
 
 export const createProfile1dChart = (shares, charts) => {
-  debugger;
   const symbols = Object.keys(shares);
   const res = [];
   symbols.forEach(symbol => {

@@ -1,0 +1,30 @@
+json = {
+  user: {
+    id: user.id,
+    buyingPower: user.buying_power
+  },
+  transactions: {},
+  watchlist: {}
+}
+
+user.transactions.each do |transaction|
+  json[:transactions][transaction.id] = {
+    id: transaction.id,
+    symbol: transaction.symbol,
+    userId: transaction.user_id,
+    transactionType: transaction.transaction_type,
+    stockPrice: transaction.stock_price,
+    numShares: transaction.num_shares,
+    time: transaction.created_at
+  }
+end
+
+user.watched_stocks.each do |watched_stock|
+  json[:watchlist][watched_stock.id] = {
+    id: watched_stock.id,
+    symbol: watched_stock.symbol,
+    userId: watched_stock.user_id
+  }
+end
+
+json
