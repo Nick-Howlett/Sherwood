@@ -18,7 +18,7 @@ export const makeTransaction = transaction => (
 export const getIntradayChart = symbol => (
   $.ajax({
     method: "GET",
-    url:`https://intraday.worldtradingdata.com/api/v1/`,
+    url:`https://intraday.worldtradingdata.com/api/v1/intraday`,
     data: {
       range: 1,
       interval: 5,
