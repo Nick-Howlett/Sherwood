@@ -18,7 +18,12 @@ export const makeTransaction = transaction => (
 export const getIntradayChart = symbol => (
   $.ajax({
     method: "GET",
-    url:`https://www.worldtradingdata.com/api/v1/intraday?symbol=${symbol}&range=1&interval=5&api_token=XRILYfvsaaBx3J3bVFWvmYEWEH7TQI91gJrqQl0j3joYtOXxpEQmtUlsQBwn`
+    url:`https://intraday.worldtradingdata.com/api/v1/`,
+    data: {
+      range: 1,
+      interval: 5,
+      api_token: window.stocksAPIKey
+    }
   })
 );
 
@@ -26,14 +31,23 @@ export const getHistoricalChart = symbol => {
   const dateEnd = moment().subtract(5, 'years').format("YYYY-MM-DD");
   return $.ajax({
     method: "GET",
-    url:`https://www.worldtradingdata.com/api/v1/history?symbol=${symbol}&date_from=${dateEnd}&api_token=XRILYfvsaaBx3J3bVFWvmYEWEH7TQI91gJrqQl0j3joYtOXxpEQmtUlsQBwn`
+    url:`https://www.worldtradingdata.com/api/v1/history`,
+    data: {
+      symbol: symbol,
+      date_from: dateEnd,
+      api_token: window.stocksAPIKey
+    }
   });
 };
 
 export const getInfo = symbol => {
   return $.ajax({
     method: "GET",
-    url: `https://www.worldtradingdata.com/api/v1/stock?symbol=${symbol}&api_token=XRILYfvsaaBx3J3bVFWvmYEWEH7TQI91gJrqQl0j3joYtOXxpEQmtUlsQBwn`
+    url: `https://www.worldtradingdata.com/api/v1/stock`,
+    data: {
+      symbol: symbol,
+      api_token: window.stocksAPIKey
+    }
   }).then(info => info.data[0]);
 };
 
