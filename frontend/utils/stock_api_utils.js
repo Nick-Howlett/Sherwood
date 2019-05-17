@@ -20,6 +20,7 @@ export const getIntradayChart = symbol => (
     method: "GET",
     url:`https://intraday.worldtradingdata.com/api/v1/intraday`,
     data: {
+      symbol: symbol,
       range: 1,
       interval: 5,
       api_token: window.stocksAPIKey
