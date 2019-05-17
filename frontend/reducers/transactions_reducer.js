@@ -4,7 +4,7 @@ import {RECEIVE_USER} from "../actions/session_actions";
 export default (state = {}, action) => {
   switch(action.type){
     case RECEIVE_TRANSACTION:
-      return Object.assign({}, state, {[action.payload.transaction.id]: action.payload.transaction});
+      return Object.assign({}, state, {[action.payload.id]: action.payload});
     case RECEIVE_USER:
       return Object.assign({}, action.user.transactions);
     default:

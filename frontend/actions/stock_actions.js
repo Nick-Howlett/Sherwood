@@ -28,17 +28,19 @@ export const getStockDisplay = (symbols, shares = {}, watchedStocks = new Set())
       .then(values => {
           const info = values.slice(0,2);
           const chart = formatChart(values[2]);
-          info.forEach(info => Object.assign(stock, {[symbol]: info}));
+          info.forEach(info => {
+            Object.assign(stock, info);
+          });
           if(symbol in shares){
-            prev += parseFloat(stock[symbol].close_yesterday) * shares[symbol];
+            prev += parseFloat(stock.close_yesterday) * shares[symbol];
           } else if(symbols.length === 1) {
-            prev = parseFloat(stock[symbol].close_yesterday);
+            prev = parseFloat(stock.close_yesterday);
           }
           allCharts[symbol] = chart;
-          dispatch(receiveStock(stock));
+          dispatch(receiveStock({[stock.symbol]: stock}));
           const watchlistItem = {symbol, 
-                                 prev: stock[symbol].close_yesterday, 
-                                 price: stock[symbol].price, 
+                                 prev: stock.close_yesterday, 
+                                 price: stock.price, 
                                  chart: chart};
           if(watchedStocks.has(symbol)) {
             dispatch(receiveWatchlistItem(Object.assign({}, watchlistItem)));

@@ -1,7 +1,7 @@
 # <img src="https://raw.githubusercontent.com/Nick-Howlett/Sherwood/master/app/assets/images/sherwood_logo_green.png" width="40" height="40" /> Sherwood
 
 ## About
-[Live Demo](https://sherwoodapp.herokuapp.com?utm_source=readme&medium=body)
+[Live Demo](https://sherwoodapp.herokuapp.com?utm_source=readme&utm_medium=body)
 
 Sherwood is a single page app clone of the popular stock trading site robinhood.com featuring over 8,000 publicly traded companies complete with company information, real-time stock data, and interactive charts of stock and portfolio performance.
 

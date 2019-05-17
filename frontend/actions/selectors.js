@@ -6,9 +6,9 @@ export const currentUser = state => {
 
 
 export const countStocks = (transactions, date = moment()) => {
-  const shares = {}; 
+  const shares = {};
   for(let i = 0; i < transactions.length; i++){
-    if(date.isBefore(transactions[i].time)) return shares; //transaction array is in order, stop counting if we reach transactions after our date.
+    if(date.isSameOrBefore(transactions[i].time)) return shares; //transaction array is in order, stop counting if we reach transactions after our date.
     const symbol = transactions[i].symbol;
     const numShares = transactions[i].numShares;
     const type = transactions[i].transactionType;

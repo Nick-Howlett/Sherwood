@@ -1,0 +1,14 @@
+json = {
+  id: @transaction.id,
+  symbol: @transaction.symbol,
+  userId: @transaction.user_id,
+  transactionType: @transaction.transaction_type,
+  stockPrice: @transaction.stock_price,
+  numShares: @transaction.num_shares,
+  time: @transaction.created_at,
+  user: {
+    buyingPower: @user.buying_power
+  }
+}
+
+json
