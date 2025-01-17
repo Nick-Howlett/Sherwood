@@ -1,1 +1,1 @@
-web: sh -c 'webpack && rails server'
+web: sh -c 'rails server'
