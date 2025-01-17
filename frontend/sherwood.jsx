@@ -4,8 +4,9 @@ import configureStore from "./store/store";
 import Root from "./components/root";
 import moment from "moment";
 
+console.log("Testing entryfile running");
+
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("DomContentLoaded event fired");
   const root = document.getElementById("root");
   let store;
   if (window.currentUser) {
