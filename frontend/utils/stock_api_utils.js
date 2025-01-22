@@ -16,7 +16,7 @@ export const makeTransaction = (transaction) =>
 export const getIntradayChart = (symbol) =>
   $.ajax({
     method: "GET",
-    url: `http://api.marketstack.com/v1/intraday`,
+    url: `https://api.marketstack.com/v1/intraday`,
     data: {
       symbol: symbol,
       range: 1,
@@ -29,7 +29,7 @@ export const getHistoricalChart = (symbol) => {
   const dateEnd = moment().subtract(5, "years").format("YYYY-MM-DD");
   return $.ajax({
     method: "GET",
-    url: `http://api.marketstack.com/v1/history`,
+    url: `https://api.marketstack.com/v1/history`,
     data: {
       symbol: symbol,
       date_from: dateEnd,
@@ -41,7 +41,7 @@ export const getHistoricalChart = (symbol) => {
 export const getInfo = (symbol) => {
   return $.ajax({
     method: "GET",
-    url: `http://api.marketstack.com/v1/stock`,
+    url: `https://api.marketstack.com/v1/stock`,
     data: {
       symbol: symbol,
       api_token: window.stocksAPIKey,
