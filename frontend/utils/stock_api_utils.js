@@ -1,5 +1,13 @@
 import moment from "moment";
 
+const buildUrlWithParams = (url, params) => {
+  const urlParams = new URLSearchParams();
+  for (const [key, value] of Object.entries(params)) {
+    urlParams.append(key, value);
+  }
+  return url + urlParams.toString();
+};
+
 export const fetchStock = (symbol) =>
   $.ajax({
     method: "GET",
@@ -16,36 +24,32 @@ export const makeTransaction = (transaction) =>
 export const getIntradayChart = (symbol) =>
   $.ajax({
     method: "GET",
-    url: `https://api.marketstack.com/v1/intraday`,
-    data: {
-      symbol: symbol,
-      range: 1,
-      interval: 5,
-      api_token: window.stocksAPIKey,
-    },
+    url: buildUrlWithParams(`https://api.marketstack.com/v1/intraday`, {
+      symbols: symbol,
+      interval: "5min",
+      access_key: window.stocksAPIKey,
+    }),
   });
 
 export const getHistoricalChart = (symbol) => {
   const dateEnd = moment().subtract(5, "years").format("YYYY-MM-DD");
   return $.ajax({
     method: "GET",
-    url: `https://api.marketstack.com/v1/history`,
-    data: {
-      symbol: symbol,
+    url: buildUrlWithParams(`https://api.marketstack.com/v1/history`, {
+      symbols: symbol,
       date_from: dateEnd,
-      api_token: window.stocksAPIKey,
-    },
+      access_key: window.stocksAPIKey,
+    }),
   });
 };
 
 export const getInfo = (symbol) => {
   return $.ajax({
     method: "GET",
-    url: `https://api.marketstack.com/v1/stock`,
-    data: {
-      symbol: symbol,
-      api_token: window.stocksAPIKey,
-    },
+    url: buildUrlWithParams(`https://api.marketstack.com/v1/stock`, {
+      symbols: symbol,
+      access_key: window.stocksAPIKey,
+    }),
   }).then((info) => info.data[0]);
 };
 
