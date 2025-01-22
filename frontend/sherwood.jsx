@@ -5,8 +5,6 @@ import Root from "./components/root";
 import moment from "moment";
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Testing entryfile running");
-
   const root = document.getElementById("root");
   let store;
   if (window.currentUser) {
