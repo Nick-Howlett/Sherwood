@@ -5,7 +5,7 @@ const buildUrlWithParams = (url, params) => {
   for (const [key, value] of Object.entries(params)) {
     urlParams.append(key, value);
   }
-  return url + urlParams.toString();
+  return url + "?" + urlParams.toString();
 };
 
 export const fetchStock = (symbol) =>
