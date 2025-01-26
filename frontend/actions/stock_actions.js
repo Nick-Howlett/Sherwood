@@ -111,7 +111,9 @@ export const makeTransaction = (transaction) => (dispatch) => {
 };
 
 export const getNews = (name) => (dispatch) => {
-  APIUtil.getNews(name).then((news) => dispatch(receiveNews(news.response)));
+  APIUtil.getNews(name).then((news) =>
+    dispatch(receiveNews(JSON.parse(news.response)))
+  );
 };
 
 export const getSearch = () => (dispatch) => {
