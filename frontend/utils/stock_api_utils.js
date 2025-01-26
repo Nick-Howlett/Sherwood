@@ -24,31 +24,31 @@ export const makeTransaction = (transaction) =>
 export const getIntradayChart = (symbol) =>
   $.ajax({
     method: "GET",
-    url: buildUrlWithParams(`https://api.marketstack.com/v2/intraday`, {
-      symbols: symbol,
-      interval: "5min",
-      access_key: window.stocksAPIKey,
+    url: buildUrlWithParams(`api/stock_api/intraday`, {
+      symbol: symbol,
     }),
   });
 
 export const getHistoricalChart = (symbol) => {
   const dateEnd = moment().subtract(5, "years").format("YYYY-MM-DD");
+  const dateStart = moment().format("YYYY-MM-DD");
   return $.ajax({
     method: "GET",
-    url: buildUrlWithParams(`https://api.marketstack.com/v2/history`, {
-      symbols: symbol,
-      date_from: dateEnd,
-      access_key: window.stocksAPIKey,
+    url: buildUrlWithParams(`api/stock_api/historical`, {
+      symbol: symbol,
+      from_date: dateEnd,
+      to_date: dateStart,
     }),
   });
 };
 
 export const getInfo = (symbol) => {
+  const dateStart = moment().format("YYYY-MM-DD");
   return $.ajax({
     method: "GET",
-    url: buildUrlWithParams(`https://api.marketstack.com/v2/eod`, {
-      symbols: symbol,
-      access_key: window.stocksAPIKey,
+    url: buildUrlWithParams(`api/stock_api/info`, {
+      symbol: symbol,
+      from_date: dateStart,
     }),
   }).then((info) => info.data[0]);
 };
@@ -58,12 +58,12 @@ export const getNews = (name) => {
     return $.ajax({
       method: "GET",
       url: `api/news/${name}`,
-    })
+    });
   } else {
     return $.ajax({
       method: "GET",
       url: `api/news`,
-    })
+    });
   }
 };
 
