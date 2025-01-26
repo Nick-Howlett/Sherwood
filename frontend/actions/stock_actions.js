@@ -38,10 +38,10 @@ export const getStockDisplay =
         ]).then((values) => {
           const info = values.slice(0, 2);
           const chart = formatChart(values[2]);
+          console.log(chart);
           info.forEach((info) => {
             Object.assign(stock, info);
           });
-          console.log(stock);
           if (symbol in shares) {
             prev += parseFloat(stock.close) * shares[symbol];
           } else if (symbols.length === 1) {
