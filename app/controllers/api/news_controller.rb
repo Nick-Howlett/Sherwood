@@ -1,3 +1,5 @@
+require 'net/http'
+
 class Api::NewsController < ApplicationController
     def show
         @name = params[:name]
