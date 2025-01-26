@@ -50,7 +50,9 @@ export const getInfo = (symbol) => {
       symbol: symbol,
       from_date: dateStart,
     }),
-  }).then((info) => JSON.parse(info.response).data[0]);
+  }).then((info) => ({
+    response: JSON.parse(info.response).data[0],
+  }));
 };
 
 export const getNews = (name) => {
