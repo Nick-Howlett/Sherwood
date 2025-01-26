@@ -8,6 +8,6 @@ Rails.application.routes.draw do
     resources :transactions, only: [:create]
     resources :stock_watches, only: [:create, :destroy]
     resources :news, param: :name, only: [:show, :index]
-    resources :stocks_api, param :method, only [:show]
+    resources :stocks_api, param: :method, only: [:show]
   end
 end
