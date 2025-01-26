@@ -41,16 +41,17 @@ export const getStockDisplay =
           info.forEach((info) => {
             Object.assign(stock, info);
           });
+          console.log(stock);
           if (symbol in shares) {
-            prev += parseFloat(stock.close_yesterday) * shares[symbol];
+            prev += parseFloat(stock.close) * shares[symbol];
           } else if (symbols.length === 1) {
-            prev = parseFloat(stock.close_yesterday);
+            prev = parseFloat(stock.close);
           }
           allCharts[symbol] = chart;
           dispatch(receiveStock({ [stock.symbol]: stock }));
           const watchlistItem = {
             symbol,
-            prev: stock.close_yesterday,
+            prev: stock.close,
             price: stock.price,
             chart: chart,
           };
