@@ -55,6 +55,10 @@ export const createDateRangeCharts = (chart) => {
 
 export const formatChart = (chart) => {
   const chartData = chart.data;
+  if (!chartData) {
+    return [];
+  }
+  
   const formattedChart = Object.keys(chartData)
     .map((date) => {
       const datum = chartData[date];
