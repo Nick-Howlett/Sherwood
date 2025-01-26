@@ -1,9 +1,6 @@
 <% if current_user %>
   <script type="text/javascript">
-    window.currentUser = <%= render(
-      "api/users/user.json.jb",
-      user: current_user
-    ).to_json.html_safe %></script>
+    window.currentUser = <%= (render partial:  "api/users/user", formats: [:json], locals: { user: current_user }).to_json.html_safe %></script>
 <% end %>
 <script type="text/javascript">
   window.form_half = "<%= image_url('form_half.png') %>"
