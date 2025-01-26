@@ -58,12 +58,12 @@ export const getNews = (name) => {
     return $.ajax({
       method: "GET",
       url: `api/news/${name}`,
-    });
+    }).response;
   } else {
     return $.ajax({
       method: "GET",
       url: `api/news`,
-    });
+    }).response;
   }
 };
 
