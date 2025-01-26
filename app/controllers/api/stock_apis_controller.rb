@@ -6,11 +6,11 @@ class Api::StockApisController < ApplicationController
         to_date = params[:to_date]
         api_key = Rails.application.credentials.stocks
         case method
-        when 'intraday':
+        when 'intraday'
             url = "https://api.marketstack.com/v2/intraday/latest?symbols=#{symbol}&interval=5min&access_key=#{api_key}"
-        when 'historical':
+        when 'historical'
             url = "https://api.marketstack.com/v2/eod?access_key=#{api_key}&symbols=#{symbols}&date_from=#{from_date}&date_to=#{to_date}"
-        when 'info':
+        when 'info'
             url = "https://api.marketstack.com/v2/eod?access_key=#{api_key}&symbols=#{symbols}&date_from=#{from_date}"
         end
         uri = URI.parse(url)
