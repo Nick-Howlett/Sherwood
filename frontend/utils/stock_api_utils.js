@@ -27,7 +27,7 @@ export const getIntradayChart = (symbol) =>
     url: buildUrlWithParams(`api/stock_api/intraday`, {
       symbol: symbol,
     }),
-  });
+  }).then((resp) => JSON.parse(resp.response));
 
 export const getHistoricalChart = (symbol) => {
   const dateEnd = moment().subtract(5, "years").format("YYYY-MM-DD");
@@ -50,9 +50,7 @@ export const getInfo = (symbol) => {
       symbol: symbol,
       from_date: dateStart,
     }),
-  }).then((info) => ({
-    response: JSON.parse(info.response).data[0],
-  }));
+  }).then((info) => JSON.parse(info.response).data[0]);
 };
 
 export const getNews = (name) => {
