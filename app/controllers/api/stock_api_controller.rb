@@ -1,4 +1,4 @@
-class Api::StockApisController < ApplicationController
+class Api::StockApiController < ApplicationController
     def show
         method = params[:method]
         symbols = params[:symbol]
