@@ -43,7 +43,7 @@ export const getHistoricalChart = (symbol) => {
 };
 
 export const getInfo = (symbol) => {
-  const dateStart = moment().subtract("1", "day").format("YYYY-MM-DD");
+  const dateStart = moment().subtract("4", "days").format("YYYY-MM-DD"); // 4 days for holidays and weekends
   return $.ajax({
     method: "GET",
     url: buildUrlWithParams(`api/stock_api/info`, {
