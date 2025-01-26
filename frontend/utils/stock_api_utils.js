@@ -43,7 +43,7 @@ export const getHistoricalChart = (symbol) => {
 };
 
 export const getInfo = (symbol) => {
-  const dateStart = moment().format("YYYY-MM-DD");
+  const dateStart = moment().format("YYYY-MM-DD").subtract("1", "day");
   return $.ajax({
     method: "GET",
     url: buildUrlWithParams(`api/stock_api/info`, {
