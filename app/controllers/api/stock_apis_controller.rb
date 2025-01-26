@@ -12,12 +12,10 @@ class Api::StockApisController < ApplicationController
             url = "https://api.marketstack.com/v2/eod?access_key=#{api_key}&symbols=#{symbols}&date_from=#{from_date}&date_to=#{to_date}"
         when 'info':
             url = "https://api.marketstack.com/v2/eod?access_key=#{api_key}&symbols=#{symbols}&date_from=#{from_date}"
-            
+        end
         uri = URI.parse(url)
         @response = Net::HTTP.get(uri)
         render 'api/stock_api/show'
-    end
-
-  
-  end
+    end  
+end
   
