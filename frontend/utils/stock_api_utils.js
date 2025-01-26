@@ -57,12 +57,12 @@ export const getNews = (name) => {
   if (name) {
     return $.ajax({
       method: "GET",
-      url: `api/news`,
+      url: `api/news/${name}`,
     });
   } else {
     return $.ajax({
       method: "GET",
-      url: `https://newsapi.org/v2/top-headlines`,
+      url: `api/news`,
     });
   }
 };
