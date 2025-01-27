@@ -1,4 +1,3 @@
-import { all } from "core-js/fn/promise";
 import moment from "moment";
 
 const buildUrlWithParams = (url, params) => {
