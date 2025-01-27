@@ -29,10 +29,10 @@ export const getIntradayChart = (symbol) =>
     }),
   }).then((resp) => JSON.parse(resp.response));
 
-export const getHistoricalChart = async (symbol) => {
+export const getHistoricalChart = (symbol) => {
   const dateEnd = moment().subtract(5, "years").format("YYYY-MM-DD");
   const dateStart = moment().format("YYYY-MM-DD");
-  const makeRequest = async (page) => {
+  const makeRequest = (page) => {
     return $.ajax({
       method: "GET",
       url: buildUrlWithParams(`api/stock_api/historical`, {
@@ -41,7 +41,7 @@ export const getHistoricalChart = async (symbol) => {
         to_date: dateStart,
         offset: page,
       }),
-    }).then((resp) => JSON.parse(resp.response).data);
+    });
   };
 
   return Promise.all([makeRequest(0), makeRequest(1)]).then((arrays) => [
