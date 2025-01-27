@@ -10,7 +10,7 @@ class Api::StockApiController < ApplicationController
         when 'intraday'
             url = "https://api.marketstack.com/v2/intraday/latest?symbols=#{symbol}&interval=5min&access_key=#{api_key}"
         when 'historical'
-            url = "https://api.marketstack.com/v2/eod?access_key=#{api_key}&symbols=#{symbol}&date_from=#{from_date}&date_to=#{to_date}&limit=1000&offset=#{offset}"
+            url = "https://api.marketstack.com/v2/eod?access_key=#{api_key}&symbols=#{symbol}&date_from=#{from_date}&date_to=#{to_date}&limit=1000&offset=#{offset * 1000}" # found that offset does not respsect set limit value, just offsets by 1.
         when 'info'
             url = "https://api.marketstack.com/v2/eod?access_key=#{api_key}&symbols=#{symbol}&date_from=#{from_date}"
         end
