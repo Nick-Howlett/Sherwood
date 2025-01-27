@@ -37,7 +37,7 @@ export const getStockDisplay =
           APIUtil.getIntradayChart(symbol),
         ]).then((values) => {
           const info = values.slice(0, 2);
-          const chart = formatChart(values[2]);
+          const chart = formatChart(values[2], isIntraday);
           info.forEach((info) => {
             Object.assign(stock, info);
           });
@@ -87,7 +87,7 @@ export const getStockHistoricalCharts =
         })
       );
     });
-    
+
     return Promise.all(promises).then(() => {
       const returnChart =
         symbols.length === 1

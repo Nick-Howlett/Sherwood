@@ -55,7 +55,7 @@ export const createDateRangeCharts = (chart) => {
   return charts;
 };
 
-export const formatChart = (chart) => {
+export const formatChart = (chart, isIntraday) => {
   const chartData = chart.data;
   if (!chartData) {
     return [];
@@ -71,9 +71,9 @@ export const formatChart = (chart) => {
         high: parseFloat(datum.high),
         low: parseFloat(datum.low),
         date: momentDate,
-        label: chart.history
-          ? momentDate.format("MMM DD YYYY")
-          : `${momentDate.format("hh:mm A")} ET`,
+        label: isIntraday
+          ? `${momentDate.format("hh:mm A")} ET`
+          : momentDate.format("MMM DD YYYY"),
       }; //different format for intraday
     })
     .reverse();
