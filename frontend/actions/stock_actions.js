@@ -38,7 +38,6 @@ export const getStockDisplay =
         ]).then((values) => {
           const info = values.slice(0, 2);
           const chart = formatChart(values[2]);
-          console.log(chart);
           info.forEach((info) => {
             Object.assign(stock, info);
           });
@@ -88,6 +87,7 @@ export const getStockHistoricalCharts =
         })
       );
     });
+    
     return Promise.all(promises).then(() => {
       const returnChart =
         symbols.length === 1

@@ -14,6 +14,8 @@ export const createProfileCharts = (transactions, charts) => {
       day.close += dayPrice.close * numShares;
     });
   });
+
+  console.log(baseChart);
   return createDateRangeCharts(baseChart.reverse());
 };
 
@@ -58,7 +60,7 @@ export const formatChart = (chart) => {
   if (!chartData) {
     return [];
   }
-  
+
   const formattedChart = Object.keys(chartData)
     .map((date) => {
       const datum = chartData[date];
