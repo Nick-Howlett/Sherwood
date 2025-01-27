@@ -83,7 +83,7 @@ export const getStockHistoricalCharts =
     symbols.forEach((symbol) => {
       promises.push(
         APIUtil.getHistoricalChart(symbol).then((chart) => {
-          allCharts[symbol] = formatChart(JSON.parse(chart.response));
+          allCharts[symbol] = formatChart(chart);
         })
       );
     });
