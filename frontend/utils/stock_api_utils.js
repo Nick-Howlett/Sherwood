@@ -1,3 +1,4 @@
+import { all } from "core-js/fn/promise";
 import moment from "moment";
 
 const buildUrlWithParams = (url, params) => {
@@ -33,7 +34,7 @@ export const getHistoricalChart = async (symbol) => {
   const dateEnd = moment().subtract(5, "years").format("YYYY-MM-DD");
   const dateStart = moment().format("YYYY-MM-DD");
   const makeRequest = async (page) => {
-    const resp = await $.ajax({
+    $.ajax({
       method: "GET",
       url: buildUrlWithParams(`api/stock_api/historical`, {
         symbol: symbol,
@@ -41,12 +42,10 @@ export const getHistoricalChart = async (symbol) => {
         to_date: dateStart,
         offset: page,
       }),
-    });
-    return JSON.parse(resp.response).data;
+    }).then((resp) => JSON.parse(resp.response).data);
   };
-  const page1 = await makeRequest(0);
-  const page2 = await makeRequest(1);
-  return [...page1, ...page2];
+
+  return [...Promise.all([page1, page2])];
 };
 
 export const getInfo = (symbol) => {

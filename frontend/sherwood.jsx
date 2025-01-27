@@ -1,4 +1,3 @@
-require("regenerator-runtime/runtime");
 import ReactDOM from "react-dom";
 import React from "react";
 import configureStore from "./store/store";
