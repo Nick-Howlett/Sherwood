@@ -2,8 +2,7 @@ import ReactDOM from "react-dom";
 import React from "react";
 import configureStore from "./store/store";
 import Root from "./components/root";
-import "core-js/stable";
-import "regenerator-runtime/runtime";
+import regeneratorRuntime from "regenerator-runtime";
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("root");
