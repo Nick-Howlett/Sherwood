@@ -15,7 +15,6 @@ export const createProfileCharts = (transactions, charts) => {
     });
   });
 
-  console.log(baseChart);
   return createDateRangeCharts(baseChart.reverse());
 };
 
