@@ -41,7 +41,7 @@ export const getHistoricalChart = (symbol) => {
         to_date: dateStart,
         offset: page,
       }),
-    });
+    }).then((resp) => JSON.parse(resp.response).data);
   };
 
   return Promise.all([makeRequest(0), makeRequest(1)]).then((arrays) => [
