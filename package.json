@@ -8,6 +8,7 @@
     "babel-loader": "^8.0.5",
     "cheerio": "^1.0.0-rc.2",
     "concurrently": "^9.1.2",
+    "core-js": "^3.40.0",
     "curl": "^0.1.4",
     "jquery": "^3.3.1",
     "jquery-ujs": "^1.2.2",
@@ -24,6 +25,7 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "regenerator-runtime": "^0.14.1",
     "request-promise": "^4.2.4",
     "webpack": "^5.97.1",
     "webpack-cli": "^6.0.1"

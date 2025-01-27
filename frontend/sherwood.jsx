@@ -2,7 +2,8 @@ import ReactDOM from "react-dom";
 import React from "react";
 import configureStore from "./store/store";
 import Root from "./components/root";
-import moment from "moment";
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("root");
