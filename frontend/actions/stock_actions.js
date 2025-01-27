@@ -37,7 +37,7 @@ export const getStockDisplay =
           APIUtil.getIntradayChart(symbol),
         ]).then((values) => {
           const info = values.slice(0, 2);
-          const chart = formatChart(values[2], true);
+          const chart = formatChart(values[2].data, true);
           info.forEach((info) => {
             Object.assign(stock, info);
           });

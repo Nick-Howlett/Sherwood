@@ -55,12 +55,11 @@ export const createDateRangeCharts = (chart) => {
 };
 
 export const formatChart = (chart, isIntraday) => {
-  const chartData = chart.data;
-  if (!chartData) {
+  if (!chart) {
     return [];
   }
 
-  const formattedChart = chartData
+  const formattedChart = chart
     .map((datum) => {
       const momentDate = moment.tz(datum.date, "America/New_York");
       return {
