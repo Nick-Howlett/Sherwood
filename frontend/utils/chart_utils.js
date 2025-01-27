@@ -60,11 +60,9 @@ export const formatChart = (chart, isIntraday) => {
     return [];
   }
 
-  const formattedChart = Object.keys(chartData)
-    .map((date) => {
-      console.log(date);
-      const datum = chartData[date];
-      const momentDate = moment.tz(date, "America/New_York");
+  const formattedChart = chartData
+    .map((datum) => {
+      const momentDate = moment.tz(datum.date, "America/New_York");
       return {
         open: parseFloat(datum.open),
         close: parseFloat(datum.close),
