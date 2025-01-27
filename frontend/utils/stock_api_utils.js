@@ -33,7 +33,7 @@ export const getHistoricalChart = async (symbol) => {
   const dateEnd = moment().subtract(5, "years").format("YYYY-MM-DD");
   const dateStart = moment().format("YYYY-MM-DD");
   const makeRequest = async (page) => {
-    $.ajax({
+    return $.ajax({
       method: "GET",
       url: buildUrlWithParams(`api/stock_api/historical`, {
         symbol: symbol,
