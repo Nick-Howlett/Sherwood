@@ -1,3 +1,4 @@
+import "core-js/stable";
 import ReactDOM from "react-dom";
 import React from "react";
 import configureStore from "./store/store";
