@@ -44,7 +44,10 @@ export const getHistoricalChart = async (symbol) => {
     }).then((resp) => JSON.parse(resp.response).data);
   };
 
-  return [...Promise.all([makeRequest(0), makeRequest(1)])];
+  return Promise.all([makeRequest(0), makeRequest(1)]).then((arrays) => [
+    ...arrays[0],
+    ...arrays[1],
+  ]);
 };
 
 export const getInfo = (symbol) => {
