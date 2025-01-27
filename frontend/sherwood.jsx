@@ -1,8 +1,8 @@
+require("regenerator-runtime/runtime");
 import ReactDOM from "react-dom";
 import React from "react";
 import configureStore from "./store/store";
 import Root from "./components/root";
-import regeneratorRuntime from "regenerator-runtime";
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("root");
