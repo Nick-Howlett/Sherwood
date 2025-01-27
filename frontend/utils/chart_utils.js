@@ -62,6 +62,7 @@ export const formatChart = (chart, isIntraday) => {
 
   const formattedChart = Object.keys(chartData)
     .map((date) => {
+      console.log(date);
       const datum = chartData[date];
       const momentDate = moment.tz(date, "America/New_York");
       return {
